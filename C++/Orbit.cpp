@@ -172,7 +172,7 @@ std::vector<double> Orbit::EoM(std::vector<double> x) {
 
   ad[0] = common_term * x[0] * (1 - z_squared_term);
   ad[1] = common_term * x[1] * (1 - z_squared_term);
-  ad[2] = common_term * x[2] * (3 - z_squared_term) + 0.05;
+  ad[2] = common_term * x[2] * (3 - z_squared_term);
 
   for (int i = 0; i < 3; ++i) {
     ag[i] = -mu * x[i] / pow(r_norm, 3);
@@ -191,12 +191,9 @@ std::vector<double> Orbit::EoM(std::vector<double> x) {
 /**
  * @brief
  *
+ *
  */
-void Orbit::integrate() {
-
-  T = 2 * M_PI * sqrt(pow(SMA, 3.0) / Earth_mu) / TU;
-  double dt = 0.01;
-  double timestep = 10 * T / dt;
+void Orbit::RungeKutta45(double dt, double T, std::vector<double> x) {
 
   std::vector<double> k1 = std::vector<double>(6, 0.0);
   std::vector<double> k2 = std::vector<double>(6, 0.0);
@@ -204,13 +201,10 @@ void Orbit::integrate() {
   std::vector<double> k4 = std::vector<double>(6, 0.0);
   std::vector<double> temp = std::vector<double>(6, 0.0);
 
-  x_next = std::vector<double>(6, 0.0);
+  double timestep = T / dt;
 
-  r_final = std::vector<double>(3, 0.0);
-  v_final = std::vector<double>(3, 0.0);
-
+  // Display Information on output text file
   std::cout << "\t\tWriting output to file 'output.txt'." << std::endl;
-
   std::ofstream vOut("output.txt", std::ios::out | std::ios::trunc);
 
   for (int t = 0; t < timestep; t++) {
@@ -233,7 +227,7 @@ void Orbit::integrate() {
     k4 = Orbit::EoM(temp);
 
     for (int i = 0; i < 6; i++) {
-      x[i] = x[i] + (1.0 / 6.0) * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]) * dt;
+      x[i] += (1.0 / 6.0) * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]) * dt;
     }
 
     if (t % 628 == 0) {
@@ -251,9 +245,29 @@ void Orbit::integrate() {
     }
   }
 
-  vOut.close(); // Closing file.
+  // Finish writing and close file
+  vOut.close();
   std::cout << "\t\tFinished writing to file." << std::endl;
+}
 
+/**
+ * @brief
+ *
+ */
+void Orbit::integrate() {
+
+  // define target time and dt
+  T = 10 * 2 * M_PI * sqrt(pow(SMA, 3.0) / Earth_mu) / TU;
+  double dt = 0.01;
+
+  // Initialise r_final and v_final vectors
+  r_final = std::vector<double>(3, 0.0);
+  v_final = std::vector<double>(3, 0.0);
+
+  // Begine RK45 Integration
+  Orbit::RungeKutta45(dt, T, x);
+
+  // Dimensionalise r and v vectors
   for (int i = 0; i < 3; ++i) {
     r_final[i] = x[i] * DU;
     v_final[i] = x[i + 3] * (DU / TU);
@@ -297,6 +311,7 @@ Orbit::~Orbit() {
   v_ECI.clear();
   r_0.clear();
   v_0.clear();
+  x.clear();
   x_dot.clear();
   a.clear();
   ag.clear();

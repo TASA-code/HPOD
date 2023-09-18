@@ -40,8 +40,6 @@ public:
   std::vector<double> ag;
   std::vector<double> ad;
 
-  std::vector<double> x_next;
-
   std::vector<double> r_final;
   std::vector<double> v_final;
 
@@ -56,6 +54,8 @@ public:
   void P2ECI();
 
   std::vector<double> EoM(std::vector<double> x);
+
+  void RungeKutta45(double dt, double T, std::vector<double> x);
 
   void integrate();
 
