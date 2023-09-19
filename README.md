@@ -34,13 +34,13 @@ The orbital equation under gravitational acceleration and oblateness perturbatio
 
 $$
 \frac{d^2r}{dt^2} + \mu\frac{\mathbf{r}}{r^3} = \mathbf{a}_d = -\frac{3}{2}\frac{J_2\mu R_{Earth}\mathbf{r}}{2r^5}
-\begin{align}
+
 \begin{array}{c}
 1-\frac{5r_z^2}{r^2}\\
 1-\frac{5r_z^2}{r^2}\\
 3-\frac{5r_z^2}{r^2}\\
 \end{array}
-\end{align}
+
 $$
 
 
