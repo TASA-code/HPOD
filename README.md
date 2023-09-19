@@ -29,3 +29,11 @@ $$
     k_4 = f(y_n + \Delta tk_3)\\
 \end{align}
 $$
+
+
+## Command-line input
+The repository include a Makefile we make ease when compiling the program. A sample command line input is as such,
+
+```command line
+make test 
+```
