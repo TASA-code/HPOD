@@ -19,10 +19,10 @@ In this section, we provide two important formulas related to orbital mechanics.
 
 The formula for calculating the orbital radius (r) is given by:
 
-```markdown
-r = \frac{h^2}{\mu}\frac{1}{1+e\cos\theta}(\cos\theta \cdot i_e + \sin\theta \cdot e_p)
+$$
+r = \frac{h^2}{\mu}\frac{1}{1+e\cos\theta}(\cos\theta \cdot i_e + \sin\theta \cdot e_p)\\
 v = \frac{\mu}{h}\left(\sin\theta \cdot i_e + (e+\cos\theta) \cdot i_p\right)
-```
+$$
 
 
 For time-integration we will use 4th-order Runge-Kutta explicit scheme. This can be formulated as:
