@@ -20,6 +20,8 @@ The formula for calculating the orbital radius (r) is given by:
 $$
 r = \frac{h^2}{\mu}\frac{1}{1+e\cos\theta}(\cos\theta**i**_e + \sin\theta**i**_p)
 $$
+
+The formula for calculating the orbital velcotiy (v) is given by:
 $$
 v = \frac{\mu}{h}\left(\sin\theta**i**_e + (e+\cos\theta)**i**_p\right)
 $$
