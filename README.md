@@ -14,7 +14,7 @@ The code takes classical orbital element (SMA, e, i, RAAN, &omega;, &nu;) into a
 $$
 \begin{align}
     **r** = \frac{h^2}{\mu}\frac{1}{1+ecos\theta}(cos\theta**i**_{e}+sin\theta**e**_{p})\\
-    **v** = \frac{\mu}{h}[sin\theta**i**_{e} + (e+cos\theta)**i**_p]
+    **v** = \frac{\mu}{h}\[sin\theta**i**_{e} + (e+cos\theta)**i**_p\]\\
 \end{align}
 $$
 
