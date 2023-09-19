@@ -1,14 +1,14 @@
 # Orbit_Determination
 
 This code serves the purpose for orbit determination of a satellite orbiting aroung Earth with the effect of J2 perturbation. 
-The code takes classical orbital element (SMA, e, i, RAAN, &omega, &nu) into account to calculate and iterate the final position and velocity vector
+The code takes classical orbital element (SMA, e, i, RAAN, &omega;, &nu;) into account to calculate and iterate the final position and velocity vector
 
 - SMA  : Semi-Major axis,
 - e    : Eccentricity,
 - i    : Inclination,
 - RAAN : Right Ascension of Ascending Node,
-- &omega: Argument of periapsi,
-- &nu : True Anomaly.
+- &omega;: Argument of periapsi,
+- &nu; : True Anomaly.
 
 
 For time-integration we will use 4th-order Runge-Kutta explicit scheme. This can be formulated as:
