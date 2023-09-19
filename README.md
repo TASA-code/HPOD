@@ -11,12 +11,18 @@ The code takes classical orbital element (SMA, e, i, RAAN, &omega;, &nu;) into a
 - &nu; : True Anomaly.
 
 
-$$
-\begin{align}
-    **r** = \frac{h^2}{\mu}\frac{1}{1+ecos\theta}(cos\theta**i**_{e}+sin\theta**e**_{p})\\
-    **v** = \frac{\mu}{h}\[sin\theta**i**_{e} + (e+cos\theta)**i**_p\]\\
-\end{align}
-$$
+# Mathematical Formulas
+
+In this section, we provide two important formulas related to orbital mechanics.
+
+## Formula 1: Orbital Radius (r)
+
+The formula for calculating the orbital radius (r) is given by:
+
+```latex
+r = \frac{h^2}{\mu}\frac{1}{1+e\cos\theta}(\cos\theta \cdot i_e + \sin\theta \cdot e_p)
+v = \frac{\mu}{h}\left(\sin\theta \cdot i_e + (e+\cos\theta) \cdot i_p\right)
+```
 
 
 For time-integration we will use 4th-order Runge-Kutta explicit scheme. This can be formulated as:
