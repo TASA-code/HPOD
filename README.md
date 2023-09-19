@@ -11,6 +11,12 @@ The code takes classical orbital element (SMA, e, i, RAAN, &omega;, &nu;) into a
 - &nu; : True Anomaly.
 
 
+$$
+\begin{align}
+    **r** = \frac{h^2}{\mu}\frac{1}{1+ecos\theta}(cos\theta**i**_{e}+sin\theta**e**_{p})\\
+    **v** = \frac{\mu}{h}[sin\theta**i**_{e} + (e+cos\theta)**i**_p]
+\end{align}
+$$
 
 
 For time-integration we will use 4th-order Runge-Kutta explicit scheme. This can be formulated as:
@@ -37,3 +43,4 @@ The repository include a Makefile we make ease when compiling the program. A sam
 ```command line
 make test 
 ```
+
