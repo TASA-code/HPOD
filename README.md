@@ -19,13 +19,13 @@ In this section, we provide two important formulas related to orbital mechanics.
 The formula for calculating the orbital radius (r) is given by:
 
 $$
-r = \frac{h^2}{\mu}\frac{1}{1+e\cos\theta}(\cos\theta\hspace{0.2cm}\textbf{i}_e + \sin\theta{0.2cm}\mathbf{i}_p)
+r = \frac{h^2}{\mu}\frac{1}{1+e\cos\theta}(\cos\theta\hspace{0.2cm}\mathbf{i}_e + \sin\theta\hspace{0.2cm}\mathbf{i}_p)
 $$
 
 The formula for calculating the orbital velcotiy (v) is given by:
 
 $$
-v = \frac{\mu}{h}(\sin\theta{0.2cm}\mathbf{i}_e + (e+\cos\theta){0.2cm}\mathbf{i}_p)
+v = \frac{\mu}{h}(\sin\theta\hspace{0.2cm}\mathbf{i}_e + (e+\cos\theta)\hspace{0.2cm}\mathbf{i}_p)
 $$
 
 ## Gravitational Acceleration and Oblateness Perturbation (J2)
