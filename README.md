@@ -18,7 +18,7 @@ In this section, we provide two important formulas related to orbital mechanics.
 The formula for calculating the orbital radius (r) is given by:
 
 $$
-r = \frac{h^2}{\mu}\frac{1}{1+e\cos\theta}(\cos\theta \cdot i_e + \sin\theta \cdot i_p)
+r = \frac{h^2}{\mu}\frac{1}{1+e\cos\theta}(\cos\theta \cdot i_e + \sin\theta \cdot i_p)\\
 v = \frac{\mu}{h}\left(\sin\theta \cdot i_e + (e+\cos\theta) \cdot i_p\right)
 $$
 
