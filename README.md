@@ -19,9 +19,6 @@ The code takes classical orbital element (SMA, e, i, RAAN, &omega;, &nu;) into a
 - &omega;: Argument of periapsi,
 - &nu; : True Anomaly.
 
-> [!IMPORTANT]
-> The orbital coordinate are transformed from Perifocal to ECI
-
 # Mathematical Formulas
 ## Orbital Equation
 
@@ -38,6 +35,9 @@ The formula for calculating the orbital velcotiy (v) is given by:
 $$
 v = \frac{\mu}{h}(\sin\theta\hspace{0.2cm}\mathbf{i}_e + (e+\cos\theta)\hspace{0.2cm}\mathbf{i}_p)
 $$
+
+> [!IMPORTANT]
+> The orbital coordinate are transformed from Perifocal to ECI
 
 ## Gravitational Acceleration and Oblateness Perturbation (J2)
 
