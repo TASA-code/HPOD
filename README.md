@@ -1,3 +1,15 @@
+# Resulting Plot
+
+> [!IMPORTANT]
+> The orbital coordinate are transformed from Perifocal to ECI
+
+<p align="center">
+  <img src="C++/3d.jpg" width="400" title="C++">
+  <img src="MATLAB/Result_plots/orbit.png" width="450" alt="MATLAB">
+  <img src="MATLAB/Result_plots/orbit_earth.png" width="400" alt="MATLAB">
+</p>
+
+
 # Orbit_Determination
 
 This code serves the purpose for orbit determination of a satellite orbiting aroung Earth with the effect of J2 perturbation. 
@@ -64,3 +76,8 @@ The repository include a Makefile we make ease when compiling the program. A sam
 make test 
 ```
 
+where the test parametre is defined as follow with predefined initial orbital elements:
+
+```command line
+TEST_PARAMS     = --SMA 6878 --e 1.3e-4 --i 53 --RAAN 290.5 --w 110 --theta 250
+```
