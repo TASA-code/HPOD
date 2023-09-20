@@ -1,8 +1,5 @@
 # Resulting Plot
 
-> [!IMPORTANT]
-> The orbital coordinate are transformed from Perifocal to ECI
-
 <p align="center">
   <img src="C++/3d.jpg" width="400" title="C++">
   <img src="MATLAB/Result_plots/orbit.png" width="450" alt="MATLAB">
@@ -22,6 +19,8 @@ The code takes classical orbital element (SMA, e, i, RAAN, &omega;, &nu;) into a
 - &omega;: Argument of periapsi,
 - &nu; : True Anomaly.
 
+> [!IMPORTANT]
+> The orbital coordinate are transformed from Perifocal to ECI
 
 # Mathematical Formulas
 ## Orbital Equation
