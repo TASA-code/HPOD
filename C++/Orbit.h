@@ -27,8 +27,8 @@ public:
   double DU;
   double TU;
 
-  std::vector<double> r_p;
-  std::vector<double> v_p;
+  std::vector<double> r_perifocal;
+  std::vector<double> v_perifocal;
   std::vector<double> r_ECI;
   std::vector<double> v_ECI;
   std::vector<double> r_0;
@@ -36,14 +36,14 @@ public:
 
   std::vector<double> x;
   std::vector<double> x_dot;
-  std::vector<double> a;
-  std::vector<double> ag;
-  std::vector<double> ad;
+  std::vector<double> a_total;
+  std::vector<double> a_gravity;
+  std::vector<double> a_oblateness;
 
   std::vector<double> r_final;
   std::vector<double> v_final;
 
-  std::vector<std::vector<double>> A;
+  std::vector<std::vector<double>> RotMatrix_P2ECI;
 
   // Define the initial conditions from the uesr input
   void SetParameter(const double &arg_SMA, const double &e, const double &arg_i,
@@ -53,15 +53,16 @@ public:
   // Coordinate transformation to ECI and undimensionalise
   void P2ECI();
 
-  std::vector<double> EoM(std::vector<double> x);
+  // Coordinate transformation from ECI to ECEF
+  std::vector<double> EciToEcef(std::vector<double> &x);
 
-  void RungeKutta45(double dt, double T, std::vector<double> x);
+  std::vector<double> EoM(std::vector<double> &x);
+
+  void RungeKutta45(double dt, double T, std::vector<double> &x);
 
   void integrate();
 
   std::vector<std::vector<double>>
   matrixmultiply(std::vector<std::vector<double>> A,
                  std::vector<std::vector<double>> B);
-
-  ~Orbit();
 };

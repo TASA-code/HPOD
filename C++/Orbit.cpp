@@ -29,8 +29,8 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
   theta = arg_theta * M_PI / 180;
 
   // initialise vector
-  r_p = {0.0, 0.0, 0.0};
-  v_p = {0.0, 0.0, 0.0};
+  r_perifocal = {0.0, 0.0, 0.0};
+  v_perifocal = {0.0, 0.0, 0.0};
   std::vector<double> i_e = {1.0, 0.0, 0.0};
   std::vector<double> i_p = {0.0, 1.0, 0.0};
 
@@ -38,10 +38,10 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
   h = std::sqrt(Earth_mu * SMA * (1 - e * e));
 
   for (int i = 0; i < 3; ++i) {
-    r_p[i] = ((h * h) / (Earth_mu * (1 + e * std::cos(theta)))) *
-             (std::cos(theta) * i_e[i] + std::sin(theta) * i_p[i]);
-    v_p[i] = (Earth_mu / h) *
-             (-std::sin(theta) * i_e[i] + (e + std::cos(theta)) * i_p[i]);
+    r_perifocal[i] = ((h * h) / (Earth_mu * (1 + e * std::cos(theta)))) *
+                     (std::cos(theta) * i_e[i] + std::sin(theta) * i_p[i]);
+    v_perifocal[i] = (Earth_mu / h) * (-std::sin(theta) * i_e[i] +
+                                       (e + std::cos(theta)) * i_p[i]);
   }
 
   // Printing values of all the parameters to the terminal.
@@ -74,13 +74,14 @@ void Orbit::P2ECI() {
 
   // Calculate the transformation matrix A = R_RAAN * R_i * R_w
   // Initialise matrix A
-  A = std::vector<std::vector<double>>(3, std::vector<double>(3, 0.0));
-  A = matrixmultiply(matrixmultiply(R_w, R_i), R_RAAN);
+  RotMatrix_P2ECI =
+      std::vector<std::vector<double>>(3, std::vector<double>(3, 0.0));
+  RotMatrix_P2ECI = matrixmultiply(matrixmultiply(R_w, R_i), R_RAAN);
 
-  std::vector<std::vector<double>> A_transpose(3, std::vector<double>(3, 0.0));
+  std::vector<std::vector<double>> R_transpose(3, std::vector<double>(3, 0.0));
   for (int i = 0; i < 3; ++i) {
     for (int j = 0; j < 3; ++j) {
-      A_transpose[i][j] = A[j][i];
+      R_transpose[i][j] = RotMatrix_P2ECI[j][i];
     }
   }
 
@@ -88,8 +89,8 @@ void Orbit::P2ECI() {
   v_ECI = std::vector<double>(3, 0.0);
   for (int i = 0; i < 3; ++i) {
     for (int j = 0; j < 3; ++j) {
-      r_ECI[i] += A_transpose[i][j] * r_p[j];
-      v_ECI[i] += A_transpose[i][j] * v_p[j];
+      r_ECI[i] += R_transpose[i][j] * r_perifocal[j];
+      v_ECI[i] += R_transpose[i][j] * v_perifocal[j];
     }
   }
 
@@ -99,10 +100,10 @@ void Orbit::P2ECI() {
   std::cout << "\t\t...PRINTING INITIAL POSITION...\n" << std::endl;
 
   std::cout << "\t\t -- Perifocal RF --\n" << std::endl;
-  std::cout << "\t\tr0_p = [" << r_p[0] << ", " << r_p[1] << ", " << r_p[2]
-            << "]" << std::endl;
-  std::cout << "\t\tv0_p = [" << v_p[0] << ", " << v_p[1] << ", " << v_p[2]
-            << "]\n"
+  std::cout << "\t\tr0_p = [" << r_perifocal[0] << ", " << r_perifocal[1]
+            << ", " << r_perifocal[2] << "]" << std::endl;
+  std::cout << "\t\tv0_p = [" << v_perifocal[0] << ", " << v_perifocal[1]
+            << ", " << v_perifocal[2] << "]\n"
             << std::endl;
 
   std::cout << "\t\t -- ECI RF --\n" << std::endl;
@@ -151,7 +152,7 @@ void Orbit::P2ECI() {
  * @brief
  *
  */
-std::vector<double> Orbit::EoM(std::vector<double> x) {
+std::vector<double> Orbit::EoM(std::vector<double> &x) {
 
   double R_E = Earth_Radius / SMA;
   double mu = 1.0;
@@ -163,26 +164,26 @@ std::vector<double> Orbit::EoM(std::vector<double> x) {
   double r_norm = sqrt(temp1);
 
   // calculate and aggregate the acceleration from gravity and J2
-  a = std::vector<double>(3, 0.0);
-  ag = std::vector<double>(3, 0.0);
-  ad = std::vector<double>(3, 0.0);
+  a_total = std::vector<double>(3, 0.0);
+  a_gravity = std::vector<double>(3, 0.0);
+  a_oblateness = std::vector<double>(3, 0.0);
 
   double common_term = -(3 * J2 * mu * R_E * R_E) / (2 * std::pow(r_norm, 5));
   double z_squared_term = (5 * std::pow(x[2], 2)) / std::pow(r_norm, 2);
 
-  ad[0] = common_term * x[0] * (1 - z_squared_term);
-  ad[1] = common_term * x[1] * (1 - z_squared_term);
-  ad[2] = common_term * x[2] * (3 - z_squared_term);
+  a_oblateness[0] = common_term * x[0] * (1 - z_squared_term);
+  a_oblateness[1] = common_term * x[1] * (1 - z_squared_term);
+  a_oblateness[2] = common_term * x[2] * (3 - z_squared_term);
 
   for (int i = 0; i < 3; ++i) {
-    ag[i] = -mu * x[i] / pow(r_norm, 3);
-    a[i] = ag[i] + ad[i];
+    a_gravity[i] = -mu * x[i] / pow(r_norm, 3);
+    a_total[i] = a_gravity[i] + a_oblateness[i];
   }
 
   x_dot = std::vector<double>(6, 0.0);
   for (int i = 0; i < 3; ++i) {
     x_dot[i] = x[i + 3];
-    x_dot[i + 3] = a[i];
+    x_dot[i + 3] = a_total[i];
   }
 
   return x_dot;
@@ -193,7 +194,7 @@ std::vector<double> Orbit::EoM(std::vector<double> x) {
  *
  *
  */
-void Orbit::RungeKutta45(double dt, double T, std::vector<double> x) {
+void Orbit::RungeKutta45(double dt, double T, std::vector<double> &x) {
 
   std::vector<double> k1 = std::vector<double>(6, 0.0);
   std::vector<double> k2 = std::vector<double>(6, 0.0);
@@ -302,19 +303,4 @@ Orbit::matrixmultiply(std::vector<std::vector<double>> A,
   }
 
   return result;
-};
-
-Orbit::~Orbit() {
-  r_p.clear();
-  v_p.clear();
-  r_ECI.clear();
-  v_ECI.clear();
-  r_0.clear();
-  v_0.clear();
-  x.clear();
-  x_dot.clear();
-  a.clear();
-  ag.clear();
-  ad.clear();
-  A.clear();
 };
