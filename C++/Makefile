@@ -11,7 +11,7 @@ HDRS 		= Orbit.h
 
 
 # Parameters of the test case specified in handout.
-TEST_PARAMS 	= --SMA 6878 --e 1.3e-4 --i 53 --RAAN 290.5 --w 110 --theta 250
+TEST_PARAMS 	= --SMA 6878 --e 1.3e-4 --i 40 --RAAN 290.5 --w 110 --theta 250
 
 # Setting the "default" target. 
 default: all
