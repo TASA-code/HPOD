@@ -1,9 +1,8 @@
 # Resulting Plot
 
 <p align="center">
-  <img src="C++/3d.jpg" width="400" title="C++">
-  <img src="MATLAB/Result_plots/orbit.png" width="450" alt="MATLAB">
-  <img src="MATLAB/Result_plots/orbit_earth.png" width="400" alt="MATLAB">
+  <img src="C++/ECEF.png" width="400" title="C++">
+  <img src="MATLAB/Result_plots/orbit_earth.png" width="500" alt="MATLAB">
 </p>
 
 
