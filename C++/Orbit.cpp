@@ -11,7 +11,7 @@
  * @brief Takes user input orbital element and set initial coordinates
  *
  * @param arg_SMA
- * @param e
+ * @param arg_e
  * @param arg_i
  * @param arg_RAAN
  * @param arg_w
@@ -55,6 +55,7 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
     std::cout << "\t\t- theta     :  " << theta << std::endl;
     std::cout << std::endl;
 };
+
 
 
 /**
@@ -140,6 +141,7 @@ void Orbit::P2ECI() {
 };
 
 
+
 /**
  * @brief a simplified approximation on GMST. 
  *
@@ -151,6 +153,7 @@ double Orbit::GMST(double currentTime) {
     const double gmstRate = 360.0 / 86164.100352; // Earth's rotation period (seconds)
     return fmod(280.46061837 + gmstRate * currentTime, 360.0);
 }
+
 
 
 /**
@@ -175,6 +178,8 @@ std::vector<double> Orbit::EciToEcef(std::vector<double>& ECI, double GMST_deg){
     }
     return r_ECEF;
 };
+
+
 
 /** 
  * @brief Perform coordinate transformation from ECEF to Geodetic
@@ -238,10 +243,10 @@ std::vector<double> Orbit::EcefToGeo(std::vector<double>& ECEF){
     //
     // double term = a * (1-t*t) / (2*b*t);
     
-    std::vector<double> result = {longitude, latitude};
-
-    return result;
+    return {longitude, latitude};
 }
+
+
 
 /**
  * @brief To contruct the Equation of motion of the satellite for integration accounting for gravity accerleration and oblateness accerleration
@@ -286,6 +291,7 @@ std::vector<double> Orbit::EoM(std::vector<double> &x) {
 
     return x_dot;
 };
+
 
 
 /**
@@ -370,6 +376,7 @@ void Orbit::RungeKutta45(double dt, double T, std::vector<double> &x) {
 }
 
 
+
 /**
  * @brief Perform integration with RungeKutta45 and print out the final position and velocity 
  *
@@ -402,37 +409,6 @@ void Orbit::integrate() {
     std::cout << "\t\t----------------------------------" << std::endl;
 }
 
-
-
-void Orbit::WriteFile(){
-    std::ifstream inputFile("ECI.txt"); // Replace "input.txt" with the source file
-    std::ofstream outputFile("ECEF.txt"); // Replace "output.txt" with the destination file
-    
-    if (inputFile.is_open()) {
-        std::cout << "Converting from ECI to ECEF..." << std::endl;
-
-
-        
-    }
-
-    if (outputFile.is_open()) {
-        std::cerr << "Failed to open the output file." << std::endl;
-        
-    }
-
-    std::string line;
-    while (std::getline(inputFile, line)) {
-        // Modify the line here as needed
-        // For example, let's add " (modified)" to each line
-        line += " (modified)";
-
-        // Write the modified line to the output file
-        outputFile << line << std::endl;
-    }
-
-    inputFile.close(); // Close the input file
-    outputFile.close(); // Close the output file
-}
 
 
 /**

@@ -46,7 +46,7 @@ class Orbit {
         std::vector<std::vector<double>> RotMatrix_P2ECI;
 
         // Define the initial conditions from the uesr input
-        void SetParameter(const double &arg_SMA, const double &e, const double &arg_i,
+        void SetParameter(const double &arg_SMA, const double &arg_e, const double &arg_i,
                           const double &arg_RAAN, const double &arg_w,
                           const double &arg_theta);
         
@@ -69,8 +69,6 @@ class Orbit {
         void RungeKutta45(double dt, double T, std::vector<double> &x);
 
         void integrate();
-
-        void WriteFile();
 
         std::vector<std::vector<double>>
         matrixmultiply(std::vector<std::vector<double>> A,
