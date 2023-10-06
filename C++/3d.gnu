@@ -19,7 +19,7 @@ splot 'ECEF.txt' using 1:2:3 lt -1 lw 2
 
 # Plot 3: GEO data
 set title 'GEO Data (2D)'
-plot 'GEO.txt' using 1:2 with points pointsize 2 pt 7
+plot 'GEO.txt' using 1:2 with points pointsize 1 pt 7 lc rgb "black"
 
 unset multiplot
 
