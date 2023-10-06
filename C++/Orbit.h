@@ -56,13 +56,21 @@ class Orbit {
         void P2ECI();
 
         // Coordinate transformation from ECI to ECEF
-        std::vector<double> EciToEcef(std::vector<double> &x, double GMST_degree);
+        std::vector<double> EciToEcef(std::vector<double> &ECI, double GMST_degree);
+        
 
+        // Coordinate transformation from ECEF to Geodetic
+        std::vector<double> EcefToGeo(std::vector<double> &ECEF);
+        
+        // Equation of motion
         std::vector<double> EoM(std::vector<double> &x);
+
 
         void RungeKutta45(double dt, double T, std::vector<double> &x);
 
         void integrate();
+
+        void WriteFile();
 
         std::vector<std::vector<double>>
         matrixmultiply(std::vector<std::vector<double>> A,

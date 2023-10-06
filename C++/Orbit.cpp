@@ -58,7 +58,7 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
 
 
 /**
- * @brief Perform coordinate transform from perifocal frame to ECI
+ * @brief Perform coordinate transform from Perifocal frame to ECI
  *
  */
 void Orbit::P2ECI() {
@@ -113,7 +113,8 @@ void Orbit::P2ECI() {
     std::cout << "\t\tv0_ECI = [" << v_ECI[0] << ", " << v_ECI[1] << ", "
               << v_ECI[2] << "]\n"
               << std::endl;
-
+    std::cout << "\t\t----------------------------------" << std::endl;   
+   
     // Initialise
     double temp = 0.0;
     DU = 0.0;
@@ -175,9 +176,75 @@ std::vector<double> Orbit::EciToEcef(std::vector<double>& ECI, double GMST_deg){
     return r_ECEF;
 };
 
+/** 
+ * @brief Perform coordinate transformation from ECEF to Geodetic
+ *
+ * @param x: Takes ECEF vector
+ * @param a: Semi major axis of Earth (approx.)
+ * @param b: Semi minor acis of Earth (approx.)
+ *
+ */
+std::vector<double> Orbit::EcefToGeo(std::vector<double>& ECEF){
+
+    for (double& element : ECEF) {
+        element*= DU; // Multiply each element with the result
+    }
+   
+    const double a = 6378.137; // Semi-major axis in km
+    const double b = 6356.7523; // Semi-minor axis in km
+    //
+    const double e2 = 1.0 - (b * b) / (a * a);
+
+    // Calculate geodetic latitude and longitude
+    double longitude = atan2(ECEF[1], ECEF[0]) * (180.0 / M_PI);
+    double p = sqrt(ECEF[0] * ECEF[0] + ECEF[1] * ECEF[1]);
+    double latitude = atan2(ECEF[2], p);
+
+    // Iterate to calculate altitude
+    double latitude_prev = 0.0;
+    double altitude = 0.0;
+
+    const double epsilon = 1e-9; // Tolerance for convergence
+    while (std::abs(latitude - latitude_prev) > epsilon) {
+        latitude_prev = latitude;
+        double N = a / sqrt(1.0 - e2 * sin(latitude) * sin(latitude));
+        altitude = p / cos(latitude) - N;
+        latitude = atan2(ECEF[2], p / (1.0 - e2 * N / (N + altitude)));
+    }
+
+    // Convert latitude and longitude to degrees
+    latitude *= (180.0 / M_PI);
+    
+    // double r = sqrt(pow(ECEF[0],2.0) + pow(ECEF[1],2.0));
+    // double E = (b*ECEF[2] - (a*a - b*b)) / (a*r);
+    // double F = (b*ECEF[2] + (a*a - b*b)) / (a*r);
+    // double P = (4.0/3.0) * (E*F + 1);
+    // double Q = 2 * (E*E - F*F);
+    // double D = pow(P,3.0) + pow(Q, 2.0);
+    // 
+    // double nu = 0.0;
+    //
+    // if (D < 0) {
+    //     nu = 2*sqrt(P) * cos((1.0/3.0) * acos(Q*pow(-P,-0.5) / P));
+    // }
+    // else {
+    //     nu = pow(pow(D,0.5) - Q, 1/3) - pow(pow(D,0.5) + Q , 1/3);
+    // }
+    //
+    // double G = 0.5 * (sqrt(E*E + nu) + E);
+    //
+    // double temp_term = G*G + (F - nu*G) / (2*G - E);
+    // double t = sqrt(temp_term) - G;
+    //
+    // double term = a * (1-t*t) / (2*b*t);
+    
+    std::vector<double> result = {longitude, latitude};
+
+    return result;
+}
 
 /**
- * @brief To contruct the Equation of motion of the satellite for integration accounting f *        or gravity accerleration and oblateness accerleration
+ * @brief To contruct the Equation of motion of the satellite for integration accounting for gravity accerleration and oblateness accerleration
  *
  * @param x: state vector with component [r,v]
  *
@@ -237,8 +304,11 @@ void Orbit::RungeKutta45(double dt, double T, std::vector<double> &x) {
     double timestep = T / dt;
 
     // Display Information on output text file
-    std::cout << "\t\tWriting output to file 'output.txt'." << std::endl;
-    std::ofstream vOut("output.txt", std::ios::out | std::ios::trunc);
+    std::cout << "\t\tWriting output to file 'ECI.txt'." << std::endl;
+    std::ofstream vOut_ECI("ECI.txt", std::ios::out | std::ios::trunc);
+ 
+    std::ofstream vOut_ECEF("ECEF.txt", std::ios::out | std::ios::trunc);
+    std::ofstream vOut_GEO("GEO.txt", std::ios::out | std::ios::trunc);
 
     for (int t = 0; t < timestep; t++) {
 
@@ -261,13 +331,14 @@ void Orbit::RungeKutta45(double dt, double T, std::vector<double> &x) {
         for (int i = 0; i < 6; i++) {
             x[i] += (1.0 / 6.0) * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]) * dt;
         }
-       
-        std::vector<double> temp(3,0.0), r_temp(3,0.0);
+        
+        std::vector<double> temp(3,0.0), ECEF(3,0.0);
         for(int i = 0; i < 3; i++)temp[i] = x[i];
         
         double current_time = Orbit::GMST(t*100); 
-        r_temp = Orbit::EciToEcef(temp, current_time);
-    
+        ECEF = Orbit::EciToEcef(temp, current_time);
+
+
         if (t % 628 == 0) {
             std::cout << "\t\tTime-step: " << std::setw(6) << t << "/" << timestep
                       << " (" << std::setw(2) << 100 * t / timestep << "%)"
@@ -275,17 +346,26 @@ void Orbit::RungeKutta45(double dt, double T, std::vector<double> &x) {
         }
 
         // Checking that file opened successfully.
-        if (vOut.is_open()) {
-            vOut << r_temp[0]*DU << " " << r_temp[1]*DU << " " << r_temp[2]*DU << " " 
-                    << x[3] << " " << x[4]
-                    << " " << x[5] << std::endl;
-        } else {
-            std::cout << "Did not open vOut successfully!" << std::endl;
-            }
+        if (vOut_ECI.is_open()) {
+            vOut_ECI << x[0]*DU << " " << x[1]*DU << " " << x[2]*DU << " " << x[3] << " "
+                << x[4] << " " << x[5] << std::endl;
         }
+        else {
+            std::cout << "Did not open file successfully!" << std::endl;
+        }
+ 
+        vOut_ECEF << ECEF[0]*DU << " " << ECEF[1]*DU << " " << ECEF[2]*DU << std::endl;
 
+        std::vector<double> GEO(2,0.0);
+        GEO = Orbit::EcefToGeo(ECEF);
+        vOut_GEO << GEO[0] << " " << GEO[1] << std::endl;
+      
+    }
+        
     // Finish writing and close file
-    vOut.close();
+    vOut_ECI.close();
+    vOut_ECEF.close();
+    vOut_GEO.close();
     std::cout << "\t\tFinished writing to file." << std::endl;
 }
 
@@ -304,7 +384,7 @@ void Orbit::integrate() {
     r_final = std::vector<double>(3, 0.0);
     v_final = std::vector<double>(3, 0.0);
 
-    // Begine RK45 Integration
+    // Begin RK45 Integration
     Orbit::RungeKutta45(dt, T, x);
 
     // Dimensionalise r and v vectors
@@ -320,6 +400,38 @@ void Orbit::integrate() {
               << v_final[2] << "]\n"
               << std::endl;
     std::cout << "\t\t----------------------------------" << std::endl;
+}
+
+
+
+void Orbit::WriteFile(){
+    std::ifstream inputFile("ECI.txt"); // Replace "input.txt" with the source file
+    std::ofstream outputFile("ECEF.txt"); // Replace "output.txt" with the destination file
+    
+    if (inputFile.is_open()) {
+        std::cout << "Converting from ECI to ECEF..." << std::endl;
+
+
+        
+    }
+
+    if (outputFile.is_open()) {
+        std::cerr << "Failed to open the output file." << std::endl;
+        
+    }
+
+    std::string line;
+    while (std::getline(inputFile, line)) {
+        // Modify the line here as needed
+        // For example, let's add " (modified)" to each line
+        line += " (modified)";
+
+        // Write the modified line to the output file
+        outputFile << line << std::endl;
+    }
+
+    inputFile.close(); // Close the input file
+    outputFile.close(); // Close the output file
 }
 
 
