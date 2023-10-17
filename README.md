@@ -1,7 +1,7 @@
 # Resulting Plot
 
 <p align="center">
-  <img src="C++/result(plot)/3d.jpg" width="600" title="C++">
+  <img src="C++/plot/3d.jpg" width="600" title="C++">
 </p>
 
 
