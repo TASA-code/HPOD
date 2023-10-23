@@ -114,7 +114,7 @@ void Orbit::P2ECI() {
     std::cout << "\t\tv0_ECI = [" << v_ECI[0] << ", " << v_ECI[1] << ", "
               << v_ECI[2] << "]\n"
               << std::endl;
-    std::cout << "\t\t----------------------------------" << std::endl;   
+        std::cout << "\t\t----------------------------------" << std::endl;   
    
     // Initialise
     double temp = 0.0;
