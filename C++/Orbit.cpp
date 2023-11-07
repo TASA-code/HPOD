@@ -256,23 +256,16 @@ std::vector<double> Orbit::EcefToGeo(std::vector<double>& ECEF){
  * @output x_dot: derivative of the state vector [v,a]
  */
 std::vector<double> Orbit::EoM(std::vector<double> &x) {
-
-    double R_E = Earth_Radius / SMA;
-    double mu = 1.0;
-
-    double temp1 = 0.0;
-    for (int i = 0; i < 3; ++i) {
-      temp1 += x[i] * x[i];
-    }
-    double r_norm = sqrt(temp1);
+    const double R_E = Earth_Radius / SMA;
+    const double mu = 1.0;
+    const double r_norm = sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2]);
 
     // calculate and aggregate the acceleration from gravity and J2
-    a_total = std::vector<double>(3, 0.0);
     a_gravity = std::vector<double>(3, 0.0);
     a_oblateness = std::vector<double>(3, 0.0);
 
-    double common_term = -(3 * J2 * mu * R_E * R_E) / (2 * std::pow(r_norm, 5));
-    double z_squared_term = (5 * std::pow(x[2], 2)) / std::pow(r_norm, 2);
+    const double common_term = -(3 * J2 * mu * R_E * R_E) / (2 * std::pow(r_norm, 5));
+    const double z_squared_term = (5 * x[2] * x[2]) / (r_norm * r_norm);
 
     a_oblateness[0] = common_term * x[0] * (1 - z_squared_term);
     a_oblateness[1] = common_term * x[1] * (1 - z_squared_term);
@@ -280,13 +273,13 @@ std::vector<double> Orbit::EoM(std::vector<double> &x) {
 
     for (int i = 0; i < 3; ++i) {
       a_gravity[i] = -mu * x[i] / pow(r_norm, 3);
-      a_total[i] = a_gravity[i] + a_oblateness[i];
     }
 
     x_dot = std::vector<double>(6, 0.0);
+
     for (int i = 0; i < 3; ++i) {
       x_dot[i] = x[i + 3];
-      x_dot[i + 3] = a_total[i];
+      x_dot[i + 3] = a_gravity[i] + a_oblateness[i];
     }
 
     return x_dot;
