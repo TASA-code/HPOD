@@ -1,0 +1,15 @@
+* Orbital Equaion and TODO list
+** Clohessy-Wiltshire equation
+** satellite motion
+** solar cell charge and energy balance estimation
+** electric propulsion
+
+
+
+
+
+
+
+* (-) TODO list
+** (-) Code ECI to LVLH function
+** ( ) migrate coordinate transfer function to class coordinate

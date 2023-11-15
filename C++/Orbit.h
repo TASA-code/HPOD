@@ -3,6 +3,10 @@
 #include <numeric>
 #include <vector>
 
+#include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
+
+
+
 /**
  * @class
  *
@@ -55,9 +59,7 @@ class Orbit {
         // Coordinate transformation to ECI and undimensionalise
         void P2ECI();
 
-        // Coordinate transformation from ECI to ECEF
-        std::vector<double> EciToEcef(std::vector<double> &ECI, double GMST_degree);
-        
+        std::vector<double> EciToEcef(std::vector<double>& ECI, double GMST_deg);
 
         // Coordinate transformation from ECEF to Geodetic
         std::vector<double> EcefToGeo(std::vector<double> &ECEF);

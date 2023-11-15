@@ -5,6 +5,9 @@
 #include <numeric>
 #include <vector>
 
+#include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
+
+
 #include "Orbit.h"
 
 /**
@@ -378,7 +381,7 @@ void Orbit::RungeKutta45(double dt, double T, std::vector<double> &x) {
 void Orbit::integrate() {
 
     // define target time and dt
-    T = 15 * 2 * M_PI * sqrt(pow(SMA, 3.0) / Earth_mu) / TU;
+    T = 11 * 2 * M_PI * sqrt(pow(SMA, 3.0) / Earth_mu) / TU;
     double dt = 0.01;
 
     // Initialise r_final and v_final vectors
