@@ -21,6 +21,18 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
                          const double &arg_i, const double &arg_RAAN,
                          const double &arg_w, const double &arg_theta) {
 
+    // Printing values of all the parameters to the terminal.
+    std::cout << std::endl;
+    std::cout << "\t\tList of Commands Line Inputs:\n" << std::endl;
+    std::cout << "\t\t- SMA       :  " << arg_SMA << std::endl;
+    std::cout << "\t\t- e         :  " << arg_e << std::endl;
+    std::cout << "\t\t- i         :  " << arg_i << std::endl;
+    std::cout << "\t\t- RAAN      :  " << arg_RAAN << std::endl;
+    std::cout << "\t\t- w         :  " << arg_w << std::endl;
+    std::cout << "\t\t- theta     :  " << arg_theta << std::endl;
+    std::cout << std::endl;
+    
+
     SMA = arg_SMA;
     e = arg_e;
     i = arg_i * M_PI / 180;
@@ -43,17 +55,6 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
       v_perifocal[i] = (Earth_mu / h) * (-std::sin(theta) * i_e[i] +
                                         (e + std::cos(theta)) * i_p[i]);
     }
-
-    // Printing values of all the parameters to the terminal.
-    std::cout << std::endl;
-    std::cout << "\t\tList of Commands Line Inputs:\n" << std::endl;
-    std::cout << "\t\t- SMA       :  " << SMA << std::endl;
-    std::cout << "\t\t- e         :  " << e << std::endl;
-    std::cout << "\t\t- i         :  " << i << std::endl;
-    std::cout << "\t\t- RAAN      :  " << RAAN << std::endl;
-    std::cout << "\t\t- w         :  " << w << std::endl;
-    std::cout << "\t\t- theta     :  " << theta << std::endl;
-    std::cout << std::endl;
 };
 
 
@@ -100,13 +101,13 @@ void Orbit::P2ECI() {
     std::cout << "\t\t----------------------------------" << std::endl;
     std::cout << "\t\t...PRINTING INITIAL POSITION...\n" << std::endl;
 
-    std::cout << "\t\t -- Perifocal RF --\n" << std::endl;
-    std::cout << "\t\tr0_p = [" << r_perifocal[0] << ", " << r_perifocal[1]
-              << ", " << r_perifocal[2] << "]" << std::endl;
-    std::cout << "\t\tv0_p = [" << v_perifocal[0] << ", " << v_perifocal[1]
-              << ", " << v_perifocal[2] << "]\n"
-              << std::endl;
-
+    // std::cout << "\t\t -- Perifocal RF --\n" << std::endl;
+    // std::cout << "\t\tr0_p = [" << r_perifocal[0] << ", " << r_perifocal[1]
+    //           << ", " << r_perifocal[2] << "]" << std::endl;
+    // std::cout << "\t\tv0_p = [" << v_perifocal[0] << ", " << v_perifocal[1]
+    //           << ", " << v_perifocal[2] << "]\n"
+    //           << std::endl;
+    //
     std::cout << "\t\t -- ECI RF --\n" << std::endl;
     std::cout << "\t\tr0_ECI = [" << r_ECI[0] << ", " << r_ECI[1] << ", "
               << r_ECI[2] << "]" << std::endl;
@@ -377,7 +378,7 @@ void Orbit::RungeKutta45(double dt, double T, std::vector<double> &x) {
 void Orbit::integrate() {
 
     // define target time and dt
-    T = 10 * 2 * M_PI * sqrt(pow(SMA, 3.0) / Earth_mu) / TU;
+    T = 15 * 2 * M_PI * sqrt(pow(SMA, 3.0) / Earth_mu) / TU;
     double dt = 0.01;
 
     // Initialise r_final and v_final vectors
