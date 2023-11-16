@@ -1,35 +1,33 @@
-#ifndef COORINDATE_H
-#define COORDINATE_H
-
 #include <algorithm>
 #include <cmath>
 #include <numeric>
 #include <vector>
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
+#include "Orbit.h"
+using namespace Eigen;
+
+typedef Matrix<double,6,1> Vector6d;
 
 /**
 * @class 
 *
 */
-class Coordinate {
-    
-
+class Coordinate : public Orbit {
 
 public:
 
-    Eigen::Vector3d LVLH_r;
-    Eigen::Vector3d LVLH_v;
+    Vector3d LVLH_r;
+    Vector3d LVLH_v;
 
-    Eigen::Matrix3d ECI_LVLH;
+    Matrix3d ECI_LVLH;
         
-    Eigen::Vector3d P2ECI();
+    Vector3d P2ECI();
+    
+    Vector3d ECI2LVLH(Vector3d& ECI_r, Vector3d& ECI_v);
+    
+    Vector3d ECI2ECEF(Vector6d& ECI, double GMST_deg);
 
-    Eigen::Vector3d ECI2ECEF();
-
-    Eigen::Vector3d ECI2LVLH(Eigen::Vector3d&ECI_r, Eigen::Vector3d&ECI_v);
-
+    Vector3d ECEF2GEO(Vector3d& ECEF);
 
 };
-
-#endif // COORINDATE_H

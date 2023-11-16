@@ -1,9 +1,9 @@
 CC		    = g++
-CXXFLAGS    = -std=c++11 -Wall -o3 -flto -g -I/opt/homebrew/opt/boost/include 
+CXXFLAGS    = -std=c++11 -Wall -o3 -flto -g -I/opt/homebrew/opt/boost/include -I/opt/homebrew/opt/eigen/include/eigen3
 LDLIBS		= -lboost_program_options #-lblas
-LDFLAGS		= -L/opt/homebrew/opt/boost/lib #-L/opt/homebrew/opt/eigen/include/eigen3
+LDFLAGS		= -L/opt/homebrew/opt/boost/lib -L/opt/homebrew/opt/eigen/include/eigen3
 TARGET		= main
-HDRS 		= Orbit.h #Coordinate.h
+HDRS 		= Orbit.h Coordinate.h
 
 # CXXFLAGS    = -fopenmp -Wall -o3 -flto -g -I/opt/homebrew/opt/libomp/include
 # LDFLAGS	  = -fopenmp -L/opt/homebrew/opt/libomp/lib
@@ -17,7 +17,7 @@ TEST_PARAMS 	= --SMA 6945 --e 1.3e-4 --i 87 --RAAN 290.5 --w 110 --theta 250
 default: all
 all: $(TARGET)
 
-$(TARGET): $(TARGET).o Orbit.o #Coordinate.o
+$(TARGET): $(TARGET).o Orbit.o Coordinate.o
 
 # A change in the header file requires re-compilation 
 # (done as both .cpp include the header file).
