@@ -29,9 +29,9 @@ ady = -(3*J2*mu*R_E^2*ry)/(2*r^5) * (1-(5*rz^2)/r^2);
 adz = -(3*J2*mu*R_E^2*rz)/(2*r^5) * (3-(5*rz^2)/r^2);
 
 % sum up the acceleration due to gravity and oblateness 
-ax = agx + adx + 1/1000;
+ax = agx + adx;
 ay = agy + ady;
-az = agz + adz + 1/1000;
+az = agz + adz;
 
 % Set up new conditions after t seconds
 xdot = [vx; vy; vz; ax; ay; az];

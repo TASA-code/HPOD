@@ -102,12 +102,15 @@ void Orbit::P2ECI() {
 
     r_ECI = std::vector<double>(3, 0.0);
     v_ECI = std::vector<double>(3, 0.0);
-    for (int i = 0; i < 3; ++i) {
-      for (int j = 0; j < 3; ++j) {
-        r_ECI[i] += R_transpose[i][j] * r_perifocal[j];
-        v_ECI[i] += R_transpose[i][j] * v_perifocal[j];
-      }
-    }
+    // for (int i = 0; i < 3; ++i) {
+    //   for (int j = 0; j < 3; ++j) {
+    //     r_ECI[i] += R_transpose[i][j] * r_perifocal[j];
+    //     v_ECI[i] += R_transpose[i][j] * v_perifocal[j];
+    //   }
+    // }
+    
+    r_ECI = {918.8051813, 100.2960181, 6871.8919169};
+    v_ECI = {0.884039, -7.534891, -0.0081953};
 
     // Print the resulting vectors r_ECI and v_ECI
     // format data output
@@ -435,8 +438,7 @@ void Orbit::RungeKutta45(double dt, double T, std::vector<double> &x) {
 
         // Checking that file opened successfully.
         if (vOut_ECI.is_open()) {
-            vOut_ECI << x[0]*DU << " " << x[1]*DU << " " << x[2]*DU << " " << x[3] << " "
-                << x[4] << " " << x[5] << std::endl;
+            vOut_ECI << t << " " << x[0]*DU << " " << x[1]*DU << " " << x[2]*DU << " " << x[3]*(DU/TU) << " " << x[4]*(DU/TU) << " " << x[5]*(DU/TU) << std::endl;
         }
         else {
             std::cout << "Did not open file successfully!" << std::endl;
@@ -490,8 +492,9 @@ void Orbit::RungeKutta45(double dt, double T, std::vector<double> &x) {
 void Orbit::integrate() {
 
     // define target time and dt
-    T = 11 * 2 * M_PI * sqrt(pow(SMA, 3.0) / Earth_mu) / TU;
-    double dt = 0.01;
+    // T = 13 * 2 * M_PI * sqrt(pow(SMA, 3.0) / Earth_mu) / TU;
+    T = 73367.0/TU; 
+    double dt = 0.001093;
 
     // Initialise r_final and v_final vectors
     r_final = std::vector<double>(3, 0.0);

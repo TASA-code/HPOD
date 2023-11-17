@@ -14,7 +14,7 @@ SRCS       = main.cpp Orbit.cpp Coordinate.cpp
 OBJS       = $(SRCS:.cpp=.o)
 
 # Parameters of the test case specified in handout.
-TEST_PARAMS = --SMA 6945 --e 1.3e-4 --i 60 --RAAN 290.5 --w 110 --theta 250
+TEST_PARAMS = --SMA 6982 --e 0.0010293460 --i 97.97357 --RAAN 340.3470 --w 98.03756 --theta 229.9764
 
 # Setting the "default" target.
 all: $(TARGET)
