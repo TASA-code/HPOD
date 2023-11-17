@@ -5,7 +5,7 @@
 
 // #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
-/**
+/**:arg_w
  * @class
  *
  */
@@ -17,12 +17,13 @@ class Orbit {
         const double J2 = 0.00108263;
     
     public:
-        double SMA;
-        double e;
-        double i;
-        double RAAN;
-        double w;
-        double theta;
+
+        static double SMA;
+        static double e;
+        static double i;
+        static double RAAN;
+        static double w;
+        static double theta;
         double h;
         double T;
 
@@ -76,5 +77,5 @@ class Orbit {
         matrixmultiply(std::vector<std::vector<double>> A,
                       std::vector<std::vector<double>> B);
 
-        ~Orbit();
+        // ~Orbit();
 };

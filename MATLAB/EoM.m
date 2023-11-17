@@ -14,7 +14,7 @@ vx = x(4); %km/s
 vy = x(5); %km/s 
 vz = x(6); %km/s
  
-% Normalize the position vector for futre use
+% Normalize the position vector for future use
 r = norm([rx, ry, rz]);
 
 % Find gravity acceleration from the position vector 

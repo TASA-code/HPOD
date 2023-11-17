@@ -1,4 +1,5 @@
 #include "Orbit.h"
+#include "Coordinate.h"
 #include <fstream>
 #include <iostream>
 

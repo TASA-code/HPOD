@@ -4,11 +4,20 @@
 #include <iostream>
 #include <numeric>
 #include <vector>       
-
-// #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
-
+#include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
 #include "Orbit.h"
+#include "Coordinate.h"
+
+
+// static function initialisation
+double Orbit::SMA   = 0.0;
+double Orbit::e     = 0.0; 
+double Orbit::i     = 0.0; 
+double Orbit::RAAN  = 0.0;
+double Orbit::w     = 0.0;
+double Orbit::theta = 0.0;
+
 
 /**
  * @brief Takes user input orbital element and set initial coordinates
@@ -67,7 +76,8 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
  *
  */
 void Orbit::P2ECI() {
-
+    Coordinate::check();
+    
     // Define transformation matrices R_RAAN, R_i, and R_w
     std::vector<std::vector<double>> R_RAAN = {
         {cos(RAAN), sin(RAAN), 0}, {-sin(RAAN), cos(RAAN), 0}, {0, 0, 1}};
@@ -104,14 +114,14 @@ void Orbit::P2ECI() {
     std::cout << "\t\t----------------------------------" << std::endl;
     std::cout << "\t\t...PRINTING INITIAL POSITION...\n" << std::endl;
 
-    // std::cout << "\t\t -- Perifocal RF --\n" << std::endl;
-    // std::cout << "\t\tr0_p = [" << r_perifocal[0] << ", " << r_perifocal[1]
-    //           << ", " << r_perifocal[2] << "]" << std::endl;
-    // std::cout << "\t\tv0_p = [" << v_perifocal[0] << ", " << v_perifocal[1]
-    //           << ", " << v_perifocal[2] << "]\n"
-    //           << std::endl;
+    std::cout << "\t\t -- Perifocal RF --\n" << std::endl;
+    std::cout << "\t\tr0_p = [" << r_perifocal[0] << ", " << r_perifocal[1]
+              << ", " << r_perifocal[2] << "]" << std::endl;
+    std::cout << "\t\tv0_p = [" << v_perifocal[0] << ", " << v_perifocal[1]
+              << ", " << v_perifocal[2] << "]\n"
+              << std::endl;
     //
-    std::cout << "\t\t -- ECI RF --\n" << std::endl;
+    std::cout << "\t\t -- ECI --\n" << std::endl;
     std::cout << "\t\tr0_ECI = [" << r_ECI[0] << ", " << r_ECI[1] << ", "
               << r_ECI[2] << "]" << std::endl;
 
@@ -527,20 +537,20 @@ Orbit::matrixmultiply(std::vector<std::vector<double>> A,
     }
     return result;
 };
-
-Orbit::~Orbit() {
-  r_perifocal.clear();
-  v_perifocal.clear();
-  r_ECI.clear();
-  v_ECI.clear();
-  r_0.clear();
-  v_0.clear();
-  x.clear();
-  x_dot.clear();
-  a_total.clear();
-  a_gravity.clear();
-  a_oblateness.clear();
-  r_final.clear();
-  v_final.clear();
-  RotMatrix_P2ECI.clear();
-};
+//
+// Orbit::~Orbit() {
+//   r_perifocal.clear();
+//   v_perifocal.clear();
+//   r_ECI.clear();
+//   v_ECI.clear();
+//   r_0.clear();
+//   v_0.clear();
+//   x.clear();
+//   x_dot.clear();
+//   a_total.clear();
+//   a_gravity.clear();
+//   a_oblateness.clear();
+//   r_final.clear();
+//   v_final.clear();
+//   RotMatrix_P2ECI.clear();
+// };

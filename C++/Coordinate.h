@@ -4,7 +4,6 @@
 #include <vector>
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
-#include "Orbit.h"
 using namespace Eigen;
 
 typedef Matrix<double,6,1> Vector6d;
@@ -13,21 +12,18 @@ typedef Matrix<double,6,1> Vector6d;
 * @class 
 *
 */
-class Coordinate : public Orbit {
+class Coordinate {
 
 public:
 
-    Vector3d LVLH_r;
-    Vector3d LVLH_v;
+    static void check();
 
-    Matrix3d ECI_LVLH;
-        
-    Vector3d P2ECI();
+    static Vector3d P2ECI();
     
-    Vector3d ECI2LVLH(Vector3d& ECI_r, Vector3d& ECI_v);
+    static Vector3d ECI2LVLH(Vector3d& ECI_r, Vector3d& ECI_v);
     
-    Vector3d ECI2ECEF(Vector6d& ECI, double GMST_deg);
+    static Vector3d ECI2ECEF(Vector6d& ECI, double GMST_deg);
 
-    Vector3d ECEF2GEO(Vector3d& ECEF);
+    static Vector3d ECEF2GEO(Vector3d& ECEF);
 
 };
