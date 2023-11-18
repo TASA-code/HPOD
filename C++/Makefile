@@ -1,4 +1,3 @@
-
 CC         = g++
 CXXFLAGS   = -std=c++17 -Wall -O3 -flto -g -I/opt/homebrew/opt/boost/include -I/opt/homebrew/opt/eigen/include/eigen3
 

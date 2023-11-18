@@ -11,7 +11,7 @@ set multiplot layout 3,1 spacing 0.2
 
 # Plot 1: ECI data
 set title 'ECI Data'
-splot 'ECI.txt' using 1:2:5 lt -1 lw 2
+splot 'ECI.txt' using 2:3:4 lt -1 lw 2
 
 # Plot 2: ECEF data
 set title 'ECEF Data'

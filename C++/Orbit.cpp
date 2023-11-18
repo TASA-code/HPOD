@@ -402,7 +402,8 @@ void Orbit::RungeKutta45(double dt, double T, std::vector<double> &x) {
     std::vector<double> k4 = std::vector<double>(6, 0.0);
     std::vector<double> temp = std::vector<double>(6, 0.0);
 
-    double timestep = T / dt;
+    const int timestep = static_cast<int>(T / dt);
+    std::cout << timestep << std::endl;
 
     // Display Information on output text file
     std::cout << "\t\tWriting output to file..." << std::endl;
@@ -492,9 +493,11 @@ void Orbit::RungeKutta45(double dt, double T, std::vector<double> &x) {
 void Orbit::integrate() {
 
     // define target time and dt
-    // T = 13 * 2 * M_PI * sqrt(pow(SMA, 3.0) / Earth_mu) / TU;
-    T = 73367.0/TU; 
-    double dt = 0.001093;
+    // const double Simulation_Freq = 64;
+    const double T = 13 * 2 * M_PI * sqrt(pow(SMA, 3.0) / Earth_mu) / TU;
+    const double dt = 1/TU;
+    std::cout << dt << std::endl;
+    // const double dt = 1.0 / Simulation_Freq;
 
     // Initialise r_final and v_final vectors
     r_final = std::vector<double>(3, 0.0);
