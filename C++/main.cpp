@@ -61,8 +61,6 @@ int main(int argc, char *argv[]) {
 
   orbit_prop.SetParameter(SMA, e, i, RAAN, w, theta);
 
-  orbit_prop.P2ECI();
-
   orbit_prop.integrate();
 
   // orbit_prop.~Orbit();

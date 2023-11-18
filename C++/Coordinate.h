@@ -18,12 +18,14 @@ public:
 
     static void check();
 
-    static Vector3d P2ECI();
+    static Vector6d P2ECI(Vector6d& Perifocal);
     
     static Vector3d ECI2LVLH(Vector3d& ECI_r, Vector3d& ECI_v);
     
-    static Vector3d ECI2ECEF(Vector6d& ECI, double GMST_deg);
+    static double GMST(double currentTime);
 
-    static Vector3d ECEF2GEO(Vector3d& ECEF);
+    static Vector6d ECI2ECEF(Vector6d& ECI, double GMST_deg);
+
+    static Vector2d ECEF2GEO(Vector6d& ECEF);
 
 };
