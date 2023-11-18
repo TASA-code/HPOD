@@ -201,7 +201,7 @@ void Orbit::RungeKutta45(double dt, double T, Vector6d& x) {
         // }
 
         Vector6d ECEF;
-        double current_time = Coordinate::GMST(dt); // t*100 
+        double current_time = Coordinate::GMST(t); // t*100 
         ECEF = Coordinate::ECI2ECEF(x, current_time);
         vOut_ECEF << ECEF[0]*DU << " " << ECEF[1]*DU << " " << ECEF[2]*DU << std::endl;
 
