@@ -25,7 +25,9 @@ public:
     static double GMST(double currentTime);
 
     static Vector6d ECI2ECEF(Vector6d& ECI, double GMST_deg);
-
+    
+    static Vector3d SOFA_ECI2ECEF(Vector6d& ECI);
+    
     static Vector2d ECEF2GEO(Vector6d& ECEF);
 
 };

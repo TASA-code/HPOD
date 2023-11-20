@@ -4,6 +4,8 @@
 #include <iostream>
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
+
+#include "/Users/cooper/desktop/sofa/c/src/sofa.h"
 #include "Coordinate.h"
 #include "Orbit.h"
 
@@ -52,6 +54,31 @@ Vector6d Coordinate::P2ECI(Vector6d& Perifocal){
 
     return ECI;
  }
+
+
+
+//
+// Vector3d Coordinate::SOFA_ECI2ECEF(Vector6d &ECI){
+//
+//     Vector3d r_eci = ECI.head<3>();
+//     Vector3d v_eci = ECI.tail<3>();
+//
+//     Vector6d ebpv;
+// // Example values (you should replace these with your actual values)
+//     double date1 = 2451545.0;    // TDB Julian Date (e.g., J2000.0)
+//     double date2 = 0.0;          // Fraction of a day (e.g., 0.5 for noon)
+//
+//     // Set the position and velocity vectors in the ECI frame
+//     
+//     // Get the Earth position and velocity
+//     iauPn06a(date1, date2, ebpv);
+//
+//     Vector3d xyz;
+//     // Convert ECI to ECEF
+//     iauPv2e(date1, date2, ECI, ebpv, xyz);
+//
+//     return xyz;
+// }
 
 
 
@@ -160,37 +187,48 @@ Vector3d Coordinate::ECI2LVLH(Vector3d&ECI_r, Vector3d&ECI_v){
 
 
 double Coordinate::GMST(double currentTime){
-    
-    double year, month, day, hour, minute, second;
+    // 
+    // double year, month, day, hour, minute, second;
+    //
+    // year = 2023.0;
+    // month = 10.0;
+    // day = 29.0;
+    // hour = 7.0;
+    // minute = 55.0;
+    // second = 48.0;
+    //
+    // if (month <= 2) {
+    //    year--;
+    //    month += 12;
+    //  }
+    //
+    // // Calculate Julian Date
+    // int A = year / 100;
+    // int B = 2 - A + year;
+    // double julianDate = floor(365.25 * B) + floor(30.6001 * (month + 1)) + day + (hour + minute / 60.0 + (second + currentTime) / 3600.0) + 1720996.5;
+    //
+    //
+    // double T = (julianDate - 2451545.0) / 36525.0;
+    //
+    // // Mean sidereal time at the Greenwich meridian at J2000.0 (in seconds)
+    // double GMST = 280.46061837 + 360.98564736629 * (julianDate - 2451545.0) + 0.000387933 * T * T - T * T * T / 38710000.0;
+    //
+    // // Ensure the result is within the range [0, 360)
+    // GMST = fmod(GMST, 360.0);
+    //
+    // if (GMST < 0.0) {
+    //     GMST += 360.0;
+    // }       
+    //
 
-    year = 2023.0;
-    month = 10.0;
-    day = 29.0;
-    hour = 7;
-    minute = 55;
-    second = 48;
 
-    if (month <= 2) {
-       year--;
-       month += 12;
-     }
 
-    // Calculate Julian Date
-    int A = year / 100;
-    int B = 2 - A + year;
-    double julianDate = floor(365.25 * B) + floor(30.6001 * (month + 1)) + day + (hour + minute / 60.0 + (second + currentTime) / 3600.0) + 1720996.5;
-    
-    double T = (julianDate - 2451545.0) / 36525.0;
+    // You need to implement the GMST calculation here based on your specific needs.
+    // This is a simplified example, and you may need a more accurate formula.
+    // Here, we assume GMST increases linearly with time.
+    const double gmstRate = 360.0 / 86164.100352; // Earth's rotation period (seconds)
+    double GMST =  fmod(280.46061837 + gmstRate * currentTime, 360.0);
 
-    // Mean sidereal time at the Greenwich meridian at J2000.0 (in seconds)
-    double GMST = 280.46061837 + 360.98564736629 * (julianDate - 2451545.0) + 0.000387933 * T * T - T * T * T / 38710000.0;
-
-    // Ensure the result is within the range [0, 360)
-    GMST = fmod(GMST, 360.0);
-
-    if (GMST < 0.0) {
-        GMST += 360.0;
-    }       
 
     return GMST * (M_PI/180); 
 }

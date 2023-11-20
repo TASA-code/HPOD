@@ -239,7 +239,7 @@ void Orbit::RungeKutta45(double dt, double T, Vector6d& x) {
 void Orbit::integrate() {
 
     // define target time and dt
-    const double T = 13 * 2 * M_PI * sqrt(pow(SMA, 3.0) / Earth_mu) / TU;
+    const double T = 13 * 2 * M_PI * sqrt(pow(SMA, 3.0) / Earth_mu) / TU; //75,478.687
     const double dt = 1/TU;
 
     // Begin RK45 Integration
