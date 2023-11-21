@@ -20,7 +20,7 @@ double Orbit::e     = 0.0;
 double Orbit::i     = 0.0; 
 double Orbit::RAAN  = 0.0;
 double Orbit::w     = 0.0;
-double Orbit::theta = 0.0;
+double Orbit::M     = 0.0;
 
 double Orbit::TU = 0.0;
 double Orbit::DU = 0.0;
@@ -33,11 +33,11 @@ double Orbit::DU = 0.0;
  * @param arg_i
  * @param arg_RAAN
  * @param arg_w
- * @param arg_theta
+ * @param arg_M
  */
 void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
                          const double &arg_i, const double &arg_RAAN,
-                         const double &arg_w, const double &arg_theta) {
+                         const double &arg_w, const double &arg_M) {
 
     // Printing values of all the parameters to the terminal.
     std::cout << std::endl;
@@ -47,7 +47,7 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
     std::cout << "\t\t- i         :  " << arg_i << std::endl;
     std::cout << "\t\t- RAAN      :  " << arg_RAAN << std::endl;
     std::cout << "\t\t- w         :  " << arg_w << std::endl;
-    std::cout << "\t\t- theta     :  " << arg_theta << std::endl;
+    std::cout << "\t\t- M         :  " << arg_M << std::endl;
     std::cout << std::endl;
     
 
@@ -56,18 +56,40 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
     i = arg_i * M_PI / 180;
     RAAN = arg_RAAN * M_PI / 180;
     w = arg_w * M_PI / 180;
-    theta = arg_theta * M_PI / 180;
+    M = arg_M * M_PI / 180;
+    
+
+    // Iteration to convert mean anomaly to eccentric anomaly
+    double E = M;
+    double f = E - e * sin(E) - M;
+
+    while (fabs(f) > 1e-9){ 
+        E = E - f / (1.0 - e*cos(E));
+        f = E - e*sin(E) - M;
+    }
+    
+    // Convert Eccentric anomaly to true anomaly
+    double theta = 2.0 * atan2(sqrt(1.0 + e) * sin(E / 2.0),
+                               sqrt(1.0 - e) * cos(E / 2.0));
+    
+    std::cout << theta << std::endl;
 
     // initialise vector
-    Eigen::Vector3d P_r, P_v, i_e, i_p;
-    i_e << 1.0, 0.0, 0.0;
-    i_p << 0.0, 1.0, 0.0;
+    Eigen::Vector3d P_r, P_v, r_vector, v_vector;
+    
+    r_vector << cos(theta), sin(theta), 0;
+    v_vector << -sin(theta), e+cos(theta), 0;
+
+    P_r << (SMA*(1-e*e) / (1+e*cos(theta))) * r_vector;
+
+    P_v << sqrt(Earth_mu/SMA) * v_vector;
+
 
     // calculate angular momentum h
-    h = std::sqrt(Earth_mu * SMA * (1 - e * e));
-    
-    P_r << ( (h*h) / (Earth_mu * (1+e+cos(theta))) ) * (cos(theta) * i_e + sin(theta) * i_p);
-    P_v = (Earth_mu / h) * ( -sin(theta) * i_e + (e + cos(theta)) * i_p );
+    // h = sqrt(Earth_mu * SMA * (1 - e * e));
+   
+    // P_r << ( (h*h) / (Earth_mu * (1+e+cos(theta))) ) * (cos(theta) * i_e + sin(theta) * i_p);
+    // P_v = (Earth_mu / h) * ( -sin(theta) * i_e + (e + cos(theta)) * i_p );
 
     Vector6d Perifocal;
     Perifocal << P_r, P_v;
@@ -76,7 +98,7 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
 
     Eigen::Vector3d ECI_r = ECI_state.head<3>();
     Eigen::Vector3d ECI_v = ECI_state.tail<3>();
-    
+
     ECI_r << 918.8051813, 100.2960181, 6871.8919169;
     ECI_v << 0.884039, -7.534891, -0.0081953;
     
@@ -190,9 +212,9 @@ void Orbit::RungeKutta45(double dt, double T, Vector6d& x) {
         x += (1.0/6.0) * (k1 + 2.0*k2 + 2.0*k3 + k4) * dt;
         
 
-        Eigen::VectorXd Output(7);
-        Output << t, x.head<3>() * DU, x.segment<3>(3) * (DU / TU);
-        vOut_ECI << Output.transpose() << std::endl;
+        Eigen::VectorXd Output_ECI(7);
+        Output_ECI << t, x.head<3>() * DU, x.segment<3>(3) * (DU / TU);
+        vOut_ECI << Output_ECI.transpose() << std::endl;
         
         // std::vector<double> LVLH(6,0.0), q(4,0.0), temp2(6,0.0);
         // for(int i = 0; i < 3; i++){
@@ -200,9 +222,9 @@ void Orbit::RungeKutta45(double dt, double T, Vector6d& x) {
         //     temp2[i+3] = x[i+3];
         // }
 
-        Vector6d ECEF;
-        double current_time = Coordinate::GMST(t); // t*100 
-        ECEF = Coordinate::ECI2ECEF(x, current_time);
+        Vector6d ECEF;  
+        // double current_time = Coordinate::GMST(t); // t*100
+        ECEF = Coordinate::ECI2ECEF(x, t);
         vOut_ECEF << ECEF[0]*DU << " " << ECEF[1]*DU << " " << ECEF[2]*DU << std::endl;
 
 

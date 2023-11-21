@@ -23,8 +23,8 @@ int main(int argc, char *argv[]) {
                       ("w", po::value<double>()->required(),
                        "Argument of Periapsis (deg.)")
 
-                          ("theta", po::value<double>()->required(),
-                           "True Anomaly (deg.)");
+                          ("M", po::value<double>()->required(),
+                           "Mean Anomaly (deg.)");
 
   po::variables_map vm;
 
@@ -55,11 +55,11 @@ int main(int argc, char *argv[]) {
   const double i = vm["i"].as<double>();
   const double RAAN = vm["RAAN"].as<double>();
   const double w = vm["w"].as<double>();
-  const double theta = vm["theta"].as<double>();
+  const double M = vm["M"].as<double>();
 
   Orbit orbit_prop;
 
-  orbit_prop.SetParameter(SMA, e, i, RAAN, w, theta);
+  orbit_prop.SetParameter(SMA, e, i, RAAN, w, M);
 
   orbit_prop.integrate();
 

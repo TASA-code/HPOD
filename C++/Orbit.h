@@ -28,7 +28,7 @@ class Orbit {
         static double i;
         static double RAAN;
         static double w;
-        static double theta;
+        static double M;
         double h;
         double T;
 
@@ -41,7 +41,7 @@ class Orbit {
         // Define the initial conditions from the uesr input
         void SetParameter(const double &arg_SMA, const double &arg_e, const double &arg_i,
                           const double &arg_RAAN, const double &arg_w,
-                          const double &arg_theta);
+                          const double &arg_M);
         
         // Equation of motion
         Vector6d EoM(Vector6d &x);
