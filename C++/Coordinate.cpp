@@ -12,7 +12,7 @@
 #include "Orbit.h"
 
 
-using namespace Eigen;
+using namespace Eigen;  
 
 
 
@@ -39,19 +39,13 @@ Vector6d Coordinate::P2ECI(Vector6d& Perifocal){
            -sin(w), cos(w), 0,
            0, 0, 1;
 
-    std::cout << A_w << std::endl;
-
     A_i << 1, 0, 0,
            0,  cos(i), sin(i),
            0, -sin(i), cos(i);
 
-    std::cout << A_i << std::endl;
-
     A_RAAN << cos(RAAN),  sin(RAAN), 0, 
               -sin(RAAN), cos(RAAN), 0, 
               0, 0, 1;
-
-    std::cout << A_RAAN << std::endl;
 
     P_ECI_Matrix = (A_w * A_i * A_RAAN).transpose();
 
@@ -200,7 +194,8 @@ Vector6d Coordinate::ECI2ECEF(Vector6d &ECI, double t){
                        sin(theta),  cos(theta), 0,
                        0, 0, 1;
     Vector6d ECEF;
-    ECEF << ECI_ECEF_Matrix.transpose() * r, ECI_ECEF_Matrix.transpose() * v;
+    ECEF << ECI_ECEF_Matrix.transpose() * r, 
+            ECI_ECEF_Matrix.transpose() * v;
 
     return ECEF;
 }
@@ -251,8 +246,8 @@ double Coordinate::UTC2Julian(int year, int month, int day, int hour, int minute
         year--;
     }
 
-    int A = year/100;
-    int B = 2 - A + A / 4;
+    // int A = year/100;
+    // int B = 2 - A + A / 4;
 
     // Calculate Julian Date
     double JD = static_cast<int>(365.25 * year) + static_cast<int>(year/400) 

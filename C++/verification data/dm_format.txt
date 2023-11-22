@@ -4,8 +4,7 @@
 		DM_sc_rpy[0],DM_sc_rpy[1],DM_sc_rpy[2],
 		/// 06 07 08
 		DM_sc_rate[0],DM_sc_rate[1],DM_sc_rate[2],
-		/// 09 10 11
-		DM_pos_eci[0],DM_pos_eci[1],DM_pos_eci[2],
+		ㄔ
 		/// 12 13 14
 		DM_vel_eci[0],DM_vel_eci[1],DM_vel_eci[2],
 		/// 15 16 17 18
