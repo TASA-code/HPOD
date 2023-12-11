@@ -8,8 +8,8 @@
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
 #include "Orbit.h"
-#include "Coordinate.h"
-#include "Time.h"
+#include "../Coordinate/Coordinate.h"
+#include "../Time/Time.h"
 
 
 typedef Eigen::Matrix<double,6,1> Vector6d;

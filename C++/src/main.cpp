@@ -1,6 +1,6 @@
-#include "Orbit.h"
-#include "Coordinate.h"
-#include "Time.h"
+#include "Orbit/Orbit.h"
+#include "Coordinate/Coordinate.h"
+#include "Time/Time.h"
 #include <iostream>
 
 // add -lboost_program_options to compile

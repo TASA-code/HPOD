@@ -1,6 +1,6 @@
-CMakeFiles/main.dir/main.cpp.o: \
-  /Users/cooper/Desktop/TASA/Orbit_Determination/c++/main.cpp \
-  /Users/cooper/Desktop/TASA/Orbit_Determination/c++/Orbit.h \
+CMakeFiles/main.dir/src/main.cpp.o: \
+  /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/main.cpp \
+  /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Orbit/Orbit.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/cmath \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__assert \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__config \
@@ -1001,8 +1001,8 @@ CMakeFiles/main.dir/main.cpp.o: \
   /opt/homebrew/opt/eigen/include/eigen3/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
   /opt/homebrew/opt/eigen/include/eigen3/Eigen/src/Eigenvalues/./RealQZ.h \
   /opt/homebrew/opt/eigen/include/eigen3/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
-  /Users/cooper/Desktop/TASA/Orbit_Determination/c++/Coordinate.h \
-  /Users/cooper/Desktop/TASA/Orbit_Determination/c++/Time.h \
+  /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Coordinate/Coordinate.h \
+  /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Time/Time.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/iomanip \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/iostream \
   /opt/homebrew/Cellar/boost/1.83.0/include/boost/program_options.hpp \

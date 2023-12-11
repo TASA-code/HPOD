@@ -142,101 +142,101 @@ test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
 .PHONY : test/fast
 
-Coordinate.o: Coordinate.cpp.o
-.PHONY : Coordinate.o
+src/Coordinate/Coordinate.o: src/Coordinate/Coordinate.cpp.o
+.PHONY : src/Coordinate/Coordinate.o
 
 # target to build an object file
-Coordinate.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Coordinate.cpp.o
-.PHONY : Coordinate.cpp.o
+src/Coordinate/Coordinate.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o
+.PHONY : src/Coordinate/Coordinate.cpp.o
 
-Coordinate.i: Coordinate.cpp.i
-.PHONY : Coordinate.i
+src/Coordinate/Coordinate.i: src/Coordinate/Coordinate.cpp.i
+.PHONY : src/Coordinate/Coordinate.i
 
 # target to preprocess a source file
-Coordinate.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Coordinate.cpp.i
-.PHONY : Coordinate.cpp.i
+src/Coordinate/Coordinate.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.i
+.PHONY : src/Coordinate/Coordinate.cpp.i
 
-Coordinate.s: Coordinate.cpp.s
-.PHONY : Coordinate.s
+src/Coordinate/Coordinate.s: src/Coordinate/Coordinate.cpp.s
+.PHONY : src/Coordinate/Coordinate.s
 
 # target to generate assembly for a file
-Coordinate.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Coordinate.cpp.s
-.PHONY : Coordinate.cpp.s
+src/Coordinate/Coordinate.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.s
+.PHONY : src/Coordinate/Coordinate.cpp.s
 
-Orbit.o: Orbit.cpp.o
-.PHONY : Orbit.o
+src/Orbit/Orbit.o: src/Orbit/Orbit.cpp.o
+.PHONY : src/Orbit/Orbit.o
 
 # target to build an object file
-Orbit.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Orbit.cpp.o
-.PHONY : Orbit.cpp.o
+src/Orbit/Orbit.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o
+.PHONY : src/Orbit/Orbit.cpp.o
 
-Orbit.i: Orbit.cpp.i
-.PHONY : Orbit.i
+src/Orbit/Orbit.i: src/Orbit/Orbit.cpp.i
+.PHONY : src/Orbit/Orbit.i
 
 # target to preprocess a source file
-Orbit.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Orbit.cpp.i
-.PHONY : Orbit.cpp.i
+src/Orbit/Orbit.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Orbit/Orbit.cpp.i
+.PHONY : src/Orbit/Orbit.cpp.i
 
-Orbit.s: Orbit.cpp.s
-.PHONY : Orbit.s
+src/Orbit/Orbit.s: src/Orbit/Orbit.cpp.s
+.PHONY : src/Orbit/Orbit.s
 
 # target to generate assembly for a file
-Orbit.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Orbit.cpp.s
-.PHONY : Orbit.cpp.s
+src/Orbit/Orbit.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Orbit/Orbit.cpp.s
+.PHONY : src/Orbit/Orbit.cpp.s
 
-Time.o: Time.cpp.o
-.PHONY : Time.o
+src/Time/Time.o: src/Time/Time.cpp.o
+.PHONY : src/Time/Time.o
 
 # target to build an object file
-Time.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Time.cpp.o
-.PHONY : Time.cpp.o
+src/Time/Time.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Time/Time.cpp.o
+.PHONY : src/Time/Time.cpp.o
 
-Time.i: Time.cpp.i
-.PHONY : Time.i
+src/Time/Time.i: src/Time/Time.cpp.i
+.PHONY : src/Time/Time.i
 
 # target to preprocess a source file
-Time.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Time.cpp.i
-.PHONY : Time.cpp.i
+src/Time/Time.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Time/Time.cpp.i
+.PHONY : src/Time/Time.cpp.i
 
-Time.s: Time.cpp.s
-.PHONY : Time.s
+src/Time/Time.s: src/Time/Time.cpp.s
+.PHONY : src/Time/Time.s
 
 # target to generate assembly for a file
-Time.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/Time.cpp.s
-.PHONY : Time.cpp.s
+src/Time/Time.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/Time/Time.cpp.s
+.PHONY : src/Time/Time.cpp.s
 
-main.o: main.cpp.o
-.PHONY : main.o
+src/main.o: src/main.cpp.o
+.PHONY : src/main.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.o
-.PHONY : main.cpp.o
+src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.i
-.PHONY : main.cpp.i
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
-.PHONY : main.cpp.s
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
 # Help Target
 help:
@@ -248,18 +248,18 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... main"
-	@echo "... Coordinate.o"
-	@echo "... Coordinate.i"
-	@echo "... Coordinate.s"
-	@echo "... Orbit.o"
-	@echo "... Orbit.i"
-	@echo "... Orbit.s"
-	@echo "... Time.o"
-	@echo "... Time.i"
-	@echo "... Time.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... src/Coordinate/Coordinate.o"
+	@echo "... src/Coordinate/Coordinate.i"
+	@echo "... src/Coordinate/Coordinate.s"
+	@echo "... src/Orbit/Orbit.o"
+	@echo "... src/Orbit/Orbit.i"
+	@echo "... src/Orbit/Orbit.s"
+	@echo "... src/Time/Time.o"
+	@echo "... src/Time/Time.i"
+	@echo "... src/Time/Time.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 .PHONY : help
 
 
