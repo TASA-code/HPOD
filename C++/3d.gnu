@@ -11,15 +11,15 @@ set multiplot layout 3,1 spacing 0.2
 
 # Plot 1: ECI data
 set title 'ECI Data'
-splot 'ECI.txt' using 3:4:5 lt -1 lw 2
+splot 'build/bin/ECI.txt' using 3:4:5 lt -1 lw 2
 
 # Plot 2: ECEF data
 set title 'ECEF Data'
-splot 'ECEF.txt' using 1:2:3 lt -1 lw 2
+splot 'build/bin/ECEF.txt' using 1:2:3 lt -1 lw 2
 
 # Plot 3: GEO data
 set title 'GEO Data (2D)'
-plot 'GEO.txt' using 1:2 with points pointsize 1 pt 7 lc rgb "black"
+plot 'build/bin/GEO.txt' using 1:2 with points pointsize 1 pt 7 lc rgb "black"
 
 unset multiplot
 
