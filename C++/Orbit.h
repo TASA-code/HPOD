@@ -1,8 +1,5 @@
-#include <algorithm>
 #include <cmath>
 #include <numeric>
-#include <vector>
-
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
 using namespace Eigen;
@@ -17,9 +14,11 @@ typedef Matrix<double,6,1> Vector6d;
 class Orbit {
 
     private:
-        const double Earth_Radius = 6378;
-        const double Earth_mu = 398600;
-        const double J2 = 0.00108263;
+        const long double Earth_Radius = 6378;
+        const long double Earth_mu = 398600;
+        const long double J2 = 0.00108263;
+        const std::string Start_Date = "29-Oct-2023 07:55:48.000";
+        const std::string End_Date = "29-Oct-2023 12:55:48.000";
     
     public:
 
@@ -31,12 +30,9 @@ class Orbit {
         static double M;
         double h;
         double T;
-
-        static double DU;
-        static double TU;
         
         Vector6d ECI_state;
-        Vector6d undimensional_state;
+        Vector6d state;
 
         // Define the initial conditions from the uesr input
         void SetParameter(const double &arg_SMA, const double &arg_e, const double &arg_i,

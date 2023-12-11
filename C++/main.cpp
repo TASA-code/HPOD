@@ -1,6 +1,6 @@
 #include "Orbit.h"
 #include "Coordinate.h"
-#include <fstream>
+#include "Time.h"
 #include <iostream>
 
 // add -lboost_program_options to compile
@@ -8,23 +8,20 @@
 namespace po = boost::program_options;
 
 int main(int argc, char *argv[]) {
-  po::options_description opts("Allowed options");
-  opts.add_options()("h", "produce help message")
+    po::options_description opts("Allowed options");
+    opts.add_options()("h", "produce help message")
 
-      ("SMA", po::value<double>()->required(), "Semi-Major Axis (double)")
+    ("SMA", po::value<double>()->required(), "Semi-Major Axis (double)")
 
-          ("e", po::value<double>()->required(), "Eccentricity (double)")
+    ("e", po::value<double>()->required(), "Eccentricity (double)")
 
-              ("i", po::value<double>()->required(), "inclination (deg.)")
+    ("i", po::value<double>()->required(), "inclination (deg.)")
+                  
+    ("M", po::value<double>()->required(),"Mean Anomaly (deg.)")
 
-                  ("RAAN", po::value<double>()->required(),
-                   "Right Ascension Ascending Node (deg.)")
+    ("w", po::value<double>()->required(),"Argument of Periapsis (deg.)")
 
-                      ("w", po::value<double>()->required(),
-                       "Argument of Periapsis (deg.)")
-
-                          ("M", po::value<double>()->required(),
-                           "Mean Anomaly (deg.)");
+    ("RAAN", po::value<double>()->required(),"Right Ascension Ascending Node (deg.)");
 
   po::variables_map vm;
 
@@ -53,13 +50,13 @@ int main(int argc, char *argv[]) {
   const double SMA = vm["SMA"].as<double>();
   const double e = vm["e"].as<double>();
   const double i = vm["i"].as<double>();
-  const double RAAN = vm["RAAN"].as<double>();
-  const double w = vm["w"].as<double>();
   const double M = vm["M"].as<double>();
+  const double w = vm["w"].as<double>();
+  const double RAAN = vm["RAAN"].as<double>();
 
   Orbit orbit_prop;
 
-  orbit_prop.SetParameter(SMA, e, i, RAAN, w, M);
+  orbit_prop.SetParameter(SMA, e, i, M, w, RAAN);
 
   orbit_prop.integrate();
 

@@ -1,0 +1,61 @@
+#include <iomanip>
+#include <iostream>
+#include <cmath>
+#include <ctime>
+#include <chrono>
+#include <sstream>
+
+#include "Time.h"
+
+
+std::string Time::Time2Date(const std::string& initialTime, double secondsToAdd) {
+    // Parse the initial time string
+    struct std::tm tm = {};
+    std::istringstream ss(initialTime);
+
+    // Modify the time format to include milliseconds during parsing
+    ss >> std::get_time(&tm, "%d-%b-%Y %H:%M:%S");
+
+    // Convert to std::chrono::system_clock time_point
+    auto tp = std::chrono::system_clock::from_time_t(std::mktime(&tm));
+
+    // Add seconds (including fractional part)
+    tp += std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::duration<double>(secondsToAdd));
+
+    // Convert back to std::tm
+    std::time_t tt = std::chrono::system_clock::to_time_t(tp);
+    std::tm new_tm = *std::localtime(&tt);
+
+    // Format the new time as a string
+    std::ostringstream result;
+    result << std::put_time(&new_tm, "%d-%b-%Y %H:%M:%S");
+
+    // Include milliseconds
+    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(tp.time_since_epoch()).count() % 1000;
+    result << "." << std::setw(3) << std::setfill('0') << milliseconds;
+
+    return result.str();
+}
+
+
+
+
+double Time::Duration(const std::string& startDate, const std::string& endDate) {
+    // Parse the start date string
+    struct std::tm tmStart = {};
+    std::istringstream ssStart(startDate);
+    ssStart >> std::get_time(&tmStart, "%d-%b-%Y %H:%M:%S");
+
+    // Parse the end date string
+    struct std::tm tmEnd = {};
+    std::istringstream ssEnd(endDate);
+    ssEnd >> std::get_time(&tmEnd, "%d-%b-%Y %H:%M:%S");
+
+    // Convert to std::chrono::system_clock time_point
+    auto tpStart = std::chrono::system_clock::from_time_t(std::mktime(&tmStart));
+    auto tpEnd = std::chrono::system_clock::from_time_t(std::mktime(&tmEnd));
+
+    // Calculate the time difference in seconds
+    std::chrono::duration<double> duration = tpEnd - tpStart;
+    return duration.count();
+}

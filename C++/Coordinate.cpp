@@ -1,7 +1,4 @@
-#include <algorithm>
 #include <cmath>
-// #include <novas/novas.h>
-#include <numeric>
 #include <iostream>
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
@@ -11,11 +8,14 @@
 #include "Coordinate.h"
 #include "Orbit.h"
 
-
 using namespace Eigen;  
 
 
-
+/**
+* @ brief: To check function operation
+*
+*
+*/
 void Coordinate::check(){
     std::cout << "checkpoint" << std::endl;
 }
@@ -23,6 +23,12 @@ void Coordinate::check(){
 
 
 
+/**
+* @ brief: Transform Perifocal Coordinate to ECI
+* 
+* @ Param: Vector6d& Perifocal, input perfifocal vector
+*
+*/
 Vector6d Coordinate::P2ECI(Vector6d& Perifocal){
     
     Vector3d r = Perifocal.head<3>();
@@ -58,6 +64,8 @@ Vector6d Coordinate::P2ECI(Vector6d& Perifocal){
 
     return ECI;
  }
+
+
 
 
 
@@ -183,11 +191,11 @@ Vector6d Coordinate::ECI2ECEF(Vector6d &ECI, double t){
     double theta = GMST(Julian);
     // double theta = 7.2921159e-5 * t;
     
-    Vector2d result = Precession_Nutation(Julian);
-    double deltaPsi = result[0];
-    double deltaEpsilon = result[1];
+    // Vector2d result = Precession_Nutation(Julian);
+    // double deltaPsi = result[0];
+    // double deltaEpsilon = result[1];
 
-    theta += deltaPsi * cos(deltaEpsilon);
+    // theta += deltaPsi * cos(deltaEpsilon);
 
     Matrix3d ECI_ECEF_Matrix;
     ECI_ECEF_Matrix << cos(theta), -sin(theta), 0,
@@ -205,7 +213,7 @@ Vector6d Coordinate::ECI2ECEF(Vector6d &ECI, double t){
 Vector2d Coordinate::ECEF2GEO(Vector6d& ECEF){
 
     
-    ECEF.array() *= Orbit::DU;
+    //ECEF.array() *= Orbit::DU;
     
     const double a = 6378.137;
     const double b = 6356.7534;
