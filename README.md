@@ -67,14 +67,20 @@ $$
 
 
 ## Command-line input
-The repository include a Makefile we make ease when compiling the program. A sample command line input is as such,
+The repository is compile using cMake. To compile the program, move to the build directory
 
 ```command line
-make test 
+cd build
 ```
 
-where the test parametre is defined as follow with predefined initial orbital elements:
+and run 
+```command line
+cmake ..
+make test
+```
+
+The test parametre is defined as follow with predefined initial orbital elements:
 
 ```command line
-TEST_PARAMS     = --SMA 6878 --e 1.3e-4 --i 53 --RAAN 290.5 --w 110 --theta 250
+--SMA 6878 --e 1.3e-4 --i 53 --RAAN 290.5 --w 110 --theta 250
 ```
