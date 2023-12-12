@@ -91,9 +91,8 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
     Eigen::Vector3d ECI_r = ECI_state.head<3>();
     Eigen::Vector3d ECI_v = ECI_state.tail<3>();
 
-    ECI_r << 5748.272127, -1506.348412, -3674.401874;
-    ECI_v << 3.472888, -2.183142, 6.339326;
-
+    // ECI_r << 5748.272127, -1506.348412, -3674.401874;
+    // ECI_v << 3.472888, -2.183142, 6.339326;
 
     state = (Vector6d(6) << ECI_r, ECI_v).finished();
     

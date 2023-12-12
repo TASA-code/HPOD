@@ -15,7 +15,7 @@ class Orbit {
 
     private:
         const long double Earth_Radius = 6378.1;
-        const long double Earth_mu = 398600;
+        const long double Earth_mu = 398600.4415;
         const long double J2 = 0.00108263;
         const std::string Start_Date = "29-Oct-2023 07:55:48.000";
         const std::string End_Date = "30-Oct-2023 19:55:48.000";
