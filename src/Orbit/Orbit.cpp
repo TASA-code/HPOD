@@ -140,7 +140,7 @@ Vector6d Orbit::EoM(Vector6d& x) {
     a_oblateness[1] = common_term * x[1] * (1 - z_squared_term);
     a_oblateness[2] = common_term * x[2] * (3 - z_squared_term);
 
-    a_gravity << -Earth_mu*r / pow(r_norm,3);
+    a_gravity << -Earth_mu * r / (r_norm * r_norm * r_norm);
 
     Vector6d x_dot;
     x_dot << v, a_gravity;// + a_oblateness;
@@ -262,11 +262,10 @@ void Orbit::RungeKutta45(double dt, double T, Vector6d& x) {
  * @brief Perform integration with RungeKutta45 and print out the final position and velocity 
  *
  */
-void Orbit::integrate() {
+void Orbit::Propagate() {
 
     // define target time and dt
     const double T = Time::Duration(Start_Date,End_Date);
-    const double dt = 0.015625;
 
     // Begin RK45 Integration
     Orbit::RungeKutta45(dt, T, state);

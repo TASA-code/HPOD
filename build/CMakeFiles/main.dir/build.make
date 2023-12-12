@@ -53,10 +53,10 @@ RM = /opt/homebrew/Cellar/cmake/3.27.8/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/cooper/Desktop/TASA/Orbit_Determination/c++
+CMAKE_SOURCE_DIR = /Users/cooper/Desktop/TASA/Orbit_Determination
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/cooper/Desktop/TASA/Orbit_Determination/c++/build
+CMAKE_BINARY_DIR = /Users/cooper/Desktop/TASA/Orbit_Determination/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/main.dir/depend.make
@@ -70,60 +70,60 @@ include CMakeFiles/main.dir/progress.make
 include CMakeFiles/main.dir/flags.make
 
 CMakeFiles/main.dir/src/main.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/src/main.cpp.o: /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/main.cpp
+CMakeFiles/main.dir/src/main.cpp.o: /Users/cooper/Desktop/TASA/Orbit_Determination/src/main.cpp
 CMakeFiles/main.dir/src/main.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cooper/Desktop/TASA/Orbit_Determination/c++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.dir/src/main.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/src/main.cpp.o -MF CMakeFiles/main.dir/src/main.cpp.o.d -o CMakeFiles/main.dir/src/main.cpp.o -c /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cooper/Desktop/TASA/Orbit_Determination/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.dir/src/main.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/src/main.cpp.o -MF CMakeFiles/main.dir/src/main.cpp.o.d -o CMakeFiles/main.dir/src/main.cpp.o -c /Users/cooper/Desktop/TASA/Orbit_Determination/src/main.cpp
 
 CMakeFiles/main.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main.dir/src/main.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/main.cpp > CMakeFiles/main.dir/src/main.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cooper/Desktop/TASA/Orbit_Determination/src/main.cpp > CMakeFiles/main.dir/src/main.cpp.i
 
 CMakeFiles/main.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/main.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/main.cpp -o CMakeFiles/main.dir/src/main.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cooper/Desktop/TASA/Orbit_Determination/src/main.cpp -o CMakeFiles/main.dir/src/main.cpp.s
 
 CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o: /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Orbit/Orbit.cpp
+CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o: /Users/cooper/Desktop/TASA/Orbit_Determination/src/Orbit/Orbit.cpp
 CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cooper/Desktop/TASA/Orbit_Determination/c++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o -MF CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o.d -o CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o -c /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Orbit/Orbit.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cooper/Desktop/TASA/Orbit_Determination/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o -MF CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o.d -o CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o -c /Users/cooper/Desktop/TASA/Orbit_Determination/src/Orbit/Orbit.cpp
 
 CMakeFiles/main.dir/src/Orbit/Orbit.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main.dir/src/Orbit/Orbit.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Orbit/Orbit.cpp > CMakeFiles/main.dir/src/Orbit/Orbit.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cooper/Desktop/TASA/Orbit_Determination/src/Orbit/Orbit.cpp > CMakeFiles/main.dir/src/Orbit/Orbit.cpp.i
 
 CMakeFiles/main.dir/src/Orbit/Orbit.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/Orbit/Orbit.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Orbit/Orbit.cpp -o CMakeFiles/main.dir/src/Orbit/Orbit.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cooper/Desktop/TASA/Orbit_Determination/src/Orbit/Orbit.cpp -o CMakeFiles/main.dir/src/Orbit/Orbit.cpp.s
 
 CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o: /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Coordinate/Coordinate.cpp
+CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o: /Users/cooper/Desktop/TASA/Orbit_Determination/src/Coordinate/Coordinate.cpp
 CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cooper/Desktop/TASA/Orbit_Determination/c++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o -MF CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o.d -o CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o -c /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Coordinate/Coordinate.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cooper/Desktop/TASA/Orbit_Determination/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o -MF CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o.d -o CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o -c /Users/cooper/Desktop/TASA/Orbit_Determination/src/Coordinate/Coordinate.cpp
 
 CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Coordinate/Coordinate.cpp > CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cooper/Desktop/TASA/Orbit_Determination/src/Coordinate/Coordinate.cpp > CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.i
 
 CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Coordinate/Coordinate.cpp -o CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cooper/Desktop/TASA/Orbit_Determination/src/Coordinate/Coordinate.cpp -o CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.s
 
 CMakeFiles/main.dir/src/Time/Time.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/src/Time/Time.cpp.o: /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Time/Time.cpp
+CMakeFiles/main.dir/src/Time/Time.cpp.o: /Users/cooper/Desktop/TASA/Orbit_Determination/src/Time/Time.cpp
 CMakeFiles/main.dir/src/Time/Time.cpp.o: CMakeFiles/main.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cooper/Desktop/TASA/Orbit_Determination/c++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/src/Time/Time.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/src/Time/Time.cpp.o -MF CMakeFiles/main.dir/src/Time/Time.cpp.o.d -o CMakeFiles/main.dir/src/Time/Time.cpp.o -c /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Time/Time.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/cooper/Desktop/TASA/Orbit_Determination/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/src/Time/Time.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main.dir/src/Time/Time.cpp.o -MF CMakeFiles/main.dir/src/Time/Time.cpp.o.d -o CMakeFiles/main.dir/src/Time/Time.cpp.o -c /Users/cooper/Desktop/TASA/Orbit_Determination/src/Time/Time.cpp
 
 CMakeFiles/main.dir/src/Time/Time.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main.dir/src/Time/Time.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Time/Time.cpp > CMakeFiles/main.dir/src/Time/Time.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/cooper/Desktop/TASA/Orbit_Determination/src/Time/Time.cpp > CMakeFiles/main.dir/src/Time/Time.cpp.i
 
 CMakeFiles/main.dir/src/Time/Time.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/Time/Time.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Time/Time.cpp -o CMakeFiles/main.dir/src/Time/Time.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/cooper/Desktop/TASA/Orbit_Determination/src/Time/Time.cpp -o CMakeFiles/main.dir/src/Time/Time.cpp.s
 
 # Object files for target main
 main_OBJECTS = \
@@ -140,9 +140,8 @@ bin/main: CMakeFiles/main.dir/src/Orbit/Orbit.cpp.o
 bin/main: CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o
 bin/main: CMakeFiles/main.dir/src/Time/Time.cpp.o
 bin/main: CMakeFiles/main.dir/build.make
-bin/main: /opt/homebrew/Cellar/boost/1.83.0/lib/libboost_program_options-mt.dylib
 bin/main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/cooper/Desktop/TASA/Orbit_Determination/c++/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable bin/main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/cooper/Desktop/TASA/Orbit_Determination/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable bin/main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -154,6 +153,6 @@ CMakeFiles/main.dir/clean:
 .PHONY : CMakeFiles/main.dir/clean
 
 CMakeFiles/main.dir/depend:
-	cd /Users/cooper/Desktop/TASA/Orbit_Determination/c++/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/cooper/Desktop/TASA/Orbit_Determination/c++ /Users/cooper/Desktop/TASA/Orbit_Determination/c++ /Users/cooper/Desktop/TASA/Orbit_Determination/c++/build /Users/cooper/Desktop/TASA/Orbit_Determination/c++/build /Users/cooper/Desktop/TASA/Orbit_Determination/c++/build/CMakeFiles/main.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /Users/cooper/Desktop/TASA/Orbit_Determination/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/cooper/Desktop/TASA/Orbit_Determination /Users/cooper/Desktop/TASA/Orbit_Determination /Users/cooper/Desktop/TASA/Orbit_Determination/build /Users/cooper/Desktop/TASA/Orbit_Determination/build /Users/cooper/Desktop/TASA/Orbit_Determination/build/CMakeFiles/main.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/main.dir/depend
 

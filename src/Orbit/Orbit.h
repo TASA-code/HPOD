@@ -14,11 +14,13 @@ typedef Matrix<double,6,1> Vector6d;
 class Orbit {
 
     private:
-        const long double Earth_Radius = 6378;
+        const long double Earth_Radius = 6378.1;
         const long double Earth_mu = 398600;
         const long double J2 = 0.00108263;
         const std::string Start_Date = "29-Oct-2023 07:55:48.000";
-        const std::string End_Date = "29-Oct-2023 12:55:48.000";
+        const std::string End_Date = "30-Oct-2023 19:55:48.000";
+
+        const double dt = 0.015625;
     
     public:
 
@@ -44,7 +46,7 @@ class Orbit {
 
         void RungeKutta45(double dt, double T, Vector6d& x);
 
-        void integrate();
+        void Propagate();
 
         // ~Orbit();
 };

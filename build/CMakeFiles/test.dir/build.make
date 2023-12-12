@@ -53,10 +53,10 @@ RM = /opt/homebrew/Cellar/cmake/3.27.8/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/cooper/Desktop/TASA/Orbit_Determination/c++
+CMAKE_SOURCE_DIR = /Users/cooper/Desktop/TASA/Orbit_Determination
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/cooper/Desktop/TASA/Orbit_Determination/c++/build
+CMAKE_BINARY_DIR = /Users/cooper/Desktop/TASA/Orbit_Determination/build
 
 # Utility rule file for test.
 
@@ -67,7 +67,7 @@ include CMakeFiles/test.dir/compiler_depend.make
 include CMakeFiles/test.dir/progress.make
 
 CMakeFiles/test: bin/main
-	cd /Users/cooper/Desktop/TASA/Orbit_Determination/c++/build/bin && /Users/cooper/Desktop/TASA/Orbit_Determination/c++/build/bin/main --SMA 6982 --e 0.0010293460 --i 97.97357 --RAAN 340.3470 --w 98.03756 --M 229.9764
+	cd /Users/cooper/Desktop/TASA/Orbit_Determination/build/bin && /Users/cooper/Desktop/TASA/Orbit_Determination/build/bin/main
 
 test: CMakeFiles/test
 test: CMakeFiles/test.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/test.dir/clean:
 .PHONY : CMakeFiles/test.dir/clean
 
 CMakeFiles/test.dir/depend:
-	cd /Users/cooper/Desktop/TASA/Orbit_Determination/c++/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/cooper/Desktop/TASA/Orbit_Determination/c++ /Users/cooper/Desktop/TASA/Orbit_Determination/c++ /Users/cooper/Desktop/TASA/Orbit_Determination/c++/build /Users/cooper/Desktop/TASA/Orbit_Determination/c++/build /Users/cooper/Desktop/TASA/Orbit_Determination/c++/build/CMakeFiles/test.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /Users/cooper/Desktop/TASA/Orbit_Determination/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/cooper/Desktop/TASA/Orbit_Determination /Users/cooper/Desktop/TASA/Orbit_Determination /Users/cooper/Desktop/TASA/Orbit_Determination/build /Users/cooper/Desktop/TASA/Orbit_Determination/build /Users/cooper/Desktop/TASA/Orbit_Determination/build/CMakeFiles/test.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/test.dir/depend
 

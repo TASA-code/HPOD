@@ -1,5 +1,5 @@
 CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o: \
-  /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Coordinate/Coordinate.cpp \
+  /Users/cooper/Desktop/TASA/Orbit_Determination/src/Coordinate/Coordinate.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/cmath \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__assert \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__config \
@@ -987,7 +987,7 @@ CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o: \
   /opt/homebrew/opt/eigen/include/eigen3/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
   /opt/homebrew/opt/eigen/include/eigen3/Eigen/src/Eigenvalues/./RealQZ.h \
   /opt/homebrew/opt/eigen/include/eigen3/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
-  /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Coordinate/Coordinate.h \
+  /Users/cooper/Desktop/TASA/Orbit_Determination/src/Coordinate/Coordinate.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/numeric \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__numeric/accumulate.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__numeric/adjacent_difference.h \
@@ -1002,4 +1002,4 @@ CMakeFiles/main.dir/src/Coordinate/Coordinate.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__numeric/transform_exclusive_scan.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__numeric/transform_inclusive_scan.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk/usr/include/c++/v1/__numeric/transform_reduce.h \
-  /Users/cooper/Desktop/TASA/Orbit_Determination/c++/src/Coordinate/../Orbit/Orbit.h
+  /Users/cooper/Desktop/TASA/Orbit_Determination/src/Coordinate/../Orbit/Orbit.h
