@@ -14,25 +14,34 @@
 
 typedef Eigen::Matrix<double,6,1> Vector6d;
 
+namespace {
 
-// static function initialisation
-double Orbit::SMA   = 0.0;
-double Orbit::e     = 0.0; 
-double Orbit::i     = 0.0;
-double Orbit::M     = 0.0;
-double Orbit::w     = 0.0;
-double Orbit::RAAN  = 0.0;
+    // Progress bar function
+    static void Progress_Bar(int& iteration, const int& timestep){
+        double progress = static_cast<double>(iteration) / timestep;
+        const int barWidth = 55;
+        int pos = static_cast<int>(barWidth * progress);
+
+        std::cout << "[";
+        for (int i = 0; i < barWidth; ++i) {
+            if (i < pos)
+                std::cout << "#";
+            else if (i == pos)
+                std::cout << "#";
+            else
+                std::cout << " ";
+        }
+        
+        std::cout << "] " << std::fixed << std::setprecision(3)
+                        << progress * 100.0 << "%\r";
+        std::cout.flush();
+    }
+}
 
 
 /**
  * @brief Takes user input orbital element and set initial coordinates
  *
- * @param arg_SMA
- * @param arg_e
- * @param arg_i
- * @param arg_RAAN
- * @param arg_w
- * @param arg_M
  */
 void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
                          const double &arg_i, const double &arg_M,
@@ -48,7 +57,10 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
     std::cout << "\t\t- w         :  " << arg_w << std::endl;
     std::cout << "\t\t- RAAN      :  " << arg_RAAN << std::endl;
     std::cout << std::endl;
-    
+    std::cout << "\t\tStart Time:  " << Start_Date << std::endl;
+    std::cout << "\t\tEnd Time  :  " << End_Date << std::endl;
+    std::cout << std::endl;
+
 
     SMA = arg_SMA;
     e = arg_e;
@@ -57,7 +69,6 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
     w = arg_w * M_PI / 180;
     RAAN = arg_RAAN * M_PI / 180;
     
-
     // Iteration to convert mean anomaly to eccentric anomaly
     double E = M;
     double f = E - e * sin(E) - M;
@@ -76,38 +87,29 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
     
     r_vector << cos(theta), sin(theta), 0;
     v_vector << -sin(theta), e+cos(theta), 0;
-
     P_r << (SMA*(1-e*e) / (1+e*cos(theta))) * r_vector;
-
     P_v << sqrt(Earth_mu/SMA) * v_vector;
-
 
 
     Vector6d Perifocal;
     Perifocal << P_r, P_v;
-
-    ECI_state = Coordinate::P2ECI(Perifocal); 
-
-    Eigen::Vector3d ECI_r = ECI_state.head<3>();
-    Eigen::Vector3d ECI_v = ECI_state.tail<3>();
+    state = Coordinate::P2ECI(Perifocal); 
 
     // ECI_r << 5748.272127, -1506.348412, -3674.401874;
     // ECI_v << 3.472888, -2.183142, 6.339326;
-
-    state = (Vector6d(6) << ECI_r, ECI_v).finished();
     
 
     // Print the resulting vectors r_ECI and v_ECI
     // format data output
     std::cout << "\t\t----------------------------------" << std::endl;
     std::cout << "\t\t...PRINTING INITIAL POSITION (ECI)...\n" << std::endl;
-    std::cout << "\t\tr0 = [" << ECI_r[0] << ", " << ECI_r[1] << ", "
-              << ECI_r[2] << "]" << std::endl;
+    std::cout << "\t\tr0 = [" << state[0] << ", " << state[1] << ", "
+              << state[2] << "]" << std::endl;
 
-    std::cout << "\t\tv0 = [" << ECI_v[0] << ", " << ECI_v[1] << ", "
-              << ECI_v[2] << "]\n"
+    std::cout << "\t\tv0 = [" << state[3] << ", " << state[4] << ", "
+              << state[5] << "]\n"
               << std::endl;
-        std::cout << "\t\t----------------------------------" << std::endl;   
+    std::cout << "\t\t----------------------------------" << std::endl;   
 }
 
 
@@ -116,11 +118,8 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
 /**
  * @brief To contruct the Equation of motion of the satellite for integration accounting for gravity accerleration and oblateness accerleration
  *
- * @param x: state vector with component [r,v]
- *
- * @output x_dot: derivative of the state vector [v,a]
  */
-Vector6d Orbit::EoM(Vector6d& x) {
+Vector6d Orbit::f(const Vector6d& x) {
 
     Vector3d r = x.head<3>();
     Vector3d v = x.tail<3>();
@@ -128,11 +127,9 @@ Vector6d Orbit::EoM(Vector6d& x) {
     // const double undimensional_mu = 1.0;
     const double r_norm = r.norm();
 
-
     // calculate and aggregate the acceleration from gravity and J2
     const double common_term = -(3 * J2 * Earth_mu * Earth_Radius * Earth_Radius) / (2 * std::pow(r_norm, 5));
     const double z_squared_term = (5 * x[2] * x[2]) / (r_norm * r_norm);
-
 
     Eigen::Vector3d a_gravity, a_oblateness;
     a_oblateness[0] = common_term * x[0] * (1 - z_squared_term);
@@ -152,46 +149,42 @@ Vector6d Orbit::EoM(Vector6d& x) {
 /**
  * @brief RungeKutta45 integration function
  *
- *
  */
-void Orbit::RungeKutta45(double dt, double T, Vector6d& x) {
+void Orbit::RungeKutta45(const double& dt, const double& T, Vector6d& x) {
 
 
     const int timestep = static_cast<int>(T/dt);
     int iteration = 0;
     double current_time = 0.0;
 
-    // Display Information on output text file
-    std::cout << "\t\tWriting output to file..." << std::endl;
-    std::cout << std::endl;
-    std::ofstream vOut_ECI("ECI.txt", std::ios::out | std::ios::trunc);
-    vOut_ECI << std::fixed << std::setprecision(6);
-    std::ofstream vOut_ECEF("ECEF.txt", std::ios::out | std::ios::trunc);
-    std::ofstream vOut_GEO("GEO.txt", std::ios::out | std::ios::trunc);
-    std::ofstream vOut_q("q.txt", std::ios::out | std::ios::trunc);
 
-    if (!vOut_ECI.is_open() || !vOut_ECEF.is_open() || !vOut_GEO.is_open() || !vOut_q.is_open()) {
+    // Display Information on output text file
+    std::cout << "\t\tWriting output to file..." << std::endl << std::endl;
+    std::ofstream vOut_ECI("ECI.txt", std::ios::out | std::ios::trunc), 
+                  vOut_ECEF("ECEF.txt", std::ios::out | std::ios::trunc), 
+                  vOut_GEO1("ECI_GROUNDTRACK.txt", std::ios::out | std::ios::trunc),
+                  vOut_GEO2("GROUNDTRACK.txt", std::ios::out | std::ios::trunc);
+    vOut_ECI << std::fixed << std::setprecision(6);
+
+
+    if (!vOut_ECI.is_open() || !vOut_ECEF.is_open() || !vOut_GEO1.is_open() || !vOut_GEO2.is_open()) {
         std::cout << "Failed to open output files!" << std::endl;
         return; // or handle the error as needed
     }
    
-
     // Initialise Vectorcd
     Vector6d k1, k2, k3, k4, temp; 
 
     // Perform Runge-Kutta algorithm
     while (current_time < T ) {
 
-        k1 = EoM(x);
+        k1 = f(x);
 
-        temp = x + (dt * k1) / 2.0;
-        k2 = EoM(temp);
+        k2 = f((x + (dt * k1) / 2.0));
 
-        temp = x + (dt * k2) / 2.0;
-        k3 = EoM(temp);
+        k3 = f((x + (dt * k2) / 2.0));
 
-        temp = x + dt * k3;
-        k4 = EoM(temp);
+        k4 = f(x + dt * k3);
 
         Vector6d delta_x = (1.0 / 6.0) * (k1 + 2.0 * k2 + 2.0 * k3 + k4) * dt;
 
@@ -211,34 +204,20 @@ void Orbit::RungeKutta45(double dt, double T, Vector6d& x) {
         // Transform ECI to ECEF and output to file 
         Vector6d ECEF;  
         ECEF = Coordinate::ECI2ECEF(x, current_time);
-        vOut_ECEF << ECEF[0] << " " << ECEF[1] << " " 
-                  << ECEF[2] << std::endl;
+        vOut_ECEF << ECEF.transpose() << std::endl;      
 
         // Transform ECEF to GEO and output to file
-        Vector2d GEO; 
-        GEO = Coordinate::ECEF2GEO(ECEF);
-        vOut_GEO << GEO[0] << " " << GEO[1] << std::endl;      
-     
+        Vector2d GEO1; 
+        GEO1 = Coordinate::ECEF2GEO(x);
+        vOut_GEO1 << GEO1.transpose() << std::endl;    
 
-
+        Vector2d GEO2;
+        GEO2 = Coordinate::ECEF2GEO(ECEF);
+        vOut_GEO2 << GEO2.transpose() << std::endl;    
+    
         // Progress Bar Display
-        double progress = static_cast<double>(iteration) / timestep;
-        const int barWidth = 55;
-        int pos = static_cast<int>(barWidth * progress);
-
-        std::cout << "[";
-        for (int i = 0; i < barWidth; ++i) {
-            if (i < pos)
-                std::cout << "#";
-            else if (i == pos)
-                std::cout << "#";
-            else
-                std::cout << " ";
-        }
+        Progress_Bar(iteration, timestep);
         
-        std::cout << "] " << std::fixed << std::setprecision(3)
-                        << progress * 100.0 << "%\r";
-        std::cout.flush();
 
         x += delta_x;
         current_time += dt;
@@ -248,8 +227,8 @@ void Orbit::RungeKutta45(double dt, double T, Vector6d& x) {
     // Finish writing and close file
     vOut_ECI.close();
     vOut_ECEF.close();
-    vOut_GEO.close();
-    vOut_q.close();
+    vOut_GEO1.close();
+    vOut_GEO2.close();
     std::cout << std::endl;
     std::cout << std::endl;
     std::cout << "\t\tFinished writing to file." << std::endl;
@@ -270,7 +249,6 @@ void Orbit::Propagate() {
     Orbit::RungeKutta45(dt, T, state);
     
     // Initialise final state vector
-    // Dimensionalise r and v vectors
     Vector3d Final_r = state.head<3>() ;
     Vector3d Final_v = state.tail<3>() ;
 
@@ -282,6 +260,11 @@ void Orbit::Propagate() {
               << std::endl;
     std::cout << "\t\t----------------------------------" << std::endl;
 }
+
+
+
+
+
 
 
 // Orbit::~Orbit() {

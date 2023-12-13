@@ -73,6 +73,8 @@
         "algorithm": "cpp",
         "numeric": "cpp",
         "filesystem": "cpp",
-        "cfenv": "cpp"
+        "cfenv": "cpp",
+        "charconv": "cpp",
+        "source_location": "cpp"
     }
 }
