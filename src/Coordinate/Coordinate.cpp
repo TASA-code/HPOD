@@ -1,5 +1,6 @@
 #include <cmath>
 #include <iostream>
+#include <map>
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
 // #include "sofa/c/src/sofa.h"
@@ -13,39 +14,40 @@ using namespace Eigen;
 
 namespace {
 
-    VectorXi Extract_Date(std::string Date){
-        std::istringstream iss(Date);
+    Eigen::VectorXi Extract_Date(const std::string& Date) {
+    std::istringstream iss(Date);
 
-        int day, month, year, hour, minute, second;
-        iss >> day;
-        iss.ignore();
+        int day, month, year, hour, minute, second, milliseconds;
+        char dot; // Variable to store the dot separator
         std::string monthstr;
-        iss >> monthstr;
-        iss.ignore();
-        iss >> year;
-        iss.ignore();
-        iss >> hour;
-        iss.ignore();
-        iss >> minute;
-        iss.ignore();
-        iss >> second;
 
-        const char* monthCstr = monthstr.c_str();
-        const char* monthName[] = {"Jan","Feb","Mar","Apr","May",
-                            "Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
-        
-        for (int i = 0; i < 12; ++i){
-            if (strcmp(monthCstr, monthName[i]) == 0){
-                month = i+1;
-                break;
-            }
+        iss >> day;
+        iss.ignore(); // ignore the hyphen
+        std::getline(iss, monthstr, '-'); // read until the next hyphen
+        iss >> year >> hour >> dot >> minute >> dot >> second >> dot >> milliseconds;
+
+        // Map month names to numerical values
+        std::map<std::string, int> monthMap = {
+            {"Jan", 1}, {"Feb", 2}, {"Mar", 3}, {"Apr", 4}, {"May", 5}, {"Jun", 6},
+            {"Jul", 7}, {"Aug", 8}, {"Sep", 9}, {"Oct", 10}, {"Nov", 11}, {"Dec", 12}
+        };
+
+        // Convert month string to numerical value
+        auto it = monthMap.find(monthstr);
+        if (it != monthMap.end()) {
+            month = it->second;
+        } else {
+            // Handle invalid month case
+            std::cerr << "Invalid month: " << monthstr << std::endl;
+            // You might want to handle this case differently, depending on your requirements
         }
 
-        VectorXi intDate(6);
-        intDate << day, month, year, hour, minute, second;
+        Eigen::VectorXi intDate(7); // Include milliseconds
+        intDate << day, month, year, hour, minute, second, milliseconds;
 
         return intDate;
     }
+
 }
 
 
@@ -208,7 +210,6 @@ Vector6d Coordinate::ECI2ECEF(Vector6d &ECI, double t){
     VectorXi Date(7);
     Date = Extract_Date(Orbit::Start_Date);
 
-   
     int year, month, day, hour, minute, second;
 
     day = Date[0];

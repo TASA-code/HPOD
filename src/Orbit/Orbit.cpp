@@ -211,7 +211,7 @@ void Orbit::RungeKutta45(const double& dt, const double& T, Vector6d& x) {
         // Transform ECI to ECEF and output to file 
         Vector6d ECEF;  
         ECEF = Coordinate::ECI2ECEF(x, current_time);
-        vOut_ECEF << ECEF.transpose() << std::endl;      
+        vOut_ECEF << date << " " << ECEF.transpose() << std::endl;      
 
         // Transform ECEF to GEO and output to file
         Vector2d GEO1; 

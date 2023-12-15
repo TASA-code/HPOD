@@ -1,6 +1,8 @@
 #include "Orbit/Orbit.h"
 #include "Coordinate/Coordinate.h"
 #include "Time/Time.h"
+#include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
+
 
 #include <iostream>
 #include <fstream>
@@ -67,8 +69,8 @@ SatelliteData parseInputFile(const std::string& filePath) {
 }
 
 
-int main(int argc, char *argv[]) {
 
+int main(int argc, char *argv[]) {
 
     SatelliteData data = parseInputFile("../../input.txt");
 
