@@ -104,6 +104,9 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
 
     // ECI_r << 5748.272127, -1506.348412, -3674.401874;
     // ECI_v << 3.472888, -2.183142, 6.339326;
+
+    state << 5748.272127, -1506.348412, -3674.401874, 
+             3.472888, -2.183142, 6.339326;
     
 
     // Print the resulting vectors r_ECI and v_ECI
@@ -211,7 +214,7 @@ void Orbit::RungeKutta45(const double& dt, const double& T, Vector6d& x) {
         // Transform ECI to ECEF and output to file 
         Vector6d ECEF;  
         ECEF = Coordinate::ECI2ECEF(x, current_time);
-        vOut_ECEF << date << " " << ECEF.transpose() << std::endl;      
+        vOut_ECEF << ECEF.transpose() << std::endl;      
 
         // Transform ECEF to GEO and output to file
         Vector2d GEO1; 

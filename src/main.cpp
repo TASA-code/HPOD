@@ -76,10 +76,10 @@ int main(int argc, char *argv[]) {
 
     Orbit orbit_prop;
 
+
     orbit_prop.SetParameter(data.SMA, data.e, data.i, data.M, data.w, data.RAAN, data.Start_Date, data.End_Date);
 
     orbit_prop.Propagate();
 
     // orbit_prop.~Orbit();
 }
- 
