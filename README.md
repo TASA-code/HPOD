@@ -7,8 +7,9 @@
 
 # Orbit_Determination
 
+
 This code serves the purpose for orbit determination of a satellite orbiting aroung Earth with the effect of J2 perturbation. 
-The code takes classical orbital element (SMA, e, i, RAAN, &omega;, &nu;) into account to calculate and iterate the final position and velocity vector
+The code takes in classical orbital element (SMA, e, i, RAAN, &omega;, &nu;) into account to calculate and iterate the final position and velocity vector
 
 - SMA  : Semi-Major axis,
 - e    : Eccentricity,
@@ -16,6 +17,27 @@ The code takes classical orbital element (SMA, e, i, RAAN, &omega;, &nu;) into a
 - RAAN : Right Ascension of Ascending Node,
 - &omega;: Argument of periapsi,
 - &nu; : True Anomaly.
+
+This code takes in the argument from the file "input.txt" in the root folder
+> [!IMPORTANT]
+> Specific format must be following as indicated in the example input.txt file
+
+# Usage
+The repository is compile using cMake. To compile the program, move to the build directory
+
+```command line
+mkdir build
+cd build
+```
+
+and run 
+```command line
+cmake ..
+make test
+```
+The target test case will propagte the orbit as well as plot and open the plot for visualisation when completed.
+
+
 
 # Mathematical Formulas
 ## Orbital Equation
@@ -66,21 +88,3 @@ $$
 $$
 
 
-## Command-line input
-The repository is compile using cMake. To compile the program, move to the build directory
-
-```command line
-cd build
-```
-
-and run 
-```command line
-cmake ..
-make test
-```
-
-The test parametre is defined as follow with predefined initial orbital elements:
-
-```command line
---SMA 6878 --e 1.3e-4 --i 53 --RAAN 290.5 --w 110 --theta 250
-```
