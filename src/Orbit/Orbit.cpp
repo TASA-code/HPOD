@@ -39,13 +39,17 @@ namespace {
 }
 
 
+
+
 /**
  * @brief Takes user input orbital element and set initial coordinates
  *
  */
 void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
                          const double &arg_i, const double &arg_M,
-                         const double &arg_w, const double &arg_RAAN) {
+                         const double &arg_w, const double &arg_RAAN, 
+                         const std::string& arg_Start_Date, 
+                         const std::string& arg_End_Date) {
 
     // Printing values of all the parameters to the terminal.
     std::cout << std::endl;
@@ -57,11 +61,13 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
     std::cout << "\t\t- w         :  " << arg_w << std::endl;
     std::cout << "\t\t- RAAN      :  " << arg_RAAN << std::endl;
     std::cout << std::endl;
-    std::cout << "\t\tStart Time:  " << Start_Date << std::endl;
-    std::cout << "\t\tEnd Time  :  " << End_Date << std::endl;
+    std::cout << "\t\tStart Time:  " << arg_Start_Date << std::endl;
+    std::cout << "\t\tEnd Time  :  " << arg_End_Date << std::endl;
     std::cout << std::endl;
 
-
+    Start_Date = arg_Start_Date;
+    End_Date = arg_End_Date;
+    
     SMA = arg_SMA;
     e = arg_e;
     i = arg_i * M_PI / 180;
@@ -81,6 +87,7 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
     // Convert Eccentric anomaly to true anomaly
     double theta = 2.0 * atan2(sqrt(1.0 + e) * sin(E / 2.0),
                                sqrt(1.0 - e) * cos(E / 2.0));
+    
     
     // initialise vector
     Eigen::Vector3d P_r, P_v, r_vector, v_vector;
@@ -102,7 +109,7 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
     // Print the resulting vectors r_ECI and v_ECI
     // format data output
     std::cout << "\t\t----------------------------------" << std::endl;
-    std::cout << "\t\t...PRINTING INITIAL POSITION (ECI)...\n" << std::endl;
+    std::cout << "\t\t...INITIAL POSITION (ECI)...\n" << std::endl;
     std::cout << "\t\tr0 = [" << state[0] << ", " << state[1] << ", "
               << state[2] << "]" << std::endl;
 
@@ -159,7 +166,7 @@ void Orbit::RungeKutta45(const double& dt, const double& T, Vector6d& x) {
 
 
     // Display Information on output text file
-    std::cout << "\t\tWriting output to file..." << std::endl << std::endl;
+    std::cout << "\t\t...ORBIT PROPAGATING..." << std::endl << std::endl;
     std::ofstream vOut_ECI("ECI.txt", std::ios::out | std::ios::trunc), 
                   vOut_ECEF("ECEF.txt", std::ios::out | std::ios::trunc), 
                   vOut_GEO1("ECI_GROUNDTRACK.txt", std::ios::out | std::ios::trunc),
@@ -260,8 +267,6 @@ void Orbit::Propagate() {
               << std::endl;
     std::cout << "\t\t----------------------------------" << std::endl;
 }
-
-
 
 
 

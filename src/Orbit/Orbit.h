@@ -17,13 +17,13 @@ class Orbit {
         const long double Earth_Radius = 6378.1;
         const long double Earth_mu = 398600.4415;
         const long double J2 = 0.00108263;
-        const std::string Start_Date = "29-Oct-2023 07:55:48.000";
-        const std::string End_Date = "02-Nov-2023 07:55:48.000";
-
+        
         const double dt = 0.015625;
     
     public:
 
+        inline static std::string Start_Date;
+        inline static std::string End_Date;
         inline static double SMA;
         inline static double e;
         inline static double i;
@@ -36,7 +36,7 @@ class Orbit {
         // Define the initial conditions from the uesr input
         void SetParameter(const double &arg_SMA, const double &arg_e, const double &arg_i,
                           const double &arg_M, const double &arg_w,
-                          const double &arg_RAAN);
+                          const double &arg_RAAN, const std::string& arg_Start_Date, const std::string& arg_End_Date);
         
         // Equation of motion
         Vector6d f(const Vector6d &x);

@@ -75,6 +75,11 @@
         "filesystem": "cpp",
         "cfenv": "cpp",
         "charconv": "cpp",
-        "source_location": "cpp"
-    }
+        "source_location": "cpp",
+        "regex": "cpp"
+    },
+    "cSpell.words": [
+        "Molynia",
+        "RAAN"
+    ]
 }

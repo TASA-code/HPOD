@@ -39,10 +39,10 @@ add_custom_target(test
     COMMAND $<TARGET_FILE:main>
     COMMAND ${CMAKE_COMMAND} -E echo "Running Gnuplot..."
     COMMAND gnuplot ${CMAKE_SOURCE_DIR}/plot/3d.gnu
-    COMMAND open {CMAKE_BINARY_DIR}/bin/3d.png
+    COMMAND open 3d.png
     DEPENDS main
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-    COMMENT "Running Test and Gnuplot"
+    COMMENT "Running Simulation and Gnuplot"
 )
 
 

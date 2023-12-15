@@ -11,15 +11,42 @@
 using namespace Eigen;  
 
 
-/**
-* @ brief: To check function operation
-*
-*
-*/
-void Coordinate::check(){
-    std::cout << "checkpoint" << std::endl;
-}
+namespace {
 
+    VectorXi Extract_Date(std::string Date){
+        std::istringstream iss(Date);
+
+        int day, month, year, hour, minute, second;
+        iss >> day;
+        iss.ignore();
+        std::string monthstr;
+        iss >> monthstr;
+        iss.ignore();
+        iss >> year;
+        iss.ignore();
+        iss >> hour;
+        iss.ignore();
+        iss >> minute;
+        iss.ignore();
+        iss >> second;
+
+        const char* monthCstr = monthstr.c_str();
+        const char* monthName[] = {"Jan","Feb","Mar","Apr","May",
+                            "Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+        
+        for (int i = 0; i < 12; ++i){
+            if (strcmp(monthCstr, monthName[i]) == 0){
+                month = i+1;
+                break;
+            }
+        }
+
+        VectorXi intDate(6);
+        intDate << day, month, year, hour, minute, second;
+
+        return intDate;
+    }
+}
 
 
 
@@ -177,14 +204,25 @@ Vector6d Coordinate::ECI2ECEF(Vector6d &ECI, double t){
     
     Vector3d r = ECI.head<3>();
     Vector3d v = ECI.tail<3>();
+
+    VectorXi Date(7);
+    Date = Extract_Date(Orbit::Start_Date);
+
    
     int year, month, day, hour, minute, second;
-    year = 2023;
-    month = 10;
-    day = 29;
-    hour = 7;
-    minute = 55;
-    second = 48+t;
+
+    day = Date[0];
+    month = Date[1];
+    year = Date[2];
+    hour = Date[3];
+    minute = Date[4];
+    second = Date[5]+t;
+    // year = 2023;
+    // month = 10;
+    // day = 29;
+    // hour = 7;
+    // minute = 55;
+    // second = 48+t;
 
 
     double Julian = UTC2Julian(year, month, day, hour, minute, second); 
