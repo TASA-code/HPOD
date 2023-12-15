@@ -1,5 +1,5 @@
 set terminal png size 5000,3600 crop
-set output '3d.png'
+set output '../../plot/3d.png'
 
 set hidden3d
 set grid
