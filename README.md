@@ -23,7 +23,7 @@ This code takes in the argument from the file "input.txt" in the root folder
 > Specific format must be following as indicated in the example input.txt file
 
 # Usage
-The repository is compile using cMake. To compile the program, move to the build directory
+The repository compiles using cMake. To compile the program, move to the build directory
 
 ```command line
 mkdir build
