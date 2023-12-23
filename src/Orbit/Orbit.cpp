@@ -134,22 +134,32 @@ Vector6d Orbit::f(const Vector6d& x) {
     Vector3d r = x.head<3>();
     Vector3d v = x.tail<3>();
     
-    // const double undimensional_mu = 1.0;
-    const double r_norm = r.norm();
+    double r_norm = r.norm();
+    const long double J2 = 0.00108263;
 
     // calculate and aggregate the acceleration from gravity and J2
-    const double common_term = -(3 * J2 * Earth_mu * Earth_Radius * Earth_Radius) / (2 * std::pow(r_norm, 5));
-    const double z_squared_term = (5 * x[2] * x[2]) / (r_norm * r_norm);
+    const double common_term = -(3 * J2 * Earth_mu * Earth_Radius * Earth_Radius) / (2 * r_norm * r_norm * r_norm * r_norm);
 
-    Eigen::Vector3d a_gravity, a_oblateness;
-    a_oblateness[0] = common_term * x[0] * (1 - z_squared_term);
-    a_oblateness[1] = common_term * x[1] * (1 - z_squared_term);
-    a_oblateness[2] = common_term * x[2] * (3 - z_squared_term);
+    Eigen::Vector3d a_gravity, a_oblateness, term;
+    term.setZero();  // Initialize term vector to zero
 
+    // Check for division by zero
+    if (r_norm != 0.0) {
+        term << (1 - 5 * (x[2]/r_norm) * (x[2]/r_norm)) * x[0]/r_norm,
+                (1 - 5 * (x[2]/r_norm) * (x[2]/r_norm)) * x[1]/r_norm,
+                (3 - 5 * (x[2]/r_norm) * (x[2]/r_norm)) * x[2]/r_norm;
+    } else {
+        // Handle the case when r_norm is zero (avoid division by zero)
+        // Set term to zero or handle it as needed
+        term << 0.0, 0.0, 0.0;
+    }
+
+    a_oblateness << common_term * term;
     a_gravity << -Earth_mu * r / (r_norm * r_norm * r_norm);
 
     Vector6d x_dot;
-    x_dot << v, a_gravity;// + a_oblateness;
+    x_dot << v, a_gravity + a_oblateness;
+
 
     return x_dot;
 };
@@ -160,7 +170,7 @@ Vector6d Orbit::f(const Vector6d& x) {
  * @brief RungeKutta45 integration function
  *
  */
-void Orbit::RungeKutta45(const double& dt, const double& T, Vector6d& x) {
+void Orbit::RungeKutta45(const double& T, Vector6d& x) {
 
 
     const int timestep = static_cast<int>(T/dt);
@@ -222,7 +232,7 @@ void Orbit::RungeKutta45(const double& dt, const double& T, Vector6d& x) {
         vOut_GEO1 << GEO1.transpose() << std::endl;    
 
         Vector2d GEO2;
-        GEO2 = Coordinate::ECEF2GEO(ECEF);
+        GEO2 = Coordinate::ECEF2GEO(ECEF); 
         vOut_GEO2 << GEO2.transpose() << std::endl;    
     
         // Progress Bar Display
@@ -256,7 +266,7 @@ void Orbit::Propagate() {
     const double T = Time::Duration(Start_Date,End_Date);
 
     // Begin RK45 Integration
-    Orbit::RungeKutta45(dt, T, state);
+    Orbit::RungeKutta45(T, state);
     
     // Initialise final state vector
     Vector3d Final_r = state.head<3>() ;

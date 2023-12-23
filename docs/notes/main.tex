@@ -1,0 +1,49 @@
+\documentclass[conference,letterpaper,onecolumn]{IEEEtran}
+
+\usepackage{multicol,caption}
+
+\input{include.tex}
+
+
+\title{\LARGE \bf Orbit Propagator Theory}
+\author{Cooper Chang Chien\\Taiwan Space Agency (TASA), System Engineer}
+
+
+\begin{document}
+\maketitle
+\pagestyle{headings}
+
+\begin{abstract}
+    \noindent\bfseries
+    This is a collection of general theories and equations that establishes the algorithm as the building block of the orbit propagation simulator. This note includes the basics of orbital mechanics starting form the six orbital element, introduction on GCRF, ITRF, and LVLH reference frames, towards Keplerian orbital equations. In later sections, a detailed discussion on non-keplerian motions were conducted, this section mainly focuses on the derivation of the gravitational potential function due to Earth's oblateness, and to arrive to the acceleration used in propagation.\par\vspace{0.5cm}
+
+    \noindent
+    \underline{\textbf{NOTE:}} Some of the concepts here require extensive literature reading, serve this either as a starting point or collection of knowledge, as I'll do my best to include materials that are helpful during my studies. 
+\end{abstract}
+
+\begin{keywords}
+    \centering\small
+    Orbit propagation, perturbation, Legendre polynomials, gravitational potential, satellite
+\end{keywords}
+\vspace{0.2cm}
+\hrule
+
+
+%%%%%%%%%% Main content %%%%%%%%%%
+
+\input{}
+
+\newpage
+\input{perturbation/perturbation.tex}
+
+
+
+
+
+%%%%%%%%%% %%%%%%%%%%
+\newpage
+% \appendix
+
+
+\end{document}
+ 

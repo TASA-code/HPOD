@@ -16,7 +16,6 @@ class Orbit {
     private:
         const long double Earth_Radius = 6378.1;
         const long double Earth_mu = 398600.4415;
-        const long double J2 = 0.00108263;
         
         const double dt = 0.015625;
     
@@ -41,7 +40,7 @@ class Orbit {
         // Equation of motion
         Vector6d f(const Vector6d &x);
 
-        void RungeKutta45(const double& dt, const double& T, Vector6d& x);
+        void RungeKutta45(const double& T, Vector6d& x);
 
         void Propagate();
 
