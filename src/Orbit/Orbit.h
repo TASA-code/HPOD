@@ -14,12 +14,13 @@ typedef Matrix<double,6,1> Vector6d;
 class Orbit {
 
     private:
-        const long double Earth_Radius = 6378.1;
-        const long double Earth_mu = 398600.4415;
         
-        const double dt = 0.015625;
+        double dt = 0.015625;
     
     public:
+
+        inline static double Earth_Radius = 6378.1363e3;
+        inline static double Earth_mu = 398600.4415e+9;
 
         inline static std::string Start_Date;
         inline static std::string End_Date;
@@ -38,7 +39,7 @@ class Orbit {
                           const double &arg_RAAN, const std::string& arg_Start_Date, const std::string& arg_End_Date);
         
         // Equation of motion
-        Vector6d f(const Vector6d &x);
+        Vector6d f(const Vector6d &x, double t);
 
         void RungeKutta45(const double& T, Vector6d& x);
 

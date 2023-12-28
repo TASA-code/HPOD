@@ -164,7 +164,7 @@ The \textit{addition theorem} of spherical harmonics provides a way to expand th
 \end{gather*}
 where the summation introduces "$l$" and "$m$" indices as \textit{degree} and \textit{order}, respectively. The term $P_{l,m}$ are called the \textit{associated} Legendre functions, $P_{l,m}$. Notice that for zero order ($m=0$), the associated Legendre functions are simply the conventional Legendre polynomials. The general form were given by Lambeek as the following
 \begin{gather*}
-    P_{l,m} = \frac{1}{2^ll!}(1-\gamma^2)^{m/2}\frac{d^{l+m}}{d\gamma^{l+m}}(\gamma^2-1)^l
+    P_{l,m}[\gamma] = \frac{1}{2^ll!}(1-\gamma^2)^{m/2}\frac{d^{l+m}}{d\gamma^{l+m}}(\gamma^2-1)^l
 \end{gather*}
 
 \begin{center}
@@ -189,7 +189,7 @@ where the summation introduces "$l$" and "$m$" indices as \textit{degree} and \t
 \end{center}
 
 
-By separating all the terms that are independent of the satellite's location in \hyperref[eq:Potential]{Eq. (\ref*{eq:Potential})}, we can arrive at a solution that isolates terms which depends onyl on the central body and those which relate that satellite's position. FIrst we define two new variables, $C'_{l,m}$ and $S'_{l,m}$, as follow
+By separating all the terms that are independent of the satellite's location in \hyperref[eq:Potential]{Eq. (\ref*{eq:Potential})}, we can arrive at a solution that isolates terms which depends only on the central body and those which relate that satellite's position. FIrst we define two new variables, $C'_{l,m}$ and $S'_{l,m}$, as follow
 \begin{gather}
     \begin{split}
         C'_{l,m} &= \underset{body}{\int}r_Q^l\frac{(l-m)!}{(l+m)!}P_{l,m}[\SIN(\phi_{gc_{sat}})]\COS(m\lambda_Q)dm_\oplus\\
@@ -320,7 +320,7 @@ Then using the nonspherical portion of \hyperref[eq:final_potential]{Eq. (\ref*{
     \begin{split}
         a_I &= \Bigg\{\frac{1}{r}\frac{\partial U}{\partial r}-\frac{r_K}{r^2\sqrt{r_I^2+r_J^2}}\frac{\partial U}{\partial\phi_{gc_{sat}}}\Bigg\}r_I - \Bigg\{\frac{1}{r_I^2+r_J^2}\frac{\partial U}{\partial\lambda_{sat}}\Bigg\}r_J - \frac{\mu r}{r^3}\\[0.2cm]
         a_J &= \Bigg\{\frac{1}{r}\frac{\partial U}{\partial r}-\frac{r_K}{r^2\sqrt{r_I^2+r_J^2}}\frac{\partial U}{\partial\phi_{gc_{sat}}}\Bigg\}r_J + \Bigg\{\frac{1}{r_I^2+r_J^2}\frac{\partial U}{\partial\lambda_{sat}}\Bigg\}r_I - \frac{\mu r}{r^3}\\[0.2cm]
-        a_I &= \frac{1}{r}\frac{\partial U}{\partial r}r_K  + \frac{\sqrt{r_I^2+r_J^2}}{r^2}\frac{\partial U}{\partial\phi_{gc_{sat}}}- \frac{\mu r}{r^3}
+        a_K &= \frac{1}{r}\frac{\partial U}{\partial r}r_K  + \frac{\sqrt{r_I^2+r_J^2}}{r^2}\frac{\partial U}{\partial\phi_{gc_{sat}}}- \frac{\mu r}{r^3}
     \end{split}
 \end{gather}
 \vspace{0.2cm}

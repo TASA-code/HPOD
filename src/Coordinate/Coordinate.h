@@ -28,10 +28,10 @@ public:
 
     static Vector2d Precession_Nutation(double JD);
 
-    static Vector6d ECI2ECEF(Vector6d& ECI, double GMST_deg);
-    
-    static Vector6d SOFA_ECI2ECEF(Vector6d& ECI);
-    
+    static Vector6d ECI2ECEF(const Vector6d& ECI, double t);
+
+    static Vector3d ECEF2ECI(Vector3d& a, double t);
+
     static Vector2d ECEF2GEO(Vector6d& ECEF);
 
 };

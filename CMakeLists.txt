@@ -16,6 +16,7 @@ set(SRCS
     src/Orbit/Orbit.cpp 
     src/Coordinate/Coordinate.cpp 
     src/Time/Time.cpp
+    src/Potential/accel.cpp
 )
 
 # List of header files
@@ -23,6 +24,7 @@ set(HDRS
     src/Orbit/Orbit.h 
     src/Coordinate/Coordinate.h 
     src/Time/Time.h
+    src/Potential/accel.h
 )
 
 # List of object files

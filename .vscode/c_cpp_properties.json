@@ -5,8 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/opt/homebrew/opt/boost/include",
-                "/opt/homebrew/Cellar/libomp/16.0.6/include",
-                "/opt/homebrew/opt/openblas/include"
+                "/opt/homebrew/opt/openblas/include",
+                "/opt/homebrew/opt/eigen/include/"
             ],
             "defines": [],
             "macFrameworkPath": [

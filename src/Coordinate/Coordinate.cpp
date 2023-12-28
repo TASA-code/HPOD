@@ -50,7 +50,9 @@ namespace {
 
 }
 
-
+void Coordinate::check(){
+    std::cout << "check" << std::endl;
+}
 
 /**
 * @ brief: Transform Perifocal Coordinate to ECI
@@ -119,90 +121,8 @@ Vector3d Coordinate::ECI2LVLH(Vector3d&ECI_r, Vector3d&ECI_v){
 }
 
 
-//
-// std::vector<double> Orbit::ECI2LVLH(std::vector<double>&ECI){
-//     
-//     std::vector<double> ECI_r = {0.0,0.0,0.0};
-//     std::vector<double> ECI_v = {0.0,0.0,0.0};
-//     for(int i = 0; i < 3; i++){
-//         ECI_r[i] = ECI[i];
-//         ECI_v[i] = ECI[i+3];
-//     }
-//
-//     double r_norm = sqrt(ECI_r[0] * ECI_r[0] + ECI_r[1] * ECI_r[1] + ECI_r[2] * ECI_r[2]);
-//     std::vector<double> LV = {0.0, 0.0, 0.0};
-//     
-//     for (int i = 0; i < 3; ++i){
-//         LV[i] = ECI_r[i]/r_norm;
-//     };
-//
-//     
-//     std::vector<double> h(3,0.0);
-//     h = {(ECI_r[1]*ECI_v[2]-ECI_r[2]*ECI_v[1]), (ECI_r[0]*ECI_v[2]-ECI_r[2]*ECI_v[0]), (ECI_r[0]*ECI_v[1]-ECI_r[1]*ECI_v[0])};
-//
-//     
-//     double h_norm = sqrt(h[0]*h[0] + h[1]*h[1] + h[2]*h[2]);
-//     std::vector<double> orbit_normal = {0.0, 0.0, 0.0};
-//     for (int i = 0; i<3; ++i){
-//         orbit_normal[i] = h[i]/h_norm;
-//     };
-//
-//
-//     std::vector<double> LH(3,0.0); 
-//     LH = {(orbit_normal[1]*LV[2]-orbit_normal[2]*LV[1]), (orbit_normal[0]*LV[2]-orbit_normal[2]*LV[0]), (orbit_normal[0]*LV[1]-orbit_normal[1]*LV[0])};
-//
-//     std::vector<std::vector<double>> ECILVLH = {
-//                 {LV[0], LH[0], orbit_normal[0]},
-//                 {LV[1], LH[1], orbit_normal[1]},
-//                 {LV[2], LH[2], orbit_normal[2]},
-//                                                 };
-//     std::vector<double> LVLH_x = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-//
-//     for (int i = 0; i < 3; i++) {
-//         for (int j = 0; j < 3; j++){
-//             LVLH_x[i] += ECILVLH[i][j] * ECI_r[j];
-//             LVLH_x[i+3] += ECILVLH[i][j] * ECI_v[j];
-//         }
-//     }
-//
-//     return LVLH_x;
-// }
-//
-// std::vector<double> quaternion(std::vector<double> LVLH){
-//
-//     std::vector<double> r = {LVLH[0], LVLH[1], LVLH[2]};
-//     double norm = sqrt(r[0]*r[0] + r[1]*r[1] + r[2]*r[2]);
-//
-//     std::vector<double> LVLH_normalised = {0.0, 0.0, 0.0};
-//     for (int i = 0; i < 3; i++){
-//         LVLH_normalised[i] = r[i]/norm;
-//     };
-//     
-//     // pitch
-//     double phi = -asin(LVLH_normalised[0]);
-//     
-//     // roll
-//     double theta = atan2(LVLH_normalised[1], LVLH_normalised[2]);
-//     
-//     // yaw
-//     double psi = atan2(LVLH_normalised[1], LVLH_normalised[0]);
-//     
-//
-//     // quaternion
-//     double qw = cos(phi/2.0);
-//     double qx = sin(phi/2.0) * cos(theta/2.0);
-//     double qy = sin(phi/2.0) * sin(theta/2.0) * cos(psi/2.0);
-//     double qz = sin(phi/2.0) * sin(theta/2.0) * sin(psi/2.0);
-//     
-//     std::vector<double> quaternion = {qw,qx,qy,qz};
-//
-//     return quaternion;
-// }
 
-
-
-
-Vector6d Coordinate::ECI2ECEF(Vector6d &ECI, double t){
+Vector6d Coordinate::ECI2ECEF(const Vector6d& ECI, double t){
     
     Vector3d r = ECI.head<3>();
     Vector3d v = ECI.tail<3>();
@@ -218,22 +138,14 @@ Vector6d Coordinate::ECI2ECEF(Vector6d &ECI, double t){
     hour = Date[3];
     minute = Date[4];
     second = Date[5]+t;
-    // year = 2023;
-    // month = 10;
-    // day = 29;
-    // hour = 7;
-    // minute = 55;
-    // second = 48+t;
-
 
     double Julian = UTC2Julian(year, month, day, hour, minute, second); 
     double theta = GMST(Julian);
+
     // double theta = 7.2921159e-5 * t;
-    
     // Vector2d result = Precession_Nutation(Julian);
     // double deltaPsi = result[0];
     // double deltaEpsilon = result[1];
-
     // theta += deltaPsi * cos(deltaEpsilon);
 
     Matrix3d ECI_ECEF_Matrix;
@@ -248,14 +160,46 @@ Vector6d Coordinate::ECI2ECEF(Vector6d &ECI, double t){
 }
 
 
+Vector3d Coordinate::ECEF2ECI(Vector3d& a, double t){
+
+    VectorXi Date(7);
+    Date = Extract_Date(Orbit::Start_Date);
+
+    int year, month, day, hour, minute, second;
+
+    day = Date[0];
+    month = Date[1];
+    year = Date[2];
+    hour = Date[3];
+    minute = Date[4];
+    second = Date[5]+t;
+
+
+    double Julian = UTC2Julian(year, month, day, hour, minute, second); 
+    double theta = GMST(Julian);
+
+    // double theta = 7.2921159e-5 * t;
+    // Vector2d result = Precession_Nutation(Julian);
+    // double deltaPsi = result[0];
+    // double deltaEpsilon = result[1];
+    // theta += deltaPsi * cos(deltaEpsilon);
+
+    Matrix3d ECEF_ECI_Matrix;
+    ECEF_ECI_Matrix << cos(theta), -sin(theta), 0,
+                       sin(theta),  cos(theta), 0,
+                       0, 0, 1;
+
+    Vector3d ECI_a;
+    ECI_a << ECEF_ECI_Matrix * a;
+
+    return ECI_a;
+}
+
 
 Vector2d Coordinate::ECEF2GEO(Vector6d& ECEF){
 
-    
-    //ECEF.array() *= Orbit::DU;
-    
-    const double a = 6378.137;
-    const double b = 6356.7534;
+    const double a = 6378.137e3;
+    const double b = 6356.7534e3;
     const double e2 = 1.0 - (b*b) / (a*a);
 
     // Calculate geodetic latitude and longitude
@@ -283,6 +227,9 @@ Vector2d Coordinate::ECEF2GEO(Vector6d& ECEF){
 
     return GEO;
 }
+
+
+
 
 
 
@@ -317,8 +264,6 @@ double Coordinate::UTC2Julian(int year, int month, int day, int hour, int minute
 }
 
 
-
-
 double Coordinate::GMST(double JulianDate){
     // const double T = (JulianDate - 2451545.0) / 36525.0;
     // const double theta = 280.46061837 + 360.98564736629 * (JulianDate - 2451545.0) + T * (T * (0.000387933 - T / 38710000.0));
@@ -329,7 +274,6 @@ double Coordinate::GMST(double JulianDate){
     // return fmod(theta, 360.0) * M_PI / 180.0;
     return GMST * M_PI / 180;
 }
-
 
 
 Vector2d Coordinate::Precession_Nutation(double JD){

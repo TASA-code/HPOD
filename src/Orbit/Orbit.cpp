@@ -10,6 +10,8 @@
 #include "Orbit.h"
 #include "../Coordinate/Coordinate.h"
 #include "../Time/Time.h"
+#include "../Potential/accel.h"
+// #include "../Potential/Potential.h"
 
 
 typedef Eigen::Matrix<double,6,1> Vector6d;
@@ -105,8 +107,8 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
     // ECI_r << 5748.272127, -1506.348412, -3674.401874;
     // ECI_v << 3.472888, -2.183142, 6.339326;
 
-    state << 5748.272127, -1506.348412, -3674.401874, 
-             3.472888, -2.183142, 6.339326;
+    state << 5748.272127e3, -1506.348412e3, -3674.401874e3, 
+             3.472888e3, -2.183142e3, 6.339326e3;
     
 
     // Print the resulting vectors r_ECI and v_ECI
@@ -129,39 +131,31 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
  * @brief To contruct the Equation of motion of the satellite for integration accounting for gravity accerleration and oblateness accerleration
  *
  */
-Vector6d Orbit::f(const Vector6d& x) {
+Vector6d Orbit::f(const Vector6d& x, double t) {
 
-    Vector3d r = x.head<3>();
-    Vector3d v = x.tail<3>();
+    Vector3d r_GCRF, v_GCRF;
+    r_GCRF = x.head<3>();
+    v_GCRF = x.tail<3>();
+
+    // Vector3d r_ITRF,a_ITRF;
+    // Vector6d x_ITRF;
+    // x_ITRF = Coordinate::ECI2ECEF(x,t);
+    // r_ITRF = x_ITRF.head<3>();
+    // Vector2d GEO;
+    // GEO = Coordinate::ECEF2GEO(x_ITRF);
+    // double phi, lambda;
+    // lambda = GEO[0];
+    // phi = GEO[1];
+    // a_ITRF = Potential::a(r_ITRF, phi, lambda);
     
-    double r_norm = r.norm();
-    const long double J2 = 0.00108263;
-
-    // calculate and aggregate the acceleration from gravity and J2
-    const double common_term = -(3 * J2 * Earth_mu * Earth_Radius * Earth_Radius) / (2 * r_norm * r_norm * r_norm * r_norm);
-
-    Eigen::Vector3d a_gravity, a_oblateness, term;
-    term.setZero();  // Initialize term vector to zero
-
-    // Check for division by zero
-    if (r_norm != 0.0) {
-        term << (1 - 5 * (x[2]/r_norm) * (x[2]/r_norm)) * x[0]/r_norm,
-                (1 - 5 * (x[2]/r_norm) * (x[2]/r_norm)) * x[1]/r_norm,
-                (3 - 5 * (x[2]/r_norm) * (x[2]/r_norm)) * x[2]/r_norm;
-    } else {
-        // Handle the case when r_norm is zero (avoid division by zero)
-        // Set term to zero or handle it as needed
-        term << 0.0, 0.0, 0.0;
-    }
-
-    a_oblateness << common_term * term;
-    a_gravity << -Earth_mu * r / (r_norm * r_norm * r_norm);
-
+    Vector3d a_GCRF;
     Vector6d x_dot;
-    x_dot << v, a_gravity + a_oblateness;
 
+    // a_GCRF = Coordinate::ECEF2ECI(a_ITRF,t);
 
-    return x_dot;
+    a_GCRF = AccelMod(x, Earth_mu, 10, 10, Earth_Radius,t);
+    x_dot << v_GCRF, a_GCRF;
+    return x_dot; 
 };
 
 
@@ -193,18 +187,18 @@ void Orbit::RungeKutta45(const double& T, Vector6d& x) {
     }
    
     // Initialise Vectorcd
-    Vector6d k1, k2, k3, k4, temp; 
+    Vector6d k1, k2, k3, k4; 
 
     // Perform Runge-Kutta algorithm
     while (current_time < T ) {
 
-        k1 = f(x);
+        k1 = f(x, current_time);
 
-        k2 = f((x + (dt * k1) / 2.0));
+        k2 = f((x + (dt * k1) / 2.0), current_time);
+        
+        k3 = f((x + (dt * k2) / 2.0), current_time);
 
-        k3 = f((x + (dt * k2) / 2.0));
-
-        k4 = f(x + dt * k3);
+        k4 = f(x + dt * k3, current_time);
 
         Vector6d delta_x = (1.0 / 6.0) * (k1 + 2.0 * k2 + 2.0 * k3 + k4) * dt;
 
