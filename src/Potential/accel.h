@@ -10,6 +10,5 @@ typedef Eigen::Matrix<double,6,1> Vector6d;
 extern Vector3d AccelMod(Vector6d r_GCRF, double mu, int n_max, 
               int m_max, double R_ref, double time);
 
-extern void test(int x);
 
 #endif

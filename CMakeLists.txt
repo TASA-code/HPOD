@@ -14,16 +14,16 @@ find_package(Eigen3 REQUIRED)
 set(SRCS 
     src/main.cpp 
     src/Orbit/Orbit.cpp 
-    src/Coordinate/Coordinate.cpp 
-    src/Time/Time.cpp
+    src/Coordinate/coordinate.cpp 
+    src/Time/time.cpp
     src/Potential/accel.cpp
 )
 
 # List of header files
 set(HDRS 
     src/Orbit/Orbit.h 
-    src/Coordinate/Coordinate.h 
-    src/Time/Time.h
+    src/Coordinate/coordinate.h 
+    src/Time/time.h
     src/Potential/accel.h
 )
 

@@ -1,7 +1,8 @@
+#include <iostream>
+
 
 #include "accel.h"
-#include <iostream>
-#include "../Coordinate/Coordinate.h"
+#include "../Coordinate/coordinate.h"
 
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 typedef Eigen::Matrix<double,6,1> Vector6d;
@@ -153,7 +154,7 @@ Vector3d AccelMod(Vector6d r_GCRF, double mu, int n_max,
 	};	/* work array (0..n_max+1,0..n_max+1) */
 
 	// double tmp_matrix[3][3];
-    ITRF = Coordinate::ECI2ECEF(r_GCRF, time);
+    ITRF = ECI2ECEF(r_GCRF, time);
     r_bf = ITRF.head<3>();
 
     /* Auxiliary quantities */	
@@ -253,12 +254,7 @@ Vector3d AccelMod(Vector6d r_GCRF, double mu, int n_max,
 	// Matrix_Transpose(E, tmp_matrix);
 	// Matrix_by_Vector(tmp_matrix, a_bf, acc);
 	Vector3d a_GCRF;
-    a_GCRF = Coordinate::ECEF2ECI(a_bf, time);
+    a_GCRF = ECEF2ECI(a_bf, time);
 
 	return a_GCRF;
 }	/* end of AccelHarmonic */
-
-
-void test(int x){
-	std::cout << x << std::endl;
-}

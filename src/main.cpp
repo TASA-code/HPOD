@@ -1,6 +1,6 @@
 #include "Orbit/Orbit.h"
-#include "Coordinate/Coordinate.h"
-#include "Time/Time.h"
+#include "Coordinate/coordinate.h"
+#include "Time/time.h"
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
 

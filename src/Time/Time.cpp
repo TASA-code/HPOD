@@ -4,11 +4,53 @@
 #include <ctime>
 #include <chrono>
 #include <sstream>
+#include <map>
 
-#include "Time.h"
+
+#include "time.h"
+#include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
+using namespace Eigen;
 
 
-std::string Time::Time2Date(const std::string& initialTime, double secondsToAdd) {
+
+
+Eigen::VectorXi Extract_Date(const std::string& Date) {
+std::istringstream iss(Date);
+
+    int day, month, year, hour, minute, second, milliseconds;
+    char dot; // Variable to store the dot separator
+    std::string monthstr;
+
+    iss >> day;
+    iss.ignore(); // ignore the hyphen
+    std::getline(iss, monthstr, '-'); // read until the next hyphen
+    iss >> year >> hour >> dot >> minute >> dot >> second >> dot >> milliseconds;
+
+    // Map month names to numerical values
+    std::map<std::string, int> monthMap = {
+        {"Jan", 1}, {"Feb", 2}, {"Mar", 3}, {"Apr", 4}, {"May", 5}, {"Jun", 6},
+        {"Jul", 7}, {"Aug", 8}, {"Sep", 9}, {"Oct", 10}, {"Nov", 11}, {"Dec", 12}
+    };
+
+    // Convert month string to numerical value
+    auto it = monthMap.find(monthstr);
+    if (it != monthMap.end()) {
+        month = it->second;
+    } else {
+        // Handle invalid month case
+        std::cerr << "Invalid month: " << monthstr << std::endl;
+        // You might want to handle this case differently, depending on your requirements
+    }
+
+    Eigen::VectorXi intDate(7); // Include milliseconds
+    intDate << day, month, year, hour, minute, second, milliseconds;
+
+    return intDate;
+}
+
+
+
+std::string Time2Date(const std::string& initialTime, double secondsToAdd) {
     // Parse the initial time string
     struct std::tm tm = {};
     std::istringstream ss(initialTime);
@@ -40,7 +82,7 @@ std::string Time::Time2Date(const std::string& initialTime, double secondsToAdd)
 
 
 
-double Time::Duration(const std::string& startDate, const std::string& endDate) {
+double Duration(const std::string& startDate, const std::string& endDate) {
     // Parse the start date string
     struct std::tm tmStart = {};
     std::istringstream ssStart(startDate);

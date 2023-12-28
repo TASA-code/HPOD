@@ -8,10 +8,10 @@
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
 #include "Orbit.h"
-#include "../Coordinate/Coordinate.h"
-#include "../Time/Time.h"
+#include "../Coordinate/coordinate.h"
+#include "../Time/time.h"
 #include "../Potential/accel.h"
-// #include "../Potential/Potential.h"
+
 
 
 typedef Eigen::Matrix<double,6,1> Vector6d;
@@ -39,7 +39,6 @@ namespace {
         std::cout.flush();
     }
 }
-
 
 
 
@@ -102,7 +101,7 @@ void Orbit::SetParameter(const double &arg_SMA, const double &arg_e,
 
     Vector6d Perifocal;
     Perifocal << P_r, P_v;
-    state = Coordinate::P2ECI(Perifocal); 
+    state = P2ECI(Perifocal); 
 
     // ECI_r << 5748.272127, -1506.348412, -3674.401874;
     // ECI_v << 3.472888, -2.183142, 6.339326;
@@ -211,22 +210,22 @@ void Orbit::RungeKutta45(const double& T, Vector6d& x) {
         // Write output to file (ECI, ECEF, GEO)
         Eigen::VectorXd Output_ECI(6);
         Output_ECI << x.head<3>() , x.segment<3>(3);
-        std::string date = Time::Time2Date(Start_Date,current_time);
+        std::string date = Time2Date(Start_Date,current_time);
 
         vOut_ECI << date << " " << Output_ECI.transpose() << std::endl;
         
         // Transform ECI to ECEF and output to file 
         Vector6d ECEF;  
-        ECEF = Coordinate::ECI2ECEF(x, current_time);
+        ECEF = ECI2ECEF(x, current_time);
         vOut_ECEF << ECEF.transpose() << std::endl;      
 
         // Transform ECEF to GEO and output to file
         Vector2d GEO1; 
-        GEO1 = Coordinate::ECEF2GEO(x);
+        GEO1 = ECEF2GEO(x);
         vOut_GEO1 << GEO1.transpose() << std::endl;    
 
         Vector2d GEO2;
-        GEO2 = Coordinate::ECEF2GEO(ECEF); 
+        GEO2 = ECEF2GEO(ECEF); 
         vOut_GEO2 << GEO2.transpose() << std::endl;    
     
         // Progress Bar Display
@@ -257,7 +256,7 @@ void Orbit::RungeKutta45(const double& T, Vector6d& x) {
 void Orbit::Propagate() {
 
     // define target time and dt
-    const double T = Time::Duration(Start_Date,End_Date);
+    const double T = Duration(Start_Date,End_Date);
 
     // Begin RK45 Integration
     Orbit::RungeKutta45(T, state);

@@ -1,58 +1,57 @@
 #include <cmath>
 #include <iostream>
-#include <map>
+
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
-// #include "sofa/c/src/sofa.h"
-// #include "novas/eph_manager.h"
 
-#include "Coordinate.h"
+#include "coordinate.h"
 #include "../Orbit/Orbit.h"
+#include "../Time/time.h"
 
 using namespace Eigen;  
 
 
-namespace {
 
-    Eigen::VectorXi Extract_Date(const std::string& Date) {
-    std::istringstream iss(Date);
 
-        int day, month, year, hour, minute, second, milliseconds;
-        char dot; // Variable to store the dot separator
-        std::string monthstr;
+double GMST(double JulianDate){
+    // const double T = (JulianDate - 2451545.0) / 36525.0;
+    // const double theta = 280.46061837 + 360.98564736629 * (JulianDate - 2451545.0) + T * (T * (0.000387933 - T / 38710000.0));
 
-        iss >> day;
-        iss.ignore(); // ignore the hyphen
-        std::getline(iss, monthstr, '-'); // read until the next hyphen
-        iss >> year >> hour >> dot >> minute >> dot >> second >> dot >> milliseconds;
+    double theta = 280.46061837 + 360.985647 * (JulianDate - 2451545.0);
 
-        // Map month names to numerical values
-        std::map<std::string, int> monthMap = {
-            {"Jan", 1}, {"Feb", 2}, {"Mar", 3}, {"Apr", 4}, {"May", 5}, {"Jun", 6},
-            {"Jul", 7}, {"Aug", 8}, {"Sep", 9}, {"Oct", 10}, {"Nov", 11}, {"Dec", 12}
-        };
+    double GMST = fmod(theta, 360.0);
+    // return fmod(theta, 360.0) * M_PI / 180.0;
+    return GMST * M_PI / 180;
+}
 
-        // Convert month string to numerical value
-        auto it = monthMap.find(monthstr);
-        if (it != monthMap.end()) {
-            month = it->second;
-        } else {
-            // Handle invalid month case
-            std::cerr << "Invalid month: " << monthstr << std::endl;
-            // You might want to handle this case differently, depending on your requirements
-        }
 
-        Eigen::VectorXi intDate(7); // Include milliseconds
-        intDate << day, month, year, hour, minute, second, milliseconds;
 
-        return intDate;
+double UTC2Julian(int year, int month, int day, int hour, int minute, int second){
+
+    if (month <= 2){
+        month += 12;
+        year--;
     }
 
+    // Calculate Julian Date
+    double JD = static_cast<int>(365.25 * year) + static_cast<int>(year/400) 
+                - static_cast<int>(year/100);
+
+    JD += static_cast<int>(30.59 * (month - 2)) + day + 1721088.5;
+    JD += hour / 24.0 + minute / 1440.0 + second / 86400.0;
+
+    double MJD = JD - 2400000.5;
+    double TJD = MJD - 40000;
+
+    return TJD;
 }
 
-void Coordinate::check(){
-    std::cout << "check" << std::endl;
-}
+
+
+
+
+
+
 
 /**
 * @ brief: Transform Perifocal Coordinate to ECI
@@ -60,7 +59,7 @@ void Coordinate::check(){
 * @ Param: Vector6d& Perifocal, input perfifocal vector
 *
 */
-Vector6d Coordinate::P2ECI(Vector6d& Perifocal){
+Vector6d P2ECI(Vector6d& Perifocal){
     
     Vector3d r = Perifocal.head<3>();
     Vector3d v = Perifocal.tail<3>();
@@ -100,29 +99,29 @@ Vector6d Coordinate::P2ECI(Vector6d& Perifocal){
 
 
 
-Vector3d Coordinate::ECI2LVLH(Vector3d&ECI_r, Vector3d&ECI_v){
+// Vector3d ECI2LVLH(Vector3d& ECI_r, Vector3d&ECI_v){
     
-    Vector3d LV = ECI_r.normalized();
+//     Vector3d LV = ECI_r.normalized();
 
-    Vector3d h = LV.cross(ECI_v);
+//     Vector3d h = LV.cross(ECI_v);
     
-    Vector3d orbit_normal = h.normalized();
+//     Vector3d orbit_normal = h.normalized();
     
-    Vector3d LH = orbit_normal.cross(LV);
+//     Vector3d LH = orbit_normal.cross(LV);
 
-    Matrix3d ECI_LVLH_Matrix; 
-    ECI_LVLH_Matrix << LV, LH, orbit_normal;
+//     Matrix3d ECI_LVLH_Matrix; 
+//     ECI_LVLH_Matrix << LV, LH, orbit_normal;
 
-    Vector3d LVLH_r, LVLH_v;
-    LVLH_r = ECI_LVLH_Matrix * ECI_r;
-    LVLH_v = ECI_LVLH_Matrix * ECI_v;
+//     Vector3d LVLH_r, LVLH_v;
+//     LVLH_r = ECI_LVLH_Matrix * ECI_r;
+//     LVLH_v = ECI_LVLH_Matrix * ECI_v;
     
-    return LVLH_r;
-}
+//     return LVLH_r;
+// }
 
 
 
-Vector6d Coordinate::ECI2ECEF(const Vector6d& ECI, double t){
+Vector6d ECI2ECEF(const Vector6d& ECI, double t){
     
     Vector3d r = ECI.head<3>();
     Vector3d v = ECI.tail<3>();
@@ -142,12 +141,6 @@ Vector6d Coordinate::ECI2ECEF(const Vector6d& ECI, double t){
     double Julian = UTC2Julian(year, month, day, hour, minute, second); 
     double theta = GMST(Julian);
 
-    // double theta = 7.2921159e-5 * t;
-    // Vector2d result = Precession_Nutation(Julian);
-    // double deltaPsi = result[0];
-    // double deltaEpsilon = result[1];
-    // theta += deltaPsi * cos(deltaEpsilon);
-
     Matrix3d ECI_ECEF_Matrix;
     ECI_ECEF_Matrix << cos(theta), -sin(theta), 0,
                        sin(theta),  cos(theta), 0,
@@ -160,7 +153,7 @@ Vector6d Coordinate::ECI2ECEF(const Vector6d& ECI, double t){
 }
 
 
-Vector3d Coordinate::ECEF2ECI(Vector3d& a, double t){
+Vector3d ECEF2ECI(Vector3d& a, double t){
 
     VectorXi Date(7);
     Date = Extract_Date(Orbit::Start_Date);
@@ -178,12 +171,6 @@ Vector3d Coordinate::ECEF2ECI(Vector3d& a, double t){
     double Julian = UTC2Julian(year, month, day, hour, minute, second); 
     double theta = GMST(Julian);
 
-    // double theta = 7.2921159e-5 * t;
-    // Vector2d result = Precession_Nutation(Julian);
-    // double deltaPsi = result[0];
-    // double deltaEpsilon = result[1];
-    // theta += deltaPsi * cos(deltaEpsilon);
-
     Matrix3d ECEF_ECI_Matrix;
     ECEF_ECI_Matrix << cos(theta), -sin(theta), 0,
                        sin(theta),  cos(theta), 0,
@@ -196,7 +183,7 @@ Vector3d Coordinate::ECEF2ECI(Vector3d& a, double t){
 }
 
 
-Vector2d Coordinate::ECEF2GEO(Vector6d& ECEF){
+Vector2d ECEF2GEO(Vector6d& ECEF){
 
     const double a = 6378.137e3;
     const double b = 6356.7534e3;
@@ -232,77 +219,33 @@ Vector2d Coordinate::ECEF2GEO(Vector6d& ECEF){
 
 
 
+// Vector2d Precession_Nutation(double JD){
 
-double Coordinate::UTC2Julian(int year, int month, int day, int hour, int minute, int second){
-
-    if (month <= 2){
-        month += 12;
-        year--;
-    }
-
-    // int A = year/100;
-    // int B = 2 - A + A / 4;
-
-    // Calculate Julian Date
-    double JD = static_cast<int>(365.25 * year) + static_cast<int>(year/400) 
-                - static_cast<int>(year/100);
-
-    JD += static_cast<int>(30.59 * (month - 2)) + day + 1721088.5;
-    JD += hour / 24.0 + minute / 1440.0 + second / 86400.0;
-
-    double MJD = JD - 2400000.5;
-    double TJD = MJD - 40000;
-
-    //
-    // double Julian = static_cast<int>(365.25 * (year + 4716)) 
-    //                 + static_cast<int>(30.6001 * (month + 1));
-    //
-    // Julian += day + B;
-    // Julian += (hour - 12) / 24.0 + minute / 1440.0 + second / 86400.0; 
-
-    return TJD;
-}
-
-
-double Coordinate::GMST(double JulianDate){
-    // const double T = (JulianDate - 2451545.0) / 36525.0;
-    // const double theta = 280.46061837 + 360.98564736629 * (JulianDate - 2451545.0) + T * (T * (0.000387933 - T / 38710000.0));
-
-    double theta = 280.46061837 + 360.985647 * (JulianDate - 2451545.0);
-
-    double GMST = fmod(theta, 360.0);
-    // return fmod(theta, 360.0) * M_PI / 180.0;
-    return GMST * M_PI / 180;
-}
-
-
-Vector2d Coordinate::Precession_Nutation(double JD){
-
-    double T = (JD - 2451545.0) / 36525.0;
-    double deltaPsi_ = 5029.0966 * T + 1.11113 * T * T - 0.0000067 * T * T * T;
+//     double T = (JD - 2451545.0) / 36525.0;
+//     double deltaPsi_ = 5029.0966 * T + 1.11113 * T * T - 0.0000067 * T * T * T;
     
-    double omega = 125.04452 - 1934.136261 * T + 0.0020708 * T * T 
-                    + T * T * T / 450000.0;
-    omega *= M_PI/180;
-    double LO = 280.46646 + 36000.76983 * T + 0.0003032 * T * T;
-    LO *= M_PI/180;
-    double LS = 218.3165 + 481267.8813 * T;
-    LS *= M_PI/180;
+//     double omega = 125.04452 - 1934.136261 * T + 0.0020708 * T * T 
+//                     + T * T * T / 450000.0;
+//     omega *= M_PI/180;
+//     double LO = 280.46646 + 36000.76983 * T + 0.0003032 * T * T;
+//     LO *= M_PI/180;
+//     double LS = 218.3165 + 481267.8813 * T;
+//     LS *= M_PI/180;
 
-    double dPsi = -17.20 * sin(omega) - 1.32 * sin(2*LO) 
-                    - 0.23 * sin(2*LS) + 0.21 * sin(2*omega);
-    double dEpsilon = 9.20 * cos(omega) + 0.57 * cos(2*LO) 
-                    + 0.10 * cos(2*LS) - 0.09 * cos(2*omega);
+//     double dPsi = -17.20 * sin(omega) - 1.32 * sin(2*LO) 
+//                     - 0.23 * sin(2*LS) + 0.21 * sin(2*omega);
+//     double dEpsilon = 9.20 * cos(omega) + 0.57 * cos(2*LO) 
+//                     + 0.10 * cos(2*LS) - 0.09 * cos(2*omega);
 
-    double deltaEpsilon_ = 0.0;
-    deltaPsi_ += dPsi;
-    deltaPsi_ /= 3600.0;
-    deltaEpsilon_ += dEpsilon / 3600.0;
+//     double deltaEpsilon_ = 0.0;
+//     deltaPsi_ += dPsi;
+//     deltaPsi_ /= 3600.0;
+//     deltaEpsilon_ += dEpsilon / 3600.0;
 
 
         
-    Vector2d result;
-    result << deltaPsi_ * (M_PI/180) , deltaEpsilon_ * (M_PI/180) ;
+//     Vector2d result;
+//     result << deltaPsi_ * (M_PI/180) , deltaEpsilon_ * (M_PI/180) ;
 
-    return result; 
-}
+//     return result; 
+// }
