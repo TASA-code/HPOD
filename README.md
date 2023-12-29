@@ -47,13 +47,13 @@ In this section, we provide two important formulas related to orbital mechanics.
 The formula for calculating the orbital radius (r) is given by:
 
 $$
-r = \frac{h^2}{\mu}\frac{1}{1+e\text{\footnotesize{COS}}\theta}(\text{\footnotesize{COS}}\theta\hspace{0.2cm}\mathbf{i}_e + \text{\footnotesize{SIN}}\theta\hspace{0.2cm}\mathbf{i}_p)
+r = \frac{h^2}{\mu}\frac{1}{1+e\sin\theta}(\cos\theta\hspace{0.2cm}\mathbf{i}_e + \sin\theta\hspace{0.2cm}\mathbf{i}_p)
 $$
 
 The formula for calculating the orbital velcotiy (v) is given by:
 
 $$
-v = \frac{\mu}{h}(\text{\footnotesize{SIN}}\theta\hspace{0.2cm}\mathbf{i}_e + (e+\text{\footnotesize{COS}}\theta)\hspace{0.2cm}\mathbf{i}_p)
+v = \frac{\mu}{h}(\sin\theta\hspace{0.2cm}\mathbf{i}_e + (e+\cos\theta)\hspace{0.2cm}\mathbf{i}_p)
 $$
 
 > [!IMPORTANT]
@@ -64,17 +64,17 @@ $$
 The orbital equation under gravitational acceleration and oblateness perturbation shown below,
 
 $$
-U = \frac{\mu}{r}\Bigg[1+\sum_{l=2}^{\infty}\sum_{m=0}^{l}\Big(\frac{R_\oplus}{r}\Big)^lP_{l,m}[\text{\footnotesize{SIN}}(\phi_{gc_{sat}})]\Big\{C_{l,m}\text{\footnotesize{COS}}(m\lambda_{sat})+S_{l,m}\text{\footnotesize{SIN}}(m\lambda_{sat})\Big\}\Bigg]
+U = \frac{\mu}{r} \[1+\sum_{l=2}^{\infty}\sum_{m=0}^{l}(\frac{R_\oplus}{r})^lP_{l,m}(\sin\[\phi_{gc_{sat}})\]\{C_{l,m}\sin(m\lambda_{sat})+S_{l,m}\sin(m\lambda_{sat})\}\]
 $$
 
 
 
 $$
-\begin{split}
-  a_I &= \Bigg\{\frac{1}{r}\frac{\partial U}{\partial r}-\frac{r_K}{r^2\sqrt{r_I^2+r_J^2}}\frac{\partial U}{\partial\phi_{gc_{sat}}}\Bigg\}r_I - \Bigg\{\frac{1}{r_I^2+r_J^2}\frac{\partial U}{\partial\lambda_{sat}}\Bigg\}r_J - \frac{\mu r}{r^3}\\[0.2cm]
-  a_J &= \Bigg\{\frac{1}{r}\frac{\partial U}{\partial r}-\frac{r_K}{r^2\sqrt{r_I^2+r_J^2}}\frac{\partial U}{\partial\phi_{gc_{sat}}}\Bigg\}r_J + \Bigg\{\frac{1}{r_I^2+r_J^2}\frac{\partial U}{\partial\lambda_{sat}}\Bigg\}r_I - \frac{\mu r}{r^3}\\[0.2cm]
+\begin{aligned}
+  a_I &= \{\frac{1}{r}\frac{\partial U}{\partial r}-\frac{r_K}{r^2\sqrt{r_I^2+r_J^2}}\frac{\partial U}{\partial\phi_{gc_{sat}}} \}r_I -  \{\frac{1}{r_I^2+r_J^2}\frac{\partial U}{\partial\lambda_{sat}} \}r_J - \frac{\mu r}{r^3} \\
+  a_J &= \{\frac{1}{r}\frac{\partial U}{\partial r}-\frac{r_K}{r^2\sqrt{r_I^2+r_J^2}}\frac{\partial U}{\partial\phi_{gc_{sat}}} \}r_J +  \{\frac{1}{r_I^2+r_J^2}\frac{\partial U}{\partial\lambda_{sat}} \}r_I - \frac{\mu r}{r^3} \\
   a_K &= \frac{1}{r}\frac{\partial U}{\partial r}r_K  + \frac{\sqrt{r_I^2+r_J^2}}{r^2}\frac{\partial U}{\partial\phi_{gc_{sat}}}- \frac{\mu r}{r^3}
-\end{split}
+\end{aligned}
 $$
 
 # Time Integration
