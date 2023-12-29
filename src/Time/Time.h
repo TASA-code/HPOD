@@ -1,10 +1,7 @@
 #ifndef  _time_H
 #define  _time_H
 
-#include <iomanip>
 #include <iostream>
-#include <cmath>
-#include <ctime>
 #include <chrono>
 
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>

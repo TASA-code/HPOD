@@ -47,26 +47,35 @@ In this section, we provide two important formulas related to orbital mechanics.
 The formula for calculating the orbital radius (r) is given by:
 
 $$
-r = \frac{h^2}{\mu}\frac{1}{1+e\cos\theta}(\cos\theta\hspace{0.2cm}\mathbf{i}_e + \sin\theta\hspace{0.2cm}\mathbf{i}_p)
+r = \frac{h^2}{\mu}\frac{1}{1+e\text{\footnotesize{COS}}\theta}(\text{\footnotesize{COS}}\theta\hspace{0.2cm}\mathbf{i}_e + \text{\footnotesize{SIN}}\theta\hspace{0.2cm}\mathbf{i}_p)
 $$
 
 The formula for calculating the orbital velcotiy (v) is given by:
 
 $$
-v = \frac{\mu}{h}(\sin\theta\hspace{0.2cm}\mathbf{i}_e + (e+\cos\theta)\hspace{0.2cm}\mathbf{i}_p)
+v = \frac{\mu}{h}(\text{\footnotesize{SIN}}\theta\hspace{0.2cm}\mathbf{i}_e + (e+\text{\footnotesize{COS}}\theta)\hspace{0.2cm}\mathbf{i}_p)
 $$
 
 > [!IMPORTANT]
 > The orbital coordinate are transformed from Perifocal to ECI
 
-## Gravitational Acceleration and Oblateness Perturbation (J2)
+## Gravitational Model (JGM-3)
 
 The orbital equation under gravitational acceleration and oblateness perturbation shown below,
 
 $$
-\frac{d^2r}{dt^2} + \mu\frac{\mathbf{r}}{r^3} = \mathbf{a}_d = -\frac{3}{2}\frac{J_2\mu R_E\mathbf{r}}{2r^5} = \begin{bmatrix} 1-\frac{5r_z^2}{r^2} \\\ 1-\frac{5r_z^2}{r^2} \\\ 3-\frac{5r_z^2}{r^2} \end{bmatrix}
+U = \frac{\mu}{r}\Bigg[1+\sum_{l=2}^{\infty}\sum_{m=0}^{l}\Big(\frac{R_\oplus}{r}\Big)^lP_{l,m}[\text{\footnotesize{SIN}}(\phi_{gc_{sat}})]\Big\{C_{l,m}\text{\footnotesize{COS}}(m\lambda_{sat})+S_{l,m}\text{\footnotesize{SIN}}(m\lambda_{sat})\Big\}\Bigg]
 $$
 
+
+
+$$
+\begin{split}
+  a_I &= \Bigg\{\frac{1}{r}\frac{\partial U}{\partial r}-\frac{r_K}{r^2\sqrt{r_I^2+r_J^2}}\frac{\partial U}{\partial\phi_{gc_{sat}}}\Bigg\}r_I - \Bigg\{\frac{1}{r_I^2+r_J^2}\frac{\partial U}{\partial\lambda_{sat}}\Bigg\}r_J - \frac{\mu r}{r^3}\\[0.2cm]
+  a_J &= \Bigg\{\frac{1}{r}\frac{\partial U}{\partial r}-\frac{r_K}{r^2\sqrt{r_I^2+r_J^2}}\frac{\partial U}{\partial\phi_{gc_{sat}}}\Bigg\}r_J + \Bigg\{\frac{1}{r_I^2+r_J^2}\frac{\partial U}{\partial\lambda_{sat}}\Bigg\}r_I - \frac{\mu r}{r^3}\\[0.2cm]
+  a_K &= \frac{1}{r}\frac{\partial U}{\partial r}r_K  + \frac{\sqrt{r_I^2+r_J^2}}{r^2}\frac{\partial U}{\partial\phi_{gc_{sat}}}- \frac{\mu r}{r^3}
+\end{split}
+$$
 
 # Time Integration
 

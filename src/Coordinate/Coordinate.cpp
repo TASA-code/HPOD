@@ -14,13 +14,15 @@ using namespace Eigen;
 
 
 double GMST(double JulianDate){
-    // const double T = (JulianDate - 2451545.0) / 36525.0;
-    // const double theta = 280.46061837 + 360.98564736629 * (JulianDate - 2451545.0) + T * (T * (0.000387933 - T / 38710000.0));
 
-    double theta = 280.46061837 + 360.985647 * (JulianDate - 2451545.0);
+    /* Local variables */
+    double theta;           /* Rotation Angle */
+    double GMST;            /* Greenwich Mean Sidereal Time */
 
-    double GMST = fmod(theta, 360.0);
-    // return fmod(theta, 360.0) * M_PI / 180.0;
+
+    theta = 280.46061837 + 360.985647 * (JulianDate - 2451545.0);
+    GMST = fmod(theta, 360.0);
+
     return GMST * M_PI / 180;
 }
 
@@ -28,24 +30,28 @@ double GMST(double JulianDate){
 
 double UTC2Julian(int year, int month, int day, int hour, int minute, int second){
 
+    double JD;              /* Julian Day */
+    double MJD;             /* Modified Julian Day */
+    double TJD;             /* Truncated Julian Day */
+
+
     if (month <= 2){
         month += 12;
         year--;
     }
 
     // Calculate Julian Date
-    double JD = static_cast<int>(365.25 * year) + static_cast<int>(year/400) 
+    JD = static_cast<int>(365.25 * year) + static_cast<int>(year/400) 
                 - static_cast<int>(year/100);
 
     JD += static_cast<int>(30.59 * (month - 2)) + day + 1721088.5;
     JD += hour / 24.0 + minute / 1440.0 + second / 86400.0;
 
-    double MJD = JD - 2400000.5;
-    double TJD = MJD - 40000;
+    MJD = JD - 2400000.5;
+    TJD = MJD - 40000;
 
     return TJD;
 }
-
 
 
 
@@ -60,16 +66,26 @@ double UTC2Julian(int year, int month, int day, int hour, int minute, int second
 *
 */
 Vector6d P2ECI(Vector6d& Perifocal){
-    
-    Vector3d r = Perifocal.head<3>();
-    Vector3d v = Perifocal.tail<3>();
 
-    double RAAN = Orbit::RAAN;
-    double i    = Orbit::i;
-    double w    = Orbit::w;
+    /* Local variables */
+    double   RAAN;                  /* Right Ascension Ascending Node */
+    double   i;                     /* Inclination */
+    double   w;                     /* Argument of perigee */
+    Vector3d r;                     /* Perifocal position */
+    Vector3d v;                     /* Perifocal velocity*/
+    Vector6d ECI;                   /* Earth-Centred inertia */
+    Vector3d ECI_r, ECI_v;          /* Earth-Centred position & velocity*/
+    Matrix3d A_RAAN, A_i, A_w;      /* Rotational matrix*/
+    Matrix3d P_ECI_Matrix;
+    /* end of Local variables */
 
 
-    Matrix3d A_RAAN, A_i, A_w, P_ECI_Matrix;
+    r = Perifocal.head<3>();
+    v = Perifocal.tail<3>();
+    RAAN = Orbit::RAAN;
+    i    = Orbit::i;
+    w    = Orbit::w;
+
 
     A_w <<  cos(w), sin(w), 0,
            -sin(w), cos(w), 0,
@@ -85,15 +101,13 @@ Vector6d P2ECI(Vector6d& Perifocal){
 
     P_ECI_Matrix = (A_w * A_i * A_RAAN).transpose();
 
-    Vector3d ECI_r, ECI_v;
+    
     ECI_r = P_ECI_Matrix * r;
     ECI_v = P_ECI_Matrix * v;
-        
-    Vector6d ECI;
     ECI << ECI_r, ECI_v;
 
     return ECI;
- }
+}
 
 
 
