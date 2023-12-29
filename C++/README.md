@@ -61,13 +61,14 @@ $$
 
 ## Gravitational Model (JGM-3)
 
-The orbital equation under gravitational acceleration and oblateness perturbation shown below,
+The Gravitational potential from the JGM-3 gravity model is shown as below
 
 $$
 U = \frac{\mu}{r} \[1+\sum_{l=2}^{\infty}\sum_{m=0}^{l}(\frac{R_\oplus}{r})^lP_{l,m}(\sin\[\phi_{gc_{sat}})\]\{C_{l,m}\sin(m\lambda_{sat})+S_{l,m}\sin(m\lambda_{sat})\}\]
 $$
 
-
+> [!NOTE]  
+> Acceleration in gravitational potential are calculated in ITRF frame, whereas orbit propagation are usually conducted in GCRF (inertial) frame
 
 $$
 \begin{aligned}
@@ -89,10 +90,10 @@ with
 
 $$
 \begin{align}
-    k_1 = f(y_n)\\
-    k_2 = f(y_n + \Delta tk_1/2)\\
-    k_3 = f(y_n + \Delta tk_2/2)\\
-    k_4 = f(y_n + \Delta tk_3)\\
+    k_1 &= f(y_n)\\
+    k_2 &= f(y_n + \Delta tk_1/2)\\
+    k_3 &= f(y_n + \Delta tk_2/2)\\
+    k_4 &= f(y_n + \Delta tk_3)\\
 \end{align}
 $$
 
