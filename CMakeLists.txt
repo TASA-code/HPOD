@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 17)
 # Set compiler flags
 add_compile_options(-Wall -O3 -flto -g)
 
+# Add include directory
+include_directories(include)  # This line adds -Iinclude
 
 # Add paths to external libraries
 find_package(Eigen3 REQUIRED)
@@ -13,18 +15,22 @@ find_package(Eigen3 REQUIRED)
 # List of source files
 set(SRCS 
     src/main.cpp 
-    src/Orbit/Orbit.cpp 
+    src/propagator.cpp
     src/Coordinate/coordinate.cpp 
     src/Time/time.cpp
-    src/Potential/accel.cpp
+    src/accel/accel.cpp
+    src/utils/rk45.cpp
+    src/utils/input.cpp
 )
 
 # List of header files
 set(HDRS 
-    src/Orbit/Orbit.h 
-    src/Coordinate/coordinate.h 
-    src/Time/time.h
-    src/Potential/accel.h
+    include/propagator.h
+    include/coordinate/coordinate.h 
+    include/time/time.h
+    include/accel/accel.h
+    include/utils/rk45.h
+    include/utils/input.h
 )
 
 # List of object files

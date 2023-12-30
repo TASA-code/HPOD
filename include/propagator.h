@@ -11,7 +11,7 @@ typedef Matrix<double,6,1> Vector6d;
  * @class
  *
  */
-class Orbit {
+class Propagator {
 
     private:
         
@@ -38,10 +38,6 @@ class Orbit {
                           const double &arg_M, const double &arg_w,
                           const double &arg_RAAN, const std::string& arg_Start_Date, const std::string& arg_End_Date);
         
-        // Equation of motion
-        Vector6d f(const Vector6d &x, double t);
-
-        void RungeKutta45(const double& T, Vector6d& x);
 
         void Propagate();
 

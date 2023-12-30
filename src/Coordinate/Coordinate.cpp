@@ -4,9 +4,9 @@
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
 
-#include "coordinate.h"
-#include "../Orbit/Orbit.h"
-#include "../Time/time.h"
+#include "coordinate/coordinate.h"
+#include "propagator.h"
+#include "time/time.h"
 
 using namespace Eigen;  
 
@@ -82,9 +82,9 @@ Vector6d P2ECI(Vector6d& Perifocal){
 
     r = Perifocal.head<3>();
     v = Perifocal.tail<3>();
-    RAAN = Orbit::RAAN;
-    i    = Orbit::i;
-    w    = Orbit::w;
+    RAAN = Propagator::RAAN;
+    i    = Propagator::i;
+    w    = Propagator::w;
 
 
     A_w <<  cos(w), sin(w), 0,
@@ -141,7 +141,7 @@ Vector6d ECI2ECEF(const Vector6d& ECI, double t){
     Vector3d v = ECI.tail<3>();
 
     VectorXi Date(7);
-    Date = Extract_Date(Orbit::Start_Date);
+    Date = Extract_Date(Propagator::Start_Date);
 
     int year, month, day, hour, minute, second;
 
@@ -170,7 +170,7 @@ Vector6d ECI2ECEF(const Vector6d& ECI, double t){
 Vector3d ECEF2ECI(Vector3d& a, double t){
 
     VectorXi Date(7);
-    Date = Extract_Date(Orbit::Start_Date);
+    Date = Extract_Date(Propagator::Start_Date);
 
     int year, month, day, hour, minute, second;
 
