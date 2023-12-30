@@ -1,0 +1,4 @@
+/Users/cooper/Desktop/TASA/Orbit_Determination/build/CMakeFiles/main.dir
+/Users/cooper/Desktop/TASA/Orbit_Determination/build/CMakeFiles/test.dir
+/Users/cooper/Desktop/TASA/Orbit_Determination/build/CMakeFiles/edit_cache.dir
+/Users/cooper/Desktop/TASA/Orbit_Determination/build/CMakeFiles/rebuild_cache.dir
