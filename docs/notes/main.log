@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.11.27)  24 DEC 2023 18:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.11.27)  29 DEC 2023 16:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -992,8 +992,8 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 LaTeX Font Info:    Trying to load font information for U+lasy on input line 21.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
-) (/usr/local/texlive/2023/texmf-dist/tex/latex/tools/.tex File ignored) [1{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/stix2-type1/stix2-t1.enc}] (./perturbation/perturbation.tex
-<perturbation/point_mass.png, id=59, 533.995pt x 332.24126pt>
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/tools/.tex File ignored) (./orbit_basic/orbit_basic.tex) [1{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/stix2-type1/stix2-t1.enc}] (./perturbation/perturbation.tex
+<perturbation/point_mass.png, id=91, 533.995pt x 332.24126pt>
 File: perturbation/point_mass.png Graphic file (type png)
 <use perturbation/point_mass.png>
 Package pdftex.def Info: perturbation/point_mass.png  used on input line 67.
@@ -1008,18 +1008,18 @@ Overfull \hbox (26.29994pt too wide) in paragraph at lines 243--247
 []  [][] 
  []
 
-<perturbation/zonal.png, id=115, 933.4875pt x 353.32pt>
+<perturbation/zonal.png, id=148, 933.4875pt x 353.32pt>
 File: perturbation/zonal.png Graphic file (type png)
 <use perturbation/zonal.png>
 Package pdftex.def Info: perturbation/zonal.png  used on input line 264.
 (pdftex.def)             Requested size: 418.82603pt x 158.52348pt.
 [5 <./perturbation/zonal.png>]
-<perturbation/sectoral.png, id=126, 1039.885pt x 395.4775pt>
+<perturbation/sectoral.png, id=159, 1039.885pt x 395.4775pt>
 File: perturbation/sectoral.png Graphic file (type png)
 <use perturbation/sectoral.png>
 Package pdftex.def Info: perturbation/sectoral.png  used on input line 275.
 (pdftex.def)             Requested size: 408.35318pt x 155.29767pt.
-<perturbation/tesseral.png, id=128, 1057.9525pt x 408.52625pt>
+<perturbation/tesseral.png, id=161, 1057.9525pt x 408.52625pt>
 File: perturbation/tesseral.png Graphic file (type png)
 <use perturbation/tesseral.png>
 Package pdftex.def Info: perturbation/tesseral.png  used on input line 287.
@@ -1038,21 +1038,21 @@ Before submitting the final camera ready copy, remember to:
 
 (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: FD4A755FFB7C0D367461070BB45C1A9A;2419.
+(rerunfilecheck)             Checksum: 5003CD143E602F8CD738D4CE6CF4C778;3840.
  ) 
 Here is how much of TeX's memory you used:
- 24895 strings out of 476025
- 461074 string characters out of 5790016
+ 24917 strings out of 476025
+ 461452 string characters out of 5790016
  1894388 words of memory out of 5000000
- 44914 multiletter control sequences out of 15000+600000
+ 44924 multiletter control sequences out of 15000+600000
  882963 words of font info for 204 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  80i,19n,94p,1251b,1097s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/stix2-type1/STIX2Math.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/stix2-type1/STIX2Text-Bold.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/stix2-type1/STIX2Text-BoldItalic.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/stix2-type1/STIX2Text-Italic.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/stix2-type1/STIX2Text-Regular.pfb>
-Output written on main.pdf (7 pages, 1316654 bytes).
+Output written on main.pdf (7 pages, 1329610 bytes).
 PDF statistics:
- 209 PDF objects out of 1000 (max. 8388607)
- 174 compressed objects within 2 object streams
- 59 named destinations out of 1000 (max. 500000)
- 109 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 244 PDF objects out of 1000 (max. 8388607)
+ 208 compressed objects within 3 object streams
+ 67 named destinations out of 1000 (max. 500000)
+ 173 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1703413944 "/Users/cooper/Desktop/TASA/Orbit_Determination/docs/notes/main.tex" "main.pdf" "main" 1703413945 0
-  "/Users/cooper/Desktop/TASA/Orbit_Determination/docs/notes/main.tex" 1703342976 1519 35dd85e722b9966cd5fae094e652b3f9 ""
+["pdflatex"] 1703838969 "/Users/cooper/Desktop/TASA/Orbit_Determination/docs/notes/main.tex" "main.pdf" "main" 1703838970 0
+  "/Users/cooper/Desktop/TASA/Orbit_Determination/docs/notes/main.tex" 1703832898 1556 276fde56292de2f4b544c5ba7ec73cac ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/stix2-type1/stix2-mathcal.enc" 1610747736 3356 2818ff063f8b5d0d850e1203330b9fda ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/stix2-type1/stix2-mathex.enc" 1610747736 3374 7b7c21d9493820ef4980dfa6fd22840f ""
   "/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/stix2-type1/stix2-mathit.enc" 1610747736 3416 3b99a05a42a4705ec5a5521d2bffa072 ""
@@ -172,9 +172,10 @@
   "/usr/local/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1701052993 7883463 f76372749ff37a22bad1b643b6c49a7c ""
   "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
   "include.tex" 1703342757 2194 ea50817c36d44e267a34b38e2d79a31d ""
-  "main.aux" 1703413945 4891 3d484614a2389335c954e384387c264d "pdflatex"
-  "main.out" 1703413945 2419 fd4a755ffb7c0d367461070bb45c1a9a "pdflatex"
-  "main.tex" 1703342976 1519 35dd85e722b9966cd5fae094e652b3f9 ""
+  "main.aux" 1703838970 5963 bed573e1a126cd54a2c0194cbdbce249 "pdflatex"
+  "main.out" 1703838970 3840 5003cd143e602f8cd738d4ce6cf4c778 "pdflatex"
+  "main.tex" 1703832898 1556 276fde56292de2f4b544c5ba7ec73cac ""
+  "orbit_basic/orbit_basic.tex" 1703838967 1128 cff1d03f9f1838643c1727a5456ecf99 ""
   "perturbation/perturbation.tex" 1703413944 23780 9c2f5b5663d888c9f1c521ef482e397d ""
   "perturbation/point_mass.png" 1703144368 56861 39fb483ecb3736bb7b1d2cd3c5ba7a65 ""
   "perturbation/sectoral.png" 1703335620 212350 2083ad02e1895cd9912b37ec2238c4e4 ""
