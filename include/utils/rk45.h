@@ -6,7 +6,7 @@ using namespace Eigen;
 typedef Eigen::Matrix<double,6,1> Vector6d;
 
 
-extern void RungeKutta45(const double& T, const double& dt, Vector6d& x);
+extern void RungeKutta45(const double& T, const double& dt, const int& outputFrequency, Vector6d& x);
 
 
 

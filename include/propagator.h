@@ -16,6 +16,7 @@ class Propagator {
     private:
         
         double dt = 0.015625;
+        int output_frequency = 640;
     
     public:
 
@@ -34,7 +35,7 @@ class Propagator {
         Vector6d state;
 
         // Define the initial conditions from the uesr input
-        void SetParameter(const double &arg_SMA, const double &arg_e, const double &arg_i,
+        void Initialise(const double &arg_SMA, const double &arg_e, const double &arg_i,
                           const double &arg_M, const double &arg_w,
                           const double &arg_RAAN, const std::string& arg_Start_Date, const std::string& arg_End_Date);
         

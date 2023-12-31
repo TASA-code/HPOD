@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     Propagator prop;
 
 
-    prop.SetParameter(data.SMA, data.e, data.i, data.M, data.w, data.RAAN, data.Start_Date, data.End_Date);
+    prop.Initialise(data.SMA, data.e, data.i, data.M, data.w, data.RAAN, data.Start_Date, data.End_Date);
 
     prop.Propagate();
 
