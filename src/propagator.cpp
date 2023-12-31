@@ -20,7 +20,7 @@ typedef Eigen::Matrix<double,6,1> Vector6d;
  * @brief Takes user input orbital element and set initial coordinates
  *
  */
-void Propagator::SetParameter(const double &arg_SMA, const double &arg_e,
+void Propagator::Initialise(const double &arg_SMA, const double &arg_e,
                          const double &arg_i, const double &arg_M,
                          const double &arg_w, const double &arg_RAAN, 
                          const std::string& arg_Start_Date, 
@@ -109,7 +109,7 @@ void Propagator::Propagate() {
     const double T = Duration(Start_Date,End_Date);
 
     // Begin RK45 Integration
-    RungeKutta45(T, dt, state);
+    RungeKutta45(T, dt, output_frequency, state);
     
     // Initialise final state vector
     Vector3d Final_r = state.head<3>() ;
@@ -124,23 +124,3 @@ void Propagator::Propagate() {
     std::cout << "\t\t----------------------------------" << std::endl;
 }
 
-
-
-
-
-// Orbit::~Orbit() {
-//   r_perifocal.clear();
-//   v_perifocal.clear();
-//   r_ECI.clear();
-//   v_ECI.clear();
-//   r_0.clear();
-//   v_0.clear();
-//   x.clear();
-//   x_dot.clear();
-//   a_total.clear();
-//   a_gravity.clear();
-//   a_oblateness.clear();
-//   r_final.clear();
-//   v_final.clear();
-//   RotMatrix_P2ECI.clear();
-// };
