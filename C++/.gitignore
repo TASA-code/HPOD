@@ -2,7 +2,7 @@
 *.pdf
 *.mp4
 docs/*
-!docs/notes/main.pdf
+!docs/main.pdf
 .vscode/
 build/
 .DS_Store
