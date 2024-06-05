@@ -1,0 +1,8 @@
+*.xlsx
+*.pdf
+*.mp4
+docs/*
+!docs/main.pdf
+.vscode/
+.build/
+.DS_Store
