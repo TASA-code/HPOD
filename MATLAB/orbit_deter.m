@@ -12,7 +12,7 @@
 
 clear all
 close all
-clc
+clc;
 
 % define physical constants
 
