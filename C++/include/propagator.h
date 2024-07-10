@@ -15,8 +15,9 @@ class Propagator {
 
     private:
         
-        double dt = 0.015625;
-        int output_frequency = 640;
+        // double dt = 0.015625;
+        double dt = 10;
+        int output_frequency = 10;
     
     public:
 

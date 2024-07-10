@@ -10,6 +10,14 @@
 
 using namespace Eigen;  
 
+typedef Eigen::Matrix<double,6,1> Vector6d;
+
+// Helper function to unpack Eigen::Map into tuple
+template <typename Derived>
+auto unpackMap(const Eigen::DenseBase<Derived>& map) {
+    return std::make_tuple(map[0], map[1], map[2], map[3], map[4], map[5]);
+}
+
 
 
 
@@ -56,6 +64,63 @@ double UTC2Julian(int year, int month, int day, int hour, int minute, int second
 
 
 
+
+/**
+* @ brief: Transform Perifocal Coordinate to ECI
+* 
+* @ Param: Vector6d& Perifocal, input perfifocal vector
+*
+*/
+Vector6d OE2ECI(const double* OE){
+
+    const double Earth_mu = Propagator::Earth_mu;
+    Vector6d state;
+    // Define Eigen::Map for direct access to OE
+    Map<const VectorXd> variables(OE, 6); // Map OE to a const Eigen vector of size 6
+
+    // Unpack variables using helper function and std::tie
+    double SMA, e, i, M, w, RAAN;
+    std::tie(SMA, e, i, M, w, RAAN) = unpackMap(variables);
+
+
+    // Iteration to convert mean anomaly to eccentric anomaly
+    double E = M;
+    double f = E - e * sin(E) - M;
+
+    while (fabs(f) > 1e-9){ 
+        E = E - f / (1.0 - e*cos(E));
+        f = E - e*sin(E) - M;
+    }
+    
+    // Convert Eccentric anomaly to true anomaly
+    double theta = 2.0 * atan2(sqrt(1.0 + e) * sin(E / 2.0),
+                               sqrt(1.0 - e) * cos(E / 2.0));
+    
+    
+    // initialise vector
+    Eigen::Vector3d P_r, P_v, r_vector, v_vector;
+    
+
+    double h = sqrt(Earth_mu*SMA*1000*(1-pow(e, 2.0)));
+
+    // Define unit vectors
+    Vector3d i_e(1.0, 0.0, 0.0); // i_e = [1; 0; 0]
+    Vector3d i_p(0.0, 1.0, 0.0); // i_p = [0; 1; 0]
+
+    // Calculate r0_p (position in perifocal frame)
+    Vector3d r0_p = (pow(h, 2.0) / (Earth_mu * (1 + e * cos(theta)))) * (cos(theta) * i_e + sin(theta) * i_p);
+ 
+    // Calculate v0_p (velocity in perifocal frame)
+    Vector3d v0_p = (Earth_mu / h) * (-sin(theta) * i_e + (e + cos(theta)) * i_p);
+
+
+    Vector6d Perifocal;
+    Perifocal << r0_p, v0_p;
+    state = P2ECI(Perifocal);
+
+    return state;
+
+};
 
 
 
@@ -109,29 +174,6 @@ Vector6d P2ECI(Vector6d& Perifocal){
     return ECI;
 }
 
-
-
-
-
-// Vector3d ECI2LVLH(Vector3d& ECI_r, Vector3d&ECI_v){
-    
-//     Vector3d LV = ECI_r.normalized();
-
-//     Vector3d h = LV.cross(ECI_v);
-    
-//     Vector3d orbit_normal = h.normalized();
-    
-//     Vector3d LH = orbit_normal.cross(LV);
-
-//     Matrix3d ECI_LVLH_Matrix; 
-//     ECI_LVLH_Matrix << LV, LH, orbit_normal;
-
-//     Vector3d LVLH_r, LVLH_v;
-//     LVLH_r = ECI_LVLH_Matrix * ECI_r;
-//     LVLH_v = ECI_LVLH_Matrix * ECI_v;
-    
-//     return LVLH_r;
-// }
 
 
 

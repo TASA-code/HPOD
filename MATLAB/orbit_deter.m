@@ -23,12 +23,12 @@ J2 = 0.00108263;     % Earth 2nd zonal harmonic coefficient
 
 % define initial orbital elements (ECI)
 
-a_0     = 6828;                  % semi-major axis (km)
-e_0     = 0.05125;               % eccentricity
-i_0     = deg2rad(98.1832);      % inclined angle 
-RAAN_0  = deg2rad(146.0033);
-w_0     = deg2rad(89.1815);            
-theta_0 = deg2rad(338.8837);     % true anomaly
+a_0     = 10711.26;                  % semi-major axis (km)
+e_0     = 0.3765;               % eccentricity
+i_0     = deg2rad(116.565);      % inclined angle 
+RAAN_0  = deg2rad(153);
+w_0     = deg2rad(23.45);            
+theta_0 = deg2rad(0);     % true anomaly
 
 y_0 = [a_0 e_0 i_0 RAAN_0 w_0 theta_0];
 
@@ -44,7 +44,7 @@ i_e = [1;0;0];
 i_p = [0;1;0];
 
 r0_p = (h^2/(mu_E*(1+e_0*cos(theta_0))))*(cos(theta_0)*i_e + sin(theta_0)*i_p);
-v0_p = (mu_E/h)*(-sin(theta_0)*i_e + (e_0+cos(theta_0))*i_p);
+v0_p = (mu_E/h)*(-sin(theta_0)*i_e + (e_0+cos(theta_0))*i_p)
 
 r0_ECI = A*r0_p;
 v0_ECI = A*v0_p;

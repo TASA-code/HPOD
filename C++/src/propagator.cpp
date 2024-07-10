@@ -50,41 +50,12 @@ void Propagator::Initialise(const double &arg_SMA, const double &arg_e,
     M = arg_M * M_PI / 180;
     w = arg_w * M_PI / 180;
     RAAN = arg_RAAN * M_PI / 180;
-    
-    // Iteration to convert mean anomaly to eccentric anomaly
-    double E = M;
-    double f = E - e * sin(E) - M;
-
-    while (fabs(f) > 1e-9){ 
-        E = E - f / (1.0 - e*cos(E));
-        f = E - e*sin(E) - M;
-    }
-    
-    // Convert Eccentric anomaly to true anomaly
-    double theta = 2.0 * atan2(sqrt(1.0 + e) * sin(E / 2.0),
-                               sqrt(1.0 - e) * cos(E / 2.0));
-    
-    
-    // initialise vector
-    Eigen::Vector3d P_r, P_v, r_vector, v_vector;
-    
-    r_vector << cos(theta), sin(theta), 0;
-    v_vector << -sin(theta), e+cos(theta), 0;
-    P_r << (SMA*(1-e*e) / (1+e*cos(theta))) * r_vector;
-    P_v << sqrt(Earth_mu/SMA) * v_vector;
 
 
-    Vector6d Perifocal;
-    Perifocal << P_r, P_v;
-    state = P2ECI(Perifocal); 
+    double OE[] = {SMA, e, i, M, w, RAAN};
 
-    // ECI_r << 5748.272127, -1506.348412, -3674.401874;
-    // ECI_v << 3.472888, -2.183142, 6.339326;
-
-    state << 5748.272127e3, -1506.348412e3, -3674.401874e3, 
-             3.472888e3, -2.183142e3, 6.339326e3;
+    state = OE2ECI(OE);
     
-
     // Print the resulting vectors r_ECI and v_ECI
     // format data output
     std::cout << "\t\t----------------------------------" << std::endl;
@@ -115,9 +86,9 @@ void Propagator::Propagate() {
     RungeKutta45(T, dt, output_frequency, state);
 
     auto stop = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop-start);
+    auto duration = std::chrono::duration<double>(stop - start);
 
-    std::cout << "\n\t\tPropagation time: " << duration.count() << " seconds" << std::endl;
+    std::cout << "\n\t\tPropagation time: " << std::fixed << std::setprecision(3) << duration.count() << " seconds" << std::endl;
 
     
     // Initialise final state vector

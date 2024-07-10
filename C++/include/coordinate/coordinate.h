@@ -7,6 +7,7 @@ using namespace Eigen;
 
 typedef Matrix<double,6,1> Vector6d;
 
+extern Vector6d OE2ECI(const double* OE);
 
 extern Vector6d P2ECI(Vector6d& Perifocal);
 
