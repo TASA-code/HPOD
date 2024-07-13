@@ -13,12 +13,6 @@ typedef Matrix<double,6,1> Vector6d;
  */
 class Propagator {
 
-    private:
-        
-        // double dt = 0.015625;
-        double dt = 10;
-        int output_frequency = 10;
-    
     public:
 
         inline static double Earth_Radius = 6378.1363e3;
@@ -32,13 +26,15 @@ class Propagator {
         inline static double RAAN;
         inline static double w;
         inline static double M;
+        inline static double step_time;
+        inline static int sample_rate;
         
         Vector6d state;
 
         // Define the initial conditions from the uesr input
-        void Initialise(const double &arg_SMA, const double &arg_e, const double &arg_i,
-                          const double &arg_M, const double &arg_w,
-                          const double &arg_RAAN, const std::string& arg_Start_Date, const std::string& arg_End_Date);
+        void Initialise(const double &arg_SMA, const double &arg_e, const double &arg_i, 
+                            const double &arg_M, const double &arg_w, const double &arg_RAAN, const std::string& arg_Start_Date, 
+                            const std::string& arg_End_Date, const double& arg_step_time, const int& arg_sample_rate);
         
 
         void Propagate();

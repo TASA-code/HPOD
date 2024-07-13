@@ -21,7 +21,7 @@ set view 75,320
 r = 6378000
 
 splot r*cos(v)*cos(u), r*cos(v)*sin(u), r*sin(v) with lines lt 2 lc rgb '#000000' notitle, \
-      'output.txt' using 3:4:5 with points lt -1 lw 4 title 'ECI Data'
+      'output.txt' using 3:4:5 with points lt -1 ps 100 title 'ECI Data'
 
 unset parametric
 
@@ -34,7 +34,7 @@ set urange [0:360]
 set vrange [-90:90]
 
 splot r*cos(v)*cos(u), r*cos(v)*sin(u), r*sin(v) with lines lt 2 lc rgb '#000000' notitle, \
-      'output.txt' using 9:10:11 with points lt -1 lw 2 title 'ECEF Data'
+      'output.txt' using 9:10:11 with points lt -1 ps 100 title 'ECEF Data'
 
 unset parametric
 

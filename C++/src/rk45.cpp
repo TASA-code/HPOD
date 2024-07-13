@@ -3,10 +3,10 @@
 #include <fstream>
 
 #include "propagator.h"
-#include "accel/accel.h"
-#include "coordinate/coordinate.h"
-#include "time/time.h"
-#include "utils/rk45.h"
+#include "accel.h"
+#include "coordinate.h"
+#include "dm_time.h"
+#include "rk45.h"
 
 
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
@@ -17,15 +17,19 @@ typedef Eigen::Matrix<double,6,1> Vector6d;
 // Progress bar function
 void Progress_Bar(int& iteration, const int& timestep){
     double progress = static_cast<double>(iteration) / timestep;
-    const int barWidth = 55;
+    const int barWidth = 35;
     int pos = static_cast<int>(barWidth * progress);
+    
+    // ANSI escape code for green
+    const std::string reset = "\033[0m";
+    const std::string green = "\033[32m";
 
-    std::cout << "[";
+    std::cout << "\t\t[";
     for (int i = 0; i < barWidth; ++i) {
         if (i < pos)
-            std::cout << "#";
+            std::cout << green << "#" << reset;
         else if (i == pos)
-            std::cout << "#";
+            std::cout << green << "#" << reset;
         else
             std::cout << " ";
     }

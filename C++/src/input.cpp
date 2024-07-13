@@ -1,4 +1,4 @@
-#include "utils/input.h"
+#include "input.h"
 #include <iostream>
 #include <fstream>
 #include <regex>
@@ -22,7 +22,9 @@ SatelliteData parseInputFile(const std::string& filePath) {
         std::regex("w\\s*\\(deg\\)\\s*:\\s*([\\d.]+)"),
         std::regex("RAAN\\s*\\(deg\\)\\s*:\\s*([\\d.]+)"),
         std::regex("Start_Date\\s*:\\s*([^\n]+)"),
-        std::regex("End_Date\\s*:\\s*([^\n]+)")
+        std::regex("End_Date\\s*:\\s*([^\n]+)"),
+        std::regex("step_time\\s*:\\s*(\\d+\\.\\d+|\\d+)"),
+        std::regex("sample_rate\\s*:\\s*(\\d+)"),
     };
 
     std::smatch match;
@@ -40,6 +42,8 @@ SatelliteData parseInputFile(const std::string& filePath) {
                     case 5: satelliteData.RAAN = std::stod(match[1].str()); break;
                     case 6: satelliteData.Start_Date = match[1].str(); break;
                     case 7: satelliteData.End_Date = match[1].str(); break;
+                    case 8: satelliteData.step_time = std::stod(match[1].str()); break;
+                    case 9: satelliteData.sample_rate = std::stod(match[1].str()); break;
                 }
             }
         }

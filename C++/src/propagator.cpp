@@ -5,10 +5,10 @@
 #include <chrono>
 
 #include "propagator.h"
-#include "coordinate/coordinate.h"
-#include "time/time.h"
-#include "accel/accel.h"
-#include "utils/rk45.h"
+#include "coordinate.h"
+#include "dm_time.h"
+#include "accel.h"
+#include "rk45.h"
 
 
 
@@ -25,7 +25,7 @@ void Propagator::Initialise(const double &arg_SMA, const double &arg_e,
                          const double &arg_i, const double &arg_M,
                          const double &arg_w, const double &arg_RAAN, 
                          const std::string& arg_Start_Date, 
-                         const std::string& arg_End_Date) {
+                         const std::string& arg_End_Date, const double& arg_step_time, const int& arg_sample_rate) {
 
     // Printing values of all the parameters to the terminal.
     std::cout << std::endl;
@@ -40,9 +40,14 @@ void Propagator::Initialise(const double &arg_SMA, const double &arg_e,
     std::cout << "\t\tStart Time:  " << arg_Start_Date << std::endl;
     std::cout << "\t\tEnd Time  :  " << arg_End_Date << std::endl;
     std::cout << std::endl;
+    std::cout << "\t\tStep Time    :  " << arg_step_time << std::endl;
+    std::cout << "\t\tSample Rate  :  " << arg_sample_rate << std::endl;
 
     Start_Date = arg_Start_Date;
     End_Date = arg_End_Date;
+
+    step_time = arg_step_time;
+    sample_rate = arg_sample_rate;
     
     SMA = arg_SMA;
     e = arg_e;
@@ -60,11 +65,11 @@ void Propagator::Initialise(const double &arg_SMA, const double &arg_e,
     // format data output
     std::cout << "\t\t----------------------------------" << std::endl;
     std::cout << "\t\t...INITIAL POSITION (ECI)...\n" << std::endl;
-    std::cout << "\t\tr0 = [" << state[0] << ", " << state[1] << ", "
-              << state[2] << "]" << std::endl;
+    std::cout << "\t\tr0 = [" << state[0]/1000 << ", " << state[1]/1000 << ", "
+              << state[2]/1000 << "]" << std::endl;
 
-    std::cout << "\t\tv0 = [" << state[3] << ", " << state[4] << ", "
-              << state[5] << "]\n"
+    std::cout << "\t\tv0 = [" << state[3]/1000 << ", " << state[4]/1000 << ", "
+              << state[5]/1000 << "]\n"
               << std::endl;
     std::cout << "\t\t----------------------------------" << std::endl;   
 }
@@ -79,11 +84,11 @@ void Propagator::Initialise(const double &arg_SMA, const double &arg_e,
 void Propagator::Propagate() {
 
     // define target time and dt
-    const double T = Duration(Start_Date,End_Date);
+    double T = Duration(Start_Date,End_Date);
 
     // Begin RK45 Integration
     auto start = std::chrono::high_resolution_clock::now();
-    RungeKutta45(T, dt, output_frequency, state);
+    RungeKutta45(T, step_time, sample_rate, state);
 
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration<double>(stop - start);
@@ -95,12 +100,14 @@ void Propagator::Propagate() {
     Vector3d Final_r = state.head<3>() ;
     Vector3d Final_v = state.tail<3>() ;
 
-    std::cout << "\n\t\trf = [" << Final_r[0] << ", " << Final_r[1] << ", "
-              << Final_r[2] << "]" << std::endl;
+    std::cout << "\n\t\trf = [" << Final_r[0]/1000 << ", " << Final_r[1]/1000 << ", "
+              << Final_r[2]/1000 << "]" << std::endl;
 
-    std::cout << "\t\tvf = [" << Final_v[0] << ", " << Final_v[1] << ", "
-              << Final_v[2] << "]\n"
+    std::cout << "\t\tvf = [" << Final_v[0]/1000 << ", " << Final_v[1]/1000 << ", "
+              << Final_v[2]/1000 << "]\n"
               << std::endl;
     std::cout << "\t\t----------------------------------" << std::endl;
+    std::cout << "\t\t----------------------------------" << std::endl;
+    std::cout << "\n" << std::endl;
 }
 

@@ -3,10 +3,9 @@
 
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 
-
-#include "coordinate/coordinate.h"
+#include "coordinate.h"
 #include "propagator.h"
-#include "time/time.h"
+#include "dm_time.h"
 
 using namespace Eigen;  
 
@@ -270,8 +269,6 @@ Vector2d ECEF2GEO(Vector6d& ECEF){
 
     return GEO;
 }
-
-
 
 
 

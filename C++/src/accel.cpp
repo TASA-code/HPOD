@@ -1,11 +1,24 @@
 
-#include "accel/accel.h"
-#include "coordinate/coordinate.h"
-
+#include "accel.h"
+#include "coordinate.h"
 #include </opt/homebrew/opt/eigen/include/eigen3/Eigen/Dense>
 typedef Eigen::Matrix<double,6,1> Vector6d;
 using namespace Eigen;
 
+
+
+/********************************************************************
+*
+* Earth gravity field JGM3
+* Gravitational coefficients C, S are efficiently stored in a single
+* array CS. The lower triangle matrix CS holds the non-sectorial C
+* coefficients C_n,m (n!=m). Sectorial C coefficients C_n,n are the 
+* diagonal elements of CS and the upper triangular matrix stores
+* the S_n,m (m!=0) coefficients in columns, for the same degree n.
+* Mapping of CS to C, S is achieved through 
+* C_n,m = CS(n,m), S_n,m = CS(m-1,n)
+*
+*********************************************************************/
 
 #define R_JGM3  6378.1363e3	/* Radius Earth [m]; JGM3 */
 #define N_JGM3  20
@@ -164,7 +177,7 @@ Vector3d AccelMod(Vector6d r_GCRF, double mu, int n_max,
 	y0 = R_ref * r_bf[1] / r_sqr;	/* coordinates */
 	z0 = R_ref * r_bf[2] / r_sqr;
 
-    	/*******************************
+    /*******************************
 	*
 	* Evaluate harmonic functions 
 	*   V_nm = (R_ref/r)^(n+1) * P_nm(sin(phi)) * cos(m*lambda)
@@ -260,23 +273,17 @@ Vector3d AccelMod(Vector6d r_GCRF, double mu, int n_max,
 
 
 
+
+
+
 Vector6d f(const Vector6d &x, double t)
 {
-    Vector3d r_GCRF, v_GCRF, a_GCRF, unit_v, a_T;
-    r_GCRF = x.head<3>();
-    v_GCRF = x.tail<3>();
-	// double T = 1;
-	// double m = 4000;
-	
-    a_GCRF = AccelMod(x, GM_Earth, 10, 10, R_JGM3,t);
-
-	// double v_norm = sqrt(v_GCRF[0]*v_GCRF[0] + v_GCRF[1]*v_GCRF[1] + v_GCRF[2]*v_GCRF[2]);
-	// unit_v << v_GCRF/v_norm;
-	// double Thrust = unit_v[0] * T;
-
-	// a_T << (Thrust / m)*unit_v[0], (Thrust / m)*unit_v[1], (Thrust / m)*unit_v[2];
-
+    Vector3d v_GCRF, a_GCRF;
 	Vector6d x_dot;
+
+    a_GCRF = AccelMod(x, GM_Earth, 10, 10, R_JGM3,t);
+	
+	v_GCRF = x.tail<3>();
     x_dot << v_GCRF, a_GCRF;
 
     return x_dot; 

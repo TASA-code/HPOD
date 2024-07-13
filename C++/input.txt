@@ -8,6 +8,8 @@ RAAN (deg) :  153
 Start_Date :  29-Oct-2023 07:55:48.000
 End_Date   :  30-Dec-2023 07:55:48.000
 
+step_time  :  10.0
+sample_rate:  30
 
 
 // Molynia Orbit

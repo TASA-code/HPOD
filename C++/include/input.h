@@ -12,6 +12,8 @@ struct SatelliteData {
     double RAAN = 0.0;
     std::string Start_Date = " ";
     std::string End_Date = " ";
+    double step_time = 0.0;
+    int sample_rate = 0.0;
 };
 
 SatelliteData parseInputFile(const std::string& filePath);
